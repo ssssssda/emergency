@@ -726,7 +726,7 @@ function highlightCurrentMatch() {
 // 添加规则引擎API调用
 async function analyzeReport(data) {
   try {
-    const response = await fetch('http://localhost:5000/analyze', {
+    const response = await fetch('http://localhost:12000/analyze', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
