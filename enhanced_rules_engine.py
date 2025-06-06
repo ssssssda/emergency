@@ -727,9 +727,9 @@ WEB_INTERFACE = '''
             html += `
                 <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
                     <h3>📋 查看详细报告</h3>
-                    <p style="margin: 15px 0; color: #666;">使用增强版查看器查看完整的系统检查报告，包含所有原有功能和智能分析</p>
+                    <p style="margin: 15px 0; color: #666;">使用详细版查看器查看完整的系统检查报告，包含所有原有功能、智能分析和专业教程</p>
                     <a href="/viewer" target="_blank" style="display: inline-block; padding: 15px 30px; background: #28a745; color: white; text-decoration: none; border-radius: 25px; font-weight: bold; margin: 10px;">
-                        🔍 打开增强版查看器
+                        🔍 打开详细版查看器
                     </a>
                 </div>
             `;
@@ -803,14 +803,14 @@ def health_check():
     return jsonify({'status': 'healthy', 'timestamp': datetime.datetime.now().isoformat()})
 
 @app.route('/viewer')
-def enhanced_viewer():
-    """增强版报告查看器"""
+def detailed_viewer():
+    """详细版报告查看器"""
     try:
         with open('enhanced_report_viewer.html', 'r', encoding='utf-8') as f:
             return f.read()
     except FileNotFoundError:
         return """
-        <h1>增强版查看器未找到</h1>
+        <h1>详细版查看器未找到</h1>
         <p>请确保 enhanced_report_viewer.html 文件存在</p>
         <p><a href="/">返回主页</a></p>
         """

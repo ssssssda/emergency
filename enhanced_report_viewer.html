@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>Linux 应急响应报告查看器 (增强版)</title>
+<title>Linux 应急响应报告查看器 (详细版)</title>
 <style>
 body { 
   font-family: "Microsoft YaHei", Arial, sans-serif; 
@@ -377,6 +377,137 @@ body {
   100% { background: #ff4444; }
 }
 
+/* 教程样式 */
+.tutorial-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  line-height: 1.6;
+}
+
+.tutorial-section {
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  background: #f8f9fa;
+}
+
+.tutorial-section h4 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #3498db;
+}
+
+.step-by-step .step {
+  margin-bottom: 25px;
+  padding: 15px;
+  background: white;
+  border-radius: 6px;
+  border-left: 4px solid #3498db;
+}
+
+.command-block {
+  background: #2c3e50;
+  color: #ecf0f1;
+  padding: 15px;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  margin: 10px 0;
+  overflow-x: auto;
+}
+
+.command-block code {
+  color: #2ecc71;
+  font-weight: bold;
+}
+
+.tip {
+  background: #e8f5e8;
+  border: 1px solid #27ae60;
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 10px;
+  color: #27ae60;
+}
+
+.warning-box {
+  background: #fdf2e9;
+  border: 1px solid #e67e22;
+  border-radius: 6px;
+  padding: 15px;
+  color: #d35400;
+}
+
+.tool-list .tool-item {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border-left: 4px solid #9b59b6;
+}
+
+.process-flow .process-step {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  border-radius: 25px;
+  font-weight: bold;
+}
+
+.attack-patterns .pattern-item {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #e74c3c;
+}
+
+.detection-methods .method-item {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #f39c12;
+}
+
+.response-actions .action-item {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+
+.action-item.urgent {
+  background: #ffebee;
+  border-left: 4px solid #f44336;
+}
+
+.action-item.medium {
+  background: #fff8e1;
+  border-left: 4px solid #ff9800;
+}
+
+.action-item.low {
+  background: #e8f5e8;
+  border-left: 4px solid #4caf50;
+}
+
+.hardening-tips .tip-category {
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border-left: 4px solid #2196f3;
+}
+
+.suspicious-signs h5 {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
   .main-container {
@@ -419,16 +550,16 @@ const TAB_TITLES = {
 
 const SUB_TAB_TITLES = {
   summary: ["系统概览", "风险评估", "智能建议", "检查清单", "专业总结"],
-  backdoor: ["UID为0的非root用户", "可疑系统配置", "异常系统文件"],
-  user: ["当前用户", "所有用户", "最近登录记录", "登录失败记录"],
-  log: ["系统日志错误", "安全日志错误"],
-  network: ["监听端口", "活动连接", "网络配置", "路由表", "可疑连接"],
-  process: ["高CPU占用进程", "可疑脚本进程"],
-  filesystem: ["SUID文件", "最近修改的文件"],
-  package: ["已安装的软件包"],
-  persistence: ["自启动服务", "计划任务", "SSH公钥", "启动项配置"],
-  integrity: ["关键二进制文件校验", "系统文件完整性"],
-  malware: ["可疑进程", "可疑提权点", "隐藏文件"]
+  backdoor: ["📚 排查教程", "UID为0的非root用户", "可疑系统配置", "异常系统文件"],
+  user: ["📚 排查教程", "当前用户", "所有用户", "最近登录记录", "登录失败记录"],
+  log: ["📚 排查教程", "SSH攻击统计分析", "登录会话分析", "系统日志错误", "数据传输异常分析", "攻击模式识别", "IP地理位置分析", "安全事件时间线"],
+  network: ["📚 排查教程", "监听端口", "活动连接", "网络配置", "路由表", "可疑连接"],
+  process: ["📚 排查教程", "高CPU占用进程", "可疑脚本进程"],
+  filesystem: ["📚 排查教程", "SUID文件", "最近修改的文件"],
+  package: ["📚 排查教程", "已安装的软件包"],
+  persistence: ["📚 排查教程", "自启动服务", "计划任务", "SSH公钥", "启动项配置"],
+  integrity: ["📚 排查教程", "关键二进制文件校验", "系统文件完整性"],
+  malware: ["📚 排查教程", "可疑进程", "可疑提权点", "隐藏文件"]
 };
 
 let gTabs = Object.keys(TAB_TITLES);
@@ -820,6 +951,853 @@ ${pendingItems.map(item => `⏳ ${item}: 建议使用专业工具进行深度分
   `;
 }
 
+// 生成教程内容
+function generateTutorial(category) {
+  const tutorials = {
+    backdoor: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>🛡️ 系统后门排查完全指南</h3>
+
+<h4>📖 什么是系统后门？</h4>
+<p>系统后门是攻击者在获得系统访问权限后，为了维持持久化访问而植入的隐蔽通道。后门可以是文件、进程、服务或系统配置的修改。</p>
+
+<h4>🔍 后门排查的核心思路</h4>
+<ol>
+<li><strong>权限异常检查</strong> - 查找不应该存在的高权限用户</li>
+<li><strong>文件完整性验证</strong> - 检查系统关键文件是否被篡改</li>
+<li><strong>进程行为分析</strong> - 识别可疑的运行进程</li>
+<li><strong>网络连接监控</strong> - 发现异常的网络通信</li>
+<li><strong>启动项检查</strong> - 确认自启动程序的合法性</li>
+</ol>
+
+<h4>💻 关键排查命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. 检查UID为0的用户（超级用户权限）
+awk -F: '$3==0 {print $1}' /etc/passwd
+
+# 2. 查找SUID文件（可能的提权点）
+find / -perm -4000 -type f 2>/dev/null
+
+# 3. 检查最近修改的系统文件
+find /bin /sbin /usr/bin /usr/sbin -mtime -7 -type f
+
+# 4. 查看隐藏文件和目录
+find / -name ".*" -type f 2>/dev/null | grep -v proc | head -20
+
+# 5. 检查异常的网络监听
+netstat -tulnp | grep LISTEN
+</div>
+
+<h4>🚨 常见后门特征</h4>
+<ul>
+<li><strong>UID为0的非root用户</strong> - 除了root外不应该有其他UID为0的用户</li>
+<li><strong>异常SUID文件</strong> - 特别是在/tmp、/var/tmp等临时目录</li>
+<li><strong>可疑的隐藏文件</strong> - 以点开头的异常文件</li>
+<li><strong>修改的系统二进制文件</strong> - ls、ps、netstat等被替换</li>
+<li><strong>异常的网络监听端口</strong> - 不明来源的监听服务</li>
+</ul>
+
+<h4>🔧 排查技巧与经验</h4>
+<ol>
+<li><strong>对比基线</strong> - 与正常系统的配置进行对比</li>
+<li><strong>时间关联</strong> - 关注文件修改时间与入侵时间的关联</li>
+<li><strong>进程父子关系</strong> - 使用pstree查看进程树结构</li>
+<li><strong>文件哈希校验</strong> - 对关键文件进行MD5/SHA校验</li>
+<li><strong>日志分析</strong> - 结合系统日志进行综合分析</li>
+</ol>
+
+<h4>⚠️ 注意事项</h4>
+<ul>
+<li>排查过程中避免惊动攻击者，先收集证据再处置</li>
+<li>对可疑文件进行备份，便于后续分析</li>
+<li>使用可信的外部工具进行检查，避免使用被篡改的系统命令</li>
+<li>记录所有发现的异常，建立完整的事件时间线</li>
+</ul>
+</div>
+    `,
+    
+    user: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>👥 用户与登录安全检查指南</h3>
+
+<h4>📖 用户安全检查的重要性</h4>
+<p>用户账户是系统安全的第一道防线。攻击者常常通过创建后门账户、提升权限或利用弱密码来维持系统访问。</p>
+
+<h4>🔍 用户检查的核心要点</h4>
+<ol>
+<li><strong>账户合法性验证</strong> - 确认所有用户账户的合法性</li>
+<li><strong>权限等级审查</strong> - 检查用户权限是否合理</li>
+<li><strong>登录行为分析</strong> - 识别异常的登录模式</li>
+<li><strong>密码策略检查</strong> - 验证密码安全策略</li>
+<li><strong>sudo权限审计</strong> - 检查特权用户配置</li>
+</ol>
+
+<h4>💻 关键检查命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. 查看所有用户账户
+cat /etc/passwd | cut -d: -f1,3,4,5,6,7
+
+# 2. 检查有登录权限的用户
+grep -v '/nologin\\|/false' /etc/passwd
+
+# 3. 查看用户组信息
+cat /etc/group
+
+# 4. 检查sudo权限配置
+cat /etc/sudoers
+visudo -c
+
+# 5. 查看最近登录记录
+last -20
+lastlog
+
+# 6. 检查当前登录用户
+who -a
+w
+
+# 7. 查看用户密码策略
+chage -l username
+</div>
+
+<h4>🚨 异常用户特征</h4>
+<ul>
+<li><strong>UID为0的非root用户</strong> - 具有超级用户权限的可疑账户</li>
+<li><strong>无家目录的用户</strong> - 家目录不存在或异常的用户</li>
+<li><strong>异常shell的用户</strong> - 使用非标准shell的账户</li>
+<li><strong>最近创建的用户</strong> - 入侵时间附近创建的新用户</li>
+<li><strong>异常登录时间</strong> - 非工作时间的登录活动</li>
+</ul>
+
+<h4>🔧 登录安全分析技巧</h4>
+<ol>
+<li><strong>登录频率分析</strong> - 识别异常高频的登录尝试</li>
+<li><strong>IP地址关联</strong> - 分析登录来源的地理位置</li>
+<li><strong>失败登录模式</strong> - 识别暴力破解攻击</li>
+<li><strong>会话持续时间</strong> - 分析异常长时间的会话</li>
+<li><strong>并发登录检查</strong> - 发现同一用户的多点登录</li>
+</ol>
+
+<h4>⚠️ 安全建议</h4>
+<ul>
+<li>定期审查用户账户，删除不必要的账户</li>
+<li>实施强密码策略和定期密码更换</li>
+<li>启用登录失败锁定机制</li>
+<li>使用SSH密钥认证替代密码认证</li>
+<li>监控和记录所有用户登录活动</li>
+</ul>
+</div>
+    `,
+    
+    log: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>📋 日志分析与攻击检测指南</h3>
+
+<h4>📖 日志分析的重要性</h4>
+<p>系统日志是安全事件的重要证据来源，通过专业的日志分析可以发现攻击痕迹、重建攻击时间线，并评估安全事件的影响范围。</p>
+
+<h4>🔍 日志分析的核心方法</h4>
+<ol>
+<li><strong>攻击模式识别</strong> - 识别暴力破解、扫描等攻击行为</li>
+<li><strong>时间线重建</strong> - 构建完整的安全事件时间线</li>
+<li><strong>IP信誉分析</strong> - 分析攻击来源的威胁情报</li>
+<li><strong>行为基线对比</strong> - 与正常行为模式进行对比</li>
+<li><strong>关联分析</strong> - 多维度关联分析发现隐蔽威胁</li>
+</ol>
+
+<h4>💻 日志分析关键命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. SSH暴力破解检测
+grep "Failed password" /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr
+
+# 2. 成功登录统计
+grep "Accepted password" /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c
+
+# 3. 异常时间登录检测
+grep "Accepted" /var/log/auth.log | awk '$3 ~ /^(2[2-3]|0[0-6]):/ {print}'
+
+# 4. 用户扫描检测
+grep "Invalid user" /var/log/auth.log | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr
+
+# 5. 权限提升检测
+grep "sudo:" /var/log/auth.log | grep -v "session opened"
+
+# 6. 系统错误分析
+grep -i "error\\|fail\\|denied" /var/log/syslog | tail -50
+
+# 7. 网络连接日志
+grep "Connection" /var/log/auth.log | tail -20
+</div>
+
+<h4>🚨 攻击特征识别</h4>
+<ul>
+<li><strong>暴力破解攻击</strong> - 短时间内大量失败登录尝试</li>
+<li><strong>字典攻击</strong> - 尝试常见用户名如admin、test等</li>
+<li><strong>分布式攻击</strong> - 来自多个IP的协调攻击</li>
+<li><strong>慢速攻击</strong> - 低频率长时间的持续攻击</li>
+<li><strong>成功入侵</strong> - 失败尝试后的成功登录</li>
+</ul>
+
+<h4>🔧 高级分析技巧</h4>
+<ol>
+<li><strong>时间窗口分析</strong> - 分析特定时间段的活动模式</li>
+<li><strong>频率统计</strong> - 计算攻击频率和成功率</li>
+<li><strong>地理位置分析</strong> - 结合IP地理位置信息</li>
+<li><strong>用户行为画像</strong> - 建立正常用户行为基线</li>
+<li><strong>威胁情报关联</strong> - 与已知威胁IP库进行比对</li>
+</ol>
+
+<h4>📊 日志分析最佳实践</h4>
+<ul>
+<li>建立日志收集和集中化管理机制</li>
+<li>设置实时告警规则，及时发现异常</li>
+<li>定期进行日志分析和安全审计</li>
+<li>保留足够长的日志历史记录</li>
+<li>使用专业的日志分析工具提高效率</li>
+</ul>
+
+<h4>⚠️ 分析注意事项</h4>
+<ul>
+<li>注意日志的完整性，防止被攻击者清除</li>
+<li>结合多个日志源进行交叉验证</li>
+<li>关注日志中的时间戳异常</li>
+<li>保护日志文件的安全性和完整性</li>
+</ul>
+</div>
+    `,
+    
+    network: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>🌐 网络安全检查与分析指南</h3>
+
+<h4>📖 网络安全检查的重要性</h4>
+<p>网络是攻击者进入系统和数据外泄的主要通道。通过网络检查可以发现后门连接、异常通信和潜在的数据泄露行为。</p>
+
+<h4>🔍 网络检查的核心要点</h4>
+<ol>
+<li><strong>端口监听分析</strong> - 识别异常的监听服务</li>
+<li><strong>连接状态检查</strong> - 分析活跃的网络连接</li>
+<li><strong>流量模式分析</strong> - 发现异常的数据传输</li>
+<li><strong>防火墙规则审计</strong> - 检查安全策略配置</li>
+<li><strong>DNS解析检查</strong> - 发现恶意域名解析</li>
+</ol>
+
+<h4>💻 网络检查关键命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. 查看监听端口和服务
+ss -tulnp
+netstat -tulnp
+
+# 2. 查看活跃连接
+ss -antp
+netstat -antp
+
+# 3. 检查网络接口配置
+ip addr show
+ifconfig -a
+
+# 4. 查看路由表
+ip route
+route -n
+
+# 5. 检查ARP表
+arp -a
+ip neigh
+
+# 6. 查看防火墙规则
+iptables -L -n
+ufw status
+
+# 7. 检查网络统计
+ss -s
+netstat -i
+
+# 8. DNS配置检查
+cat /etc/resolv.conf
+cat /etc/hosts
+</div>
+
+<h4>🚨 可疑网络活动特征</h4>
+<ul>
+<li><strong>异常监听端口</strong> - 非标准端口上的监听服务</li>
+<li><strong>外连可疑IP</strong> - 连接到恶意或未知IP地址</li>
+<li><strong>大量并发连接</strong> - 异常高的连接数量</li>
+<li><strong>非标准协议</strong> - 使用罕见端口或协议</li>
+<li><strong>反向连接</strong> - 系统主动连接外部地址</li>
+</ul>
+
+<h4>🔧 网络分析技巧</h4>
+<ol>
+<li><strong>端口扫描检测</strong> - 识别端口扫描行为</li>
+<li><strong>流量基线建立</strong> - 建立正常网络流量模式</li>
+<li><strong>地理位置分析</strong> - 分析连接的地理分布</li>
+<li><strong>协议分析</strong> - 深入分析网络协议使用</li>
+<li><strong>时间模式分析</strong> - 分析网络活动的时间规律</li>
+</ol>
+
+<h4>🛡️ 网络安全防护建议</h4>
+<ul>
+<li>关闭不必要的网络服务和端口</li>
+<li>配置防火墙规则限制网络访问</li>
+<li>使用网络监控工具实时监控流量</li>
+<li>定期检查和更新网络安全策略</li>
+<li>实施网络分段和访问控制</li>
+</ul>
+
+<h4>⚠️ 检查注意事项</h4>
+<ul>
+<li>注意区分正常业务流量和异常流量</li>
+<li>关注加密流量中的异常模式</li>
+<li>监控DNS查询的异常模式</li>
+<li>定期更新威胁情报和恶意IP列表</li>
+</ul>
+</div>
+    `,
+    
+    process: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>⚙️ 进程安全检查与分析指南</h3>
+
+<h4>📖 进程检查的重要性</h4>
+<p>恶意进程是攻击者在系统中执行恶意活动的载体。通过进程分析可以发现后门程序、挖矿木马、数据窃取工具等恶意软件。</p>
+
+<h4>🔍 进程检查的核心方法</h4>
+<ol>
+<li><strong>进程行为分析</strong> - 分析进程的运行行为和资源使用</li>
+<li><strong>父子关系检查</strong> - 分析进程的启动来源</li>
+<li><strong>网络连接关联</strong> - 检查进程的网络活动</li>
+<li><strong>文件访问监控</strong> - 监控进程的文件操作</li>
+<li><strong>权限等级审查</strong> - 检查进程的运行权限</li>
+</ol>
+
+<h4>💻 进程检查关键命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. 查看所有进程详细信息
+ps aux
+ps -ef
+
+# 2. 按CPU使用率排序
+ps aux --sort=-%cpu | head -20
+
+# 3. 按内存使用率排序
+ps aux --sort=-%mem | head -20
+
+# 4. 查看进程树结构
+pstree -p
+ps -ejH
+
+# 5. 查看进程的网络连接
+lsof -i
+ss -tulnp
+
+# 6. 查看进程打开的文件
+lsof -p PID
+ls -la /proc/PID/fd/
+
+# 7. 检查可疑脚本进程
+ps aux | grep -E 'bash|sh|python|perl|php|nc'
+
+# 8. 查看系统启动的进程
+systemctl list-units --type=service --state=running
+
+# 9. 检查进程的启动时间
+ps -eo pid,lstart,cmd
+</div>
+
+<h4>🚨 可疑进程特征</h4>
+<ul>
+<li><strong>高CPU使用率</strong> - 异常高的CPU占用（可能是挖矿程序）</li>
+<li><strong>异常网络连接</strong> - 连接到可疑IP或端口</li>
+<li><strong>隐藏进程名</strong> - 使用空格或特殊字符隐藏</li>
+<li><strong>临时目录执行</strong> - 从/tmp、/var/tmp等目录运行</li>
+<li><strong>无父进程</strong> - 孤儿进程或异常的父子关系</li>
+</ul>
+
+<h4>🔧 进程分析技巧</h4>
+<ol>
+<li><strong>资源使用分析</strong> - 监控CPU、内存、网络使用情况</li>
+<li><strong>启动时间关联</strong> - 与入侵时间进行关联分析</li>
+<li><strong>命令行参数检查</strong> - 分析进程的启动参数</li>
+<li><strong>文件哈希校验</strong> - 对可疑程序进行哈希校验</li>
+<li><strong>行为监控</strong> - 使用strace等工具监控系统调用</li>
+</ol>
+
+<h4>🛡️ 进程安全防护</h4>
+<ul>
+<li>定期检查运行进程的合法性</li>
+<li>监控异常的资源使用情况</li>
+<li>限制进程的执行权限</li>
+<li>使用进程监控工具实时告警</li>
+<li>定期更新和扫描恶意软件特征</li>
+</ul>
+
+<h4>⚠️ 分析注意事项</h4>
+<ul>
+<li>某些系统进程可能被恶意程序伪装</li>
+<li>注意进程的数字签名和来源验证</li>
+<li>关注进程的网络通信模式</li>
+<li>避免直接终止可疑进程，先收集证据</li>
+</ul>
+</div>
+    `,
+    
+    filesystem: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>📁 文件系统安全检查指南</h3>
+
+<h4>📖 文件系统检查的重要性</h4>
+<p>文件系统是攻击者植入后门、存储恶意文件和篡改系统配置的主要目标。通过文件系统检查可以发现恶意文件、权限异常和系统完整性问题。</p>
+
+<h4>🔍 文件系统检查要点</h4>
+<ol>
+<li><strong>权限异常检查</strong> - 发现SUID/SGID等特殊权限文件</li>
+<li><strong>文件完整性验证</strong> - 检查关键文件是否被篡改</li>
+<li><strong>隐藏文件发现</strong> - 查找隐藏的恶意文件</li>
+<li><strong>时间戳分析</strong> - 分析文件的修改时间</li>
+<li><strong>文件类型识别</strong> - 识别伪装的恶意文件</li>
+</ol>
+
+<h4>💻 文件系统检查命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. 查找SUID文件
+find / -perm -4000 -type f 2>/dev/null
+
+# 2. 查找SGID文件
+find / -perm -2000 -type f 2>/dev/null
+
+# 3. 查找最近修改的文件
+find / -mtime -7 -type f 2>/dev/null | grep -v proc
+
+# 4. 查找隐藏文件
+find / -name ".*" -type f 2>/dev/null | head -50
+
+# 5. 查找大文件（可能的数据收集）
+find / -size +100M -type f 2>/dev/null
+
+# 6. 检查临时目录
+ls -la /tmp /var/tmp /dev/shm
+
+# 7. 查找可执行文件
+find /tmp /var/tmp -type f -executable 2>/dev/null
+
+# 8. 检查系统关键目录
+ls -la /bin /sbin /usr/bin /usr/sbin
+
+# 9. 查找最近访问的文件
+find / -atime -1 -type f 2>/dev/null | head -20
+
+# 10. 文件完整性检查
+md5sum /bin/ls /bin/ps /bin/netstat
+</div>
+
+<h4>🚨 可疑文件特征</h4>
+<ul>
+<li><strong>异常SUID文件</strong> - 在临时目录或异常位置的SUID文件</li>
+<li><strong>隐藏可执行文件</strong> - 以点开头的可执行文件</li>
+<li><strong>系统文件篡改</strong> - 关键系统命令被替换</li>
+<li><strong>异常大文件</strong> - 可能包含窃取的数据</li>
+<li><strong>时间戳异常</strong> - 修改时间与入侵时间相关</li>
+</ul>
+
+<h4>🔧 文件分析技巧</h4>
+<ol>
+<li><strong>文件指纹对比</strong> - 与已知恶意文件哈希对比</li>
+<li><strong>文件类型检测</strong> - 使用file命令检查真实类型</li>
+<li><strong>字符串分析</strong> - 使用strings命令分析文件内容</li>
+<li><strong>权限审计</strong> - 检查文件权限的合理性</li>
+<li><strong>依赖关系分析</strong> - 分析文件的依赖和调用关系</li>
+</ol>
+
+<h4>🛡️ 文件系统安全建议</h4>
+<ul>
+<li>定期进行文件完整性检查</li>
+<li>限制临时目录的执行权限</li>
+<li>监控关键目录的文件变化</li>
+<li>使用文件完整性监控工具</li>
+<li>定期清理临时文件和日志</li>
+</ul>
+
+<h4>⚠️ 检查注意事项</h4>
+<ul>
+<li>避免在检查过程中执行可疑文件</li>
+<li>对重要发现进行备份和取证</li>
+<li>注意文件的软链接和硬链接关系</li>
+<li>关注文件的数字签名和来源</li>
+</ul>
+</div>
+    `,
+    
+    package: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>📦 软件包安全检查指南</h3>
+
+<h4>📖 软件包检查的重要性</h4>
+<p>恶意软件包可能包含后门、木马或其他恶意代码。通过软件包检查可以发现未授权安装的软件、可疑的包管理器活动和潜在的供应链攻击。</p>
+
+<h4>🔍 软件包检查要点</h4>
+<ol>
+<li><strong>包完整性验证</strong> - 检查软件包的数字签名和校验和</li>
+<li><strong>安装历史审计</strong> - 分析软件包的安装时间和来源</li>
+<li><strong>依赖关系检查</strong> - 识别异常的依赖关系</li>
+<li><strong>版本一致性</strong> - 检查软件包版本的合理性</li>
+<li><strong>来源可信度</strong> - 验证软件包的来源仓库</li>
+</ol>
+
+<h4>💻 软件包检查命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# Debian/Ubuntu系统
+# 1. 查看已安装的软件包
+dpkg -l
+apt list --installed
+
+# 2. 查看软件包安装历史
+grep " install " /var/log/dpkg.log
+grep " install " /var/log/apt/history.log
+
+# 3. 检查软件包完整性
+debsums -c
+dpkg --verify
+
+# 4. 查看软件包信息
+dpkg -s package_name
+apt show package_name
+
+# RedHat/CentOS系统
+# 1. 查看已安装的软件包
+rpm -qa
+yum list installed
+
+# 2. 查看软件包安装历史
+grep "Installed:" /var/log/yum.log
+rpm -qa --last
+
+# 3. 检查软件包完整性
+rpm -Va
+rpm --verify package_name
+
+# 4. 查看软件包信息
+rpm -qi package_name
+yum info package_name
+
+# 通用命令
+# 查找最近安装的软件包
+find /var/cache/apt/archives -name "*.deb" -mtime -7
+find /var/cache/yum -name "*.rpm" -mtime -7
+</div>
+
+<h4>🚨 可疑软件包特征</h4>
+<ul>
+<li><strong>未知来源包</strong> - 来自非官方仓库的软件包</li>
+<li><strong>签名异常</strong> - 缺少数字签名或签名验证失败</li>
+<li><strong>版本异常</strong> - 版本号不符合正常规律</li>
+<li><strong>安装时间可疑</strong> - 在入侵时间附近安装的软件包</li>
+<li><strong>依赖异常</strong> - 包含异常依赖关系的软件包</li>
+</ul>
+
+<h4>🔧 软件包分析技巧</h4>
+<ol>
+<li><strong>时间线分析</strong> - 将安装时间与安全事件关联</li>
+<li><strong>依赖树分析</strong> - 分析软件包的完整依赖关系</li>
+<li><strong>文件清单检查</strong> - 检查软件包安装的文件列表</li>
+<li><strong>仓库源验证</strong> - 验证软件包来源的可信度</li>
+<li><strong>版本对比</strong> - 与官方版本进行对比</li>
+</ol>
+
+<h4>🛡️ 软件包安全建议</h4>
+<ul>
+<li>只从可信的官方仓库安装软件包</li>
+<li>定期更新软件包到最新版本</li>
+<li>启用软件包签名验证</li>
+<li>监控软件包的安装和更新活动</li>
+<li>定期进行软件包完整性检查</li>
+</ul>
+
+<h4>⚠️ 检查注意事项</h4>
+<ul>
+<li>注意区分正常的系统更新和恶意安装</li>
+<li>关注第三方仓库的安全性</li>
+<li>检查软件包的数字签名有效性</li>
+<li>监控包管理器的配置文件变化</li>
+</ul>
+</div>
+    `,
+    
+    persistence: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>🔄 持久化机制检查指南</h3>
+
+<h4>📖 持久化检查的重要性</h4>
+<p>攻击者为了维持对系统的长期访问，会建立各种持久化机制。这些机制确保即使系统重启或检测到入侵，攻击者仍能重新获得访问权限。</p>
+
+<h4>🔍 持久化检查要点</h4>
+<ol>
+<li><strong>启动项检查</strong> - 检查系统和用户级别的启动项</li>
+<li><strong>计划任务审计</strong> - 分析cron和systemd定时任务</li>
+<li><strong>服务配置检查</strong> - 检查系统服务的配置</li>
+<li><strong>SSH密钥审计</strong> - 检查SSH公钥认证配置</li>
+<li><strong>环境变量检查</strong> - 检查可能被劫持的环境变量</li>
+</ol>
+
+<h4>💻 持久化检查命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. 检查系统服务
+systemctl list-units --type=service
+systemctl list-unit-files --type=service --state=enabled
+
+# 2. 检查cron计划任务
+crontab -l
+ls -la /etc/cron*
+cat /etc/crontab
+ls -la /var/spool/cron/
+
+# 3. 检查at计划任务
+atq
+ls -la /var/spool/at/
+
+# 4. 检查SSH公钥
+cat ~/.ssh/authorized_keys
+find /home -name "authorized_keys" -exec ls -la {} \\;
+
+# 5. 检查启动脚本
+ls -la /etc/init.d/
+ls -la /etc/rc*.d/
+cat /etc/rc.local
+
+# 6. 检查systemd用户服务
+systemctl --user list-units --type=service
+ls -la ~/.config/systemd/user/
+
+# 7. 检查环境变量配置
+cat /etc/environment
+cat /etc/profile
+cat ~/.bashrc ~/.profile
+
+# 8. 检查内核模块
+lsmod
+ls -la /etc/modules-load.d/
+
+# 9. 检查定时器
+systemctl list-timers
+</div>
+
+<h4>🚨 可疑持久化特征</h4>
+<ul>
+<li><strong>异常启动服务</strong> - 未知或可疑的系统服务</li>
+<li><strong>隐藏计划任务</strong> - 在非标准位置的cron任务</li>
+<li><strong>未授权SSH密钥</strong> - 不明来源的公钥文件</li>
+<li><strong>修改的启动脚本</strong> - 被篡改的系统启动脚本</li>
+<li><strong>异常环境变量</strong> - 可疑的PATH或LD_PRELOAD设置</li>
+</ul>
+
+<h4>🔧 持久化分析技巧</h4>
+<ol>
+<li><strong>时间关联分析</strong> - 将配置修改时间与入侵时间关联</li>
+<li><strong>权限检查</strong> - 检查配置文件的权限和所有者</li>
+<li><strong>内容分析</strong> - 分析脚本和配置文件的内容</li>
+<li><strong>依赖关系</strong> - 分析服务和任务的依赖关系</li>
+<li><strong>网络连接</strong> - 检查持久化机制的网络活动</li>
+</ol>
+
+<h4>🛡️ 持久化防护建议</h4>
+<ul>
+<li>定期审计系统启动项和服务配置</li>
+<li>监控计划任务的创建和修改</li>
+<li>严格控制SSH密钥的管理</li>
+<li>使用配置管理工具监控系统配置变化</li>
+<li>实施最小权限原则</li>
+</ul>
+
+<h4>⚠️ 检查注意事项</h4>
+<ul>
+<li>某些持久化机制可能伪装成正常服务</li>
+<li>注意检查用户级别的持久化配置</li>
+<li>关注隐藏在正常配置中的恶意代码</li>
+<li>检查配置文件的完整性和数字签名</li>
+</ul>
+</div>
+    `,
+    
+    integrity: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>🛡️ 系统完整性检查指南</h3>
+
+<h4>📖 系统完整性检查的重要性</h4>
+<p>系统完整性检查是发现系统文件篡改、rootkit感染和高级持续威胁(APT)的关键手段。通过对比文件哈希值和系统基线，可以发现隐蔽的系统修改。</p>
+
+<h4>🔍 完整性检查要点</h4>
+<ol>
+<li><strong>文件哈希验证</strong> - 对比关键文件的哈希值</li>
+<li><strong>系统基线对比</strong> - 与已知良好状态进行对比</li>
+<li><strong>数字签名验证</strong> - 检查文件的数字签名</li>
+<li><strong>Rootkit检测</strong> - 使用专业工具检测rootkit</li>
+<li><strong>内核完整性</strong> - 检查内核模块和系统调用</li>
+</ol>
+
+<h4>💻 完整性检查命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. 关键系统文件哈希检查
+md5sum /bin/ls /bin/ps /bin/netstat /usr/bin/top
+sha256sum /bin/bash /bin/sh /usr/bin/ssh
+
+# 2. 使用AIDE进行完整性检查
+aide --init
+aide --check
+
+# 3. 使用Tripwire进行检查
+tripwire --check
+
+# 4. 检查系统文件权限
+find /bin /sbin /usr/bin /usr/sbin -type f -exec ls -l {} \\;
+
+# 5. 使用chkrootkit检测rootkit
+chkrootkit
+
+# 6. 使用rkhunter检测rootkit
+rkhunter --check
+
+# 7. 检查内核模块
+lsmod
+cat /proc/modules
+
+# 8. 检查系统调用表
+cat /proc/kallsyms | grep sys_call_table
+
+# 9. 使用debsums检查Debian包完整性
+debsums -c
+
+# 10. 使用rpm验证RedHat包完整性
+rpm -Va
+</div>
+
+<h4>🚨 完整性异常特征</h4>
+<ul>
+<li><strong>哈希值不匹配</strong> - 关键文件的哈希值发生变化</li>
+<li><strong>文件大小异常</strong> - 系统文件大小与预期不符</li>
+<li><strong>修改时间异常</strong> - 系统文件的修改时间可疑</li>
+<li><strong>权限变化</strong> - 关键文件权限被异常修改</li>
+<li><strong>数字签名失效</strong> - 文件的数字签名验证失败</li>
+</ul>
+
+<h4>🔧 完整性分析技巧</h4>
+<ol>
+<li><strong>基线建立</strong> - 在系统安装后立即建立完整性基线</li>
+<li><strong>定期检查</strong> - 建立定期的完整性检查机制</li>
+<li><strong>增量分析</strong> - 分析两次检查之间的变化</li>
+<li><strong>白名单管理</strong> - 维护已知良好变化的白名单</li>
+<li><strong>告警关联</strong> - 将完整性告警与其他安全事件关联</li>
+</ol>
+
+<h4>🛡️ 完整性保护建议</h4>
+<ul>
+<li>部署文件完整性监控系统(FIM)</li>
+<li>定期更新完整性检查的基线</li>
+<li>使用只读存储保护关键配置</li>
+<li>实施代码签名和验证机制</li>
+<li>建立完整性检查的自动化流程</li>
+</ul>
+
+<h4>⚠️ 检查注意事项</h4>
+<ul>
+<li>正常的系统更新也会改变文件哈希值</li>
+<li>某些rootkit可能绕过常规检测工具</li>
+<li>需要使用可信的外部工具进行检查</li>
+<li>关注内核级别的完整性检查</li>
+</ul>
+</div>
+    `,
+    
+    malware: `
+<div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 10px 0;">
+<h3>🦠 恶意软件检测与分析指南</h3>
+
+<h4>📖 恶意软件检测的重要性</h4>
+<p>恶意软件是网络攻击的主要载体，包括病毒、木马、蠕虫、勒索软件、挖矿程序等。及时发现和分析恶意软件对于遏制攻击扩散和评估损失至关重要。</p>
+
+<h4>🔍 恶意软件检测要点</h4>
+<ol>
+<li><strong>行为特征识别</strong> - 识别恶意软件的行为模式</li>
+<li><strong>文件特征分析</strong> - 分析可疑文件的特征</li>
+<li><strong>网络通信检测</strong> - 发现恶意的网络通信</li>
+<li><strong>系统资源监控</strong> - 监控异常的资源使用</li>
+<li><strong>持久化机制</strong> - 发现恶意软件的持久化手段</li>
+</ol>
+
+<h4>💻 恶意软件检测命令</h4>
+<div style="background: #2d3748; color: #e2e8f0; padding: 15px; border-radius: 5px; font-family: monospace;">
+# 1. 查找可疑进程
+ps aux | grep -E 'bash|sh|python|perl|php' | grep -v grep
+ps aux --sort=-%cpu | head -20
+
+# 2. 检查网络连接
+netstat -antp | grep ESTABLISHED
+ss -antp | grep -v '127.0.0.1'
+
+# 3. 查找隐藏文件
+find / -name ".*" -type f 2>/dev/null | head -50
+find /tmp /var/tmp -type f -executable 2>/dev/null
+
+# 4. 检查异常大文件
+find / -size +100M -type f 2>/dev/null
+
+# 5. 查找最近修改的可执行文件
+find / -type f -executable -mtime -7 2>/dev/null
+
+# 6. 使用ClamAV扫描
+clamscan -r /home /tmp /var/tmp
+
+# 7. 检查进程的文件描述符
+lsof -p PID
+
+# 8. 查看系统调用
+strace -p PID
+
+# 9. 检查内存映射
+cat /proc/PID/maps
+
+# 10. 查找字符串特征
+strings suspicious_file | grep -E 'http|ftp|password|key'
+</div>
+
+<h4>🚨 恶意软件特征</h4>
+<ul>
+<li><strong>异常CPU使用</strong> - 挖矿程序常表现为高CPU占用</li>
+<li><strong>可疑网络连接</strong> - 连接到C&C服务器或恶意域名</li>
+<li><strong>文件加密行为</strong> - 勒索软件的文件加密活动</li>
+<li><strong>权限提升尝试</strong> - 尝试获取更高权限</li>
+<li><strong>数据收集行为</strong> - 收集敏感信息和凭据</li>
+</ul>
+
+<h4>🔧 恶意软件分析技巧</h4>
+<ol>
+<li><strong>静态分析</strong> - 不执行文件的情况下分析其特征</li>
+<li><strong>动态分析</strong> - 在隔离环境中观察运行行为</li>
+<li><strong>网络流量分析</strong> - 分析恶意软件的网络通信</li>
+<li><strong>内存分析</strong> - 分析内存中的恶意代码</li>
+<li><strong>威胁情报关联</strong> - 与已知威胁情报进行关联</li>
+</ol>
+
+<h4>🛡️ 恶意软件防护建议</h4>
+<ul>
+<li>部署多层次的反恶意软件解决方案</li>
+<li>定期更新恶意软件特征库</li>
+<li>实施应用程序白名单机制</li>
+<li>加强邮件和网络安全防护</li>
+<li>建立恶意软件应急响应流程</li>
+</ul>
+
+<h4>⚠️ 分析注意事项</h4>
+<ul>
+<li>在隔离环境中进行恶意软件分析</li>
+<li>避免直接执行可疑文件</li>
+<li>注意恶意软件的反分析技术</li>
+<li>及时更新检测工具和特征库</li>
+</ul>
+</div>
+    `
+  };
+  
+  return tutorials[category] || '<p>暂无教程内容</p>';
+}
+
 function openTab(evt, tabName) {
   const tabcontent = document.getElementsByClassName("tabcontent");
   for (let i = 0; i < tabcontent.length; i++) {
@@ -1083,8 +2061,16 @@ function renderTabs(data) {
   const tabContentHtml = gTabs.map(k => {
     const subTitles = SUB_TAB_TITLES[k];
     const subContent = subTitles.map(title => {
-      const content = data[k] && data[k][title] ? data[k][title] : "";
-      return `<details open><summary>${title}</summary><pre>${escapeHtml(content)}</pre></details>`;
+      let content = "";
+      if (title === '📚 排查教程') {
+        // 显示教程内容
+        content = generateTutorial(k);
+        return `<details><summary>${title}</summary><div style="padding: 10px;">${content}</div></details>`;
+      } else {
+        // 显示实际数据
+        content = data[k] && data[k][title] ? data[k][title] : "";
+        return `<details open><summary>${title}</summary><pre>${escapeHtml(content)}</pre></details>`;
+      }
     }).join("");
     return `<div id="${k}" class="tabcontent">${subContent}</div>`;
   }).join("");
@@ -1329,12 +2315,568 @@ function scrollToPosition(section, subsection, start, end) {
   }, 100);
 }
 
+// 生成技术教程内容
+function generateTutorialContent(section) {
+  const tutorials = {
+    backdoor: `
+      <div class="tutorial-content">
+        <h3>🎯 系统后门排查技术教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 什么是系统后门？</h4>
+          <p>系统后门是攻击者在获得系统访问权限后，为了维持持久化访问而植入的隐蔽通道。常见类型包括：</p>
+          <ul>
+            <li><strong>用户后门</strong>：创建隐蔽的高权限用户账户</li>
+            <li><strong>文件后门</strong>：替换系统关键文件或植入恶意程序</li>
+            <li><strong>服务后门</strong>：创建恶意系统服务</li>
+            <li><strong>网络后门</strong>：开启隐蔽的网络监听端口</li>
+          </ul>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🔍 排查思路与方法</h4>
+          <div class="step-by-step">
+            <div class="step">
+              <strong>第一步：检查异常用户账户</strong>
+              <div class="command-block">
+                <code># 检查UID为0的用户（除root外）</code><br>
+                <code>awk -F: '$3==0 {print $1}' /etc/passwd</code><br><br>
+                <code># 检查最近创建的用户</code><br>
+                <code>grep "useradd\|adduser" /var/log/auth.log</code><br><br>
+                <code># 检查用户密码文件</code><br>
+                <code>ls -la /etc/passwd /etc/shadow</code>
+              </div>
+              <div class="tip">💡 <strong>判断技巧</strong>：正常系统中只有root用户的UID为0，如果发现其他UID为0的用户，需要立即确认其合法性。</div>
+            </div>
+
+            <div class="step">
+              <strong>第二步：检查系统关键文件</strong>
+              <div class="command-block">
+                <code># 检查关键系统文件的修改时间</code><br>
+                <code>stat /bin/ls /bin/ps /bin/netstat /usr/bin/top</code><br><br>
+                <code># 使用文件完整性检查工具</code><br>
+                <code>rpm -Va  # RedHat系列</code><br>
+                <code>debsums -c  # Debian系列</code><br><br>
+                <code># 检查异常的SUID文件</code><br>
+                <code>find / -perm -4000 -type f 2>/dev/null</code>
+              </div>
+              <div class="tip">💡 <strong>判断技巧</strong>：关注修改时间异常的系统文件，特别是/bin、/usr/bin、/sbin等目录下的可执行文件。</div>
+            </div>
+
+            <div class="step">
+              <strong>第三步：检查隐藏文件和目录</strong>
+              <div class="command-block">
+                <code># 查找隐藏文件</code><br>
+                <code>find / -name ".*" -type f 2>/dev/null | grep -v proc</code><br><br>
+                <code># 检查临时目录</code><br>
+                <code>ls -la /tmp /var/tmp /dev/shm</code><br><br>
+                <code># 检查异常的系统目录</code><br>
+                <code>ls -la /usr/lib /lib /etc</code>
+              </div>
+              <div class="tip">💡 <strong>判断技巧</strong>：注意以点开头的隐藏文件，特别是在系统目录中不应该存在的隐藏文件。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>⚠️ 常见后门特征</h4>
+          <div class="warning-box">
+            <ul>
+              <li>🚨 <strong>用户特征</strong>：UID为0的非root用户、无家目录的用户、shell为/bin/false但能登录的用户</li>
+              <li>🚨 <strong>文件特征</strong>：系统目录下的异常可执行文件、修改时间异常的系统文件、隐藏的可执行文件</li>
+              <li>🚨 <strong>权限特征</strong>：异常的SUID/SGID文件、权限过高的普通文件</li>
+              <li>🚨 <strong>网络特征</strong>：异常的监听端口、未知的网络连接</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🛠️ 专业工具推荐</h4>
+          <div class="tool-list">
+            <div class="tool-item">
+              <strong>chkrootkit</strong> - 检测已知的rootkit后门
+              <div class="command-block"><code>chkrootkit</code></div>
+            </div>
+            <div class="tool-item">
+              <strong>rkhunter</strong> - 全面的rootkit检测工具
+              <div class="command-block"><code>rkhunter --check</code></div>
+            </div>
+            <div class="tool-item">
+              <strong>AIDE</strong> - 高级入侵检测环境
+              <div class="command-block"><code>aide --check</code></div>
+            </div>
+            <div class="tool-item">
+              <strong>Tripwire</strong> - 文件完整性监控
+              <div class="command-block"><code>tripwire --check</code></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>📋 应急处置流程</h4>
+          <div class="process-flow">
+            <div class="process-step">1. <strong>立即隔离</strong> - 断开网络连接，防止数据泄露</div>
+            <div class="process-step">2. <strong>证据保全</strong> - 备份关键日志和可疑文件</div>
+            <div class="process-step">3. <strong>深度分析</strong> - 使用专业工具进行全面扫描</div>
+            <div class="process-step">4. <strong>清除后门</strong> - 删除恶意文件，修复系统配置</div>
+            <div class="process-step">5. <strong>加固系统</strong> - 更新补丁，加强监控</div>
+            <div class="process-step">6. <strong>持续监控</strong> - 建立长期监控机制</div>
+          </div>
+        </div>
+      </div>
+    `,
+    
+    log: `
+      <div class="tutorial-content">
+        <h3>🎯 日志分析与攻击溯源教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 日志分析的重要性</h4>
+          <p>日志分析是网络安全事件响应的核心技能，通过分析系统日志可以：</p>
+          <ul>
+            <li><strong>发现攻击行为</strong>：识别暴力破解、扫描、入侵等攻击活动</li>
+            <li><strong>追踪攻击来源</strong>：确定攻击者的IP地址、地理位置、攻击路径</li>
+            <li><strong>评估影响范围</strong>：了解系统被入侵的程度和数据泄露风险</li>
+            <li><strong>制定应对策略</strong>：基于攻击模式制定针对性的防护措施</li>
+          </ul>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🔍 SSH攻击检测与分析</h4>
+          <div class="step-by-step">
+            <div class="step">
+              <strong>第一步：定位日志文件</strong>
+              <div class="command-block">
+                <code># CentOS/RHEL系列</code><br>
+                <code>tail -f /var/log/secure</code><br><br>
+                <code># Ubuntu/Debian系列</code><br>
+                <code>tail -f /var/log/auth.log</code><br><br>
+                <code># 检查日志轮转</code><br>
+                <code>ls -la /var/log/secure* /var/log/auth.log*</code>
+              </div>
+            </div>
+
+            <div class="step">
+              <strong>第二步：分析失败登录</strong>
+              <div class="command-block">
+                <code># 统计攻击IP和次数</code><br>
+                <code>grep "Failed password" /var/log/secure | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr</code><br><br>
+                <code># 分析攻击时间模式</code><br>
+                <code>grep "Failed password" /var/log/secure | awk '{print $1" "$2" "$3}' | cut -d: -f1 | sort | uniq -c</code><br><br>
+                <code># 检查被攻击的用户名</code><br>
+                <code>grep "Failed password" /var/log/secure | awk '{print $(NF-5)}' | sort | uniq -c | sort -nr</code>
+              </div>
+              <div class="tip">💡 <strong>分析技巧</strong>：关注短时间内大量失败登录的IP，这通常表示暴力破解攻击。</div>
+            </div>
+
+            <div class="step">
+              <strong>第三步：检测成功入侵</strong>
+              <div class="command-block">
+                <code># 查看成功登录记录</code><br>
+                <code>grep "Accepted password" /var/log/secure | tail -20</code><br><br>
+                <code># 分析登录后的活动</code><br>
+                <code>grep "session opened" /var/log/secure | tail -10</code><br><br>
+                <code># 检查权限提升</code><br>
+                <code>grep "sudo:" /var/log/secure | tail -10</code>
+              </div>
+              <div class="tip">💡 <strong>判断技巧</strong>：如果发现可疑IP在多次失败后成功登录，需要重点关注该IP的后续活动。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🕵️ 攻击模式识别</h4>
+          <div class="attack-patterns">
+            <div class="pattern-item">
+              <strong>🎯 字典攻击</strong>
+              <p>特征：同一IP对同一用户进行大量密码尝试</p>
+              <div class="command-block">
+                <code>grep "Failed password" /var/log/secure | awk '{print $(NF-3)" "$(NF-5)}' | sort | uniq -c | sort -nr</code>
+              </div>
+            </div>
+            
+            <div class="pattern-item">
+              <strong>🔍 用户名枚举</strong>
+              <p>特征：同一IP尝试多个不同的用户名</p>
+              <div class="command-block">
+                <code>grep "Invalid user" /var/log/secure | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr</code>
+              </div>
+            </div>
+            
+            <div class="pattern-item">
+              <strong>⏰ 时间模式攻击</strong>
+              <p>特征：攻击集中在特定时间段，可能是自动化工具</p>
+              <div class="command-block">
+                <code>grep "Failed password" /var/log/secure | awk '{print $3}' | cut -d: -f1 | sort | uniq -c</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🌍 IP地理位置分析</h4>
+          <div class="step-by-step">
+            <div class="step">
+              <strong>使用whois查询</strong>
+              <div class="command-block">
+                <code># 查询IP归属信息</code><br>
+                <code>whois 192.168.1.100</code><br><br>
+                <code># 批量查询攻击IP</code><br>
+                <code>for ip in $(grep "Failed password" /var/log/secure | awk '{print $(NF-3)}' | sort -u | head -5); do</code><br>
+                <code>  echo "=== $ip ==="</code><br>
+                <code>  whois $ip | grep -E "country|Country|organization"</code><br>
+                <code>done</code>
+              </div>
+            </div>
+            
+            <div class="step">
+              <strong>威胁情报查询</strong>
+              <div class="command-block">
+                <code># 使用在线威胁情报平台</code><br>
+                <code># AbuseIPDB: https://www.abuseipdb.com/</code><br>
+                <code># VirusTotal: https://www.virustotal.com/</code><br>
+                <code># IPVoid: https://www.ipvoid.com/</code>
+              </div>
+              <div class="tip">💡 <strong>分析建议</strong>：将可疑IP与已知的恶意IP数据库进行比对，确认是否为已知的攻击源。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>📊 数据传输异常检测</h4>
+          <div class="detection-methods">
+            <div class="method-item">
+              <strong>🔄 文件传输检测</strong>
+              <div class="command-block">
+                <code># 检查SCP/SFTP传输</code><br>
+                <code>grep -E "scp|sftp" /var/log/secure</code><br><br>
+                <code># 检查大文件下载</code><br>
+                <code>grep -E "wget|curl" /var/log/bash_history</code>
+              </div>
+            </div>
+            
+            <div class="method-item">
+              <strong>⏱️ 长时间会话检测</strong>
+              <div class="command-block">
+                <code># 检查当前活跃会话</code><br>
+                <code>who -u</code><br><br>
+                <code># 检查会话持续时间</code><br>
+                <code>last | grep "still logged in"</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🚨 应急响应建议</h4>
+          <div class="response-actions">
+            <div class="action-item urgent">
+              <strong>🔴 紧急处置（发现正在进行的攻击）</strong>
+              <ul>
+                <li>立即封禁攻击IP：<code>iptables -A INPUT -s 攻击IP -j DROP</code></li>
+                <li>终止可疑会话：<code>pkill -u 可疑用户名</code></li>
+                <li>修改被攻击账户密码</li>
+                <li>启用临时访问限制</li>
+              </ul>
+            </div>
+            
+            <div class="action-item medium">
+              <strong>🟡 中期处置（攻击已结束）</strong>
+              <ul>
+                <li>全面分析日志，确定攻击时间线</li>
+                <li>检查系统完整性，查找后门</li>
+                <li>更新安全策略和监控规则</li>
+                <li>加强访问控制和认证机制</li>
+              </ul>
+            </div>
+            
+            <div class="action-item low">
+              <strong>🟢 长期防护</strong>
+              <ul>
+                <li>部署入侵检测系统(IDS)</li>
+                <li>实施日志集中管理</li>
+                <li>建立自动化告警机制</li>
+                <li>定期进行安全评估</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    
+    user: `
+      <div class="tutorial-content">
+        <h3>🎯 用户与权限安全检查教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 用户安全检查的重要性</h4>
+          <p>用户账户是系统安全的第一道防线，攻击者经常通过以下方式利用用户账户：</p>
+          <ul>
+            <li><strong>权限提升</strong>：利用高权限账户获得系统控制权</li>
+            <li><strong>横向移动</strong>：通过普通用户账户访问其他系统资源</li>
+            <li><strong>持久化访问</strong>：创建后门账户维持长期访问</li>
+            <li><strong>数据窃取</strong>：利用用户权限访问敏感数据</li>
+          </ul>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🔍 用户账户安全检查</h4>
+          <div class="step-by-step">
+            <div class="step">
+              <strong>第一步：检查特权用户</strong>
+              <div class="command-block">
+                <code># 查看所有UID为0的用户（超级用户）</code><br>
+                <code>awk -F: '$3==0 {print $1":"$3":"$7}' /etc/passwd</code><br><br>
+                <code># 检查sudo权限用户</code><br>
+                <code>grep -v "^#" /etc/sudoers</code><br>
+                <code>ls -la /etc/sudoers.d/</code><br><br>
+                <code># 查看wheel组成员（CentOS/RHEL）</code><br>
+                <code>grep wheel /etc/group</code>
+              </div>
+              <div class="tip">💡 <strong>安全原则</strong>：除了root用户外，不应该有其他UID为0的用户。如果发现，需要立即确认其合法性。</div>
+            </div>
+
+            <div class="step">
+              <strong>第二步：检查异常用户属性</strong>
+              <div class="command-block">
+                <code># 检查无密码用户</code><br>
+                <code>awk -F: '$2=="" {print $1}' /etc/shadow</code><br><br>
+                <code># 检查密码永不过期的用户</code><br>
+                <code>awk -F: '$5==99999 {print $1}' /etc/shadow</code><br><br>
+                <code># 检查无家目录的用户</code><br>
+                <code>awk -F: '{if($6!="" && system("test -d "$6)==1) print $1":"$6}' /etc/passwd</code>
+              </div>
+              <div class="tip">💡 <strong>判断技巧</strong>：关注shell为/bin/bash但无家目录的用户，这可能是攻击者创建的隐蔽账户。</div>
+            </div>
+
+            <div class="step">
+              <strong>第三步：分析用户登录行为</strong>
+              <div class="command-block">
+                <code># 查看最近登录用户</code><br>
+                <code>last -10</code><br><br>
+                <code># 查看从未登录的用户</code><br>
+                <code>lastlog | grep "Never logged in"</code><br><br>
+                <code># 检查异常时间登录</code><br>
+                <code>last | awk '$4 ~ /22:|23:|00:|01:|02:|03:|04:|05:|06:/ {print}'</code>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>⚠️ 可疑用户特征识别</h4>
+          <div class="warning-box">
+            <div class="suspicious-signs">
+              <h5>🚨 高危特征</h5>
+              <ul>
+                <li>UID为0的非root用户</li>
+                <li>最近创建的高权限用户</li>
+                <li>无密码或弱密码的用户</li>
+                <li>异常的sudo权限配置</li>
+              </ul>
+              
+              <h5>🟡 中危特征</h5>
+              <ul>
+                <li>长期未使用但突然活跃的账户</li>
+                <li>非工作时间的登录活动</li>
+                <li>异常的登录来源IP</li>
+                <li>频繁的权限提升操作</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🛠️ 用户安全加固建议</h4>
+          <div class="hardening-tips">
+            <div class="tip-category">
+              <strong>🔐 密码策略</strong>
+              <ul>
+                <li>强制复杂密码：<code>vim /etc/pam.d/common-password</code></li>
+                <li>密码有效期：<code>chage -M 90 username</code></li>
+                <li>禁用弱密码：<code>echo "password requisite pam_pwquality.so" >> /etc/pam.d/common-password</code></li>
+              </ul>
+            </div>
+            
+            <div class="tip-category">
+              <strong>🚪 访问控制</strong>
+              <ul>
+                <li>限制SSH访问：<code>echo "AllowUsers admin" >> /etc/ssh/sshd_config</code></li>
+                <li>禁用root远程登录：<code>echo "PermitRootLogin no" >> /etc/ssh/sshd_config</code></li>
+                <li>设置登录失败锁定：<code>vim /etc/pam.d/common-auth</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    
+    network: `
+      <div class="tutorial-content">
+        <h3>🎯 网络安全检查教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 网络安全检查概述</h4>
+          <p>网络层面的安全检查是发现入侵和后门的重要手段：</p>
+          <ul>
+            <li><strong>监听端口分析</strong>：识别异常的网络服务</li>
+            <li><strong>网络连接检查</strong>：发现可疑的外联行为</li>
+            <li><strong>流量模式分析</strong>：检测数据泄露和C&C通信</li>
+            <li><strong>防火墙规则审计</strong>：确保访问控制有效性</li>
+          </ul>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🔍 端口与服务检查</h4>
+          <div class="step-by-step">
+            <div class="step">
+              <strong>监听端口检查</strong>
+              <div class="command-block">
+                <code># 查看所有监听端口</code><br>
+                <code>netstat -tlnp</code><br>
+                <code>ss -tlnp</code><br><br>
+                <code># 检查异常端口</code><br>
+                <code>netstat -tlnp | grep -E ":(1234|4444|5555|6666|7777|8888|9999)"</code><br><br>
+                <code># 查看进程与端口对应关系</code><br>
+                <code>lsof -i -P -n</code>
+              </div>
+              <div class="tip">💡 <strong>分析要点</strong>：关注非标准端口的服务，特别是高端口号的监听服务。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    
+    process: `
+      <div class="tutorial-content">
+        <h3>🎯 进程分析与恶意软件检测教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 进程分析的重要性</h4>
+          <p>进程分析是发现恶意软件和异常活动的关键技术：</p>
+          <ul>
+            <li><strong>恶意进程识别</strong>：发现伪装的恶意程序</li>
+            <li><strong>资源异常检测</strong>：识别挖矿等资源滥用行为</li>
+            <li><strong>网络行为分析</strong>：检测C&C通信和数据泄露</li>
+            <li><strong>权限提升检测</strong>：发现提权攻击和后门</li>
+          </ul>
+        </div>
+
+        <div class="tutorial-section">
+          <h4>🔍 进程检查技术</h4>
+          <div class="step-by-step">
+            <div class="step">
+              <strong>基础进程检查</strong>
+              <div class="command-block">
+                <code># 查看所有进程</code><br>
+                <code>ps aux</code><br>
+                <code>ps -ef</code><br><br>
+                <code># 按CPU使用率排序</code><br>
+                <code>ps aux --sort=-%cpu | head -20</code><br><br>
+                <code># 按内存使用率排序</code><br>
+                <code>ps aux --sort=-%mem | head -20</code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    
+    filesystem: `
+      <div class="tutorial-content">
+        <h3>🎯 文件系统安全检查教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 文件系统安全概述</h4>
+          <p>文件系统是攻击者植入后门和恶意软件的主要目标：</p>
+          <ul>
+            <li><strong>SUID/SGID文件</strong>：可能被利用进行权限提升</li>
+            <li><strong>隐藏文件</strong>：攻击者常用来隐藏恶意代码</li>
+            <li><strong>系统文件完整性</strong>：检测是否被篡改</li>
+            <li><strong>异常文件权限</strong>：发现权限配置错误</li>
+          </ul>
+        </div>
+      </div>
+    `,
+    
+    package: `
+      <div class="tutorial-content">
+        <h3>🎯 软件包安全管理教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 软件包安全的重要性</h4>
+          <p>软件包管理是系统安全的重要组成部分：</p>
+          <ul>
+            <li><strong>漏洞管理</strong>：及时更新存在安全漏洞的软件包</li>
+            <li><strong>恶意软件检测</strong>：识别非官方或恶意的软件包</li>
+            <li><strong>依赖关系分析</strong>：了解软件包之间的安全影响</li>
+            <li><strong>完整性验证</strong>：确保软件包未被篡改</li>
+          </ul>
+        </div>
+      </div>
+    `,
+    
+    persistence: `
+      <div class="tutorial-content">
+        <h3>🎯 持久化机制检测教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 持久化攻击概述</h4>
+          <p>攻击者通过各种持久化技术维持对系统的长期访问：</p>
+          <ul>
+            <li><strong>自启动服务</strong>：创建恶意系统服务</li>
+            <li><strong>计划任务</strong>：利用cron等定时执行恶意代码</li>
+            <li><strong>SSH密钥</strong>：植入公钥实现免密登录</li>
+            <li><strong>启动脚本</strong>：修改系统启动流程</li>
+          </ul>
+        </div>
+      </div>
+    `,
+    
+    integrity: `
+      <div class="tutorial-content">
+        <h3>🎯 系统完整性检查教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 完整性检查的意义</h4>
+          <p>系统完整性检查是发现系统被篡改的重要手段：</p>
+          <ul>
+            <li><strong>文件完整性</strong>：检测关键文件是否被修改</li>
+            <li><strong>配置完整性</strong>：验证系统配置的正确性</li>
+            <li><strong>二进制完整性</strong>：确保可执行文件未被替换</li>
+            <li><strong>内核完整性</strong>：检测内核级别的篡改</li>
+          </ul>
+        </div>
+      </div>
+    `,
+    
+    malware: `
+      <div class="tutorial-content">
+        <h3>🎯 恶意软件检测与分析教程</h3>
+        
+        <div class="tutorial-section">
+          <h4>📖 恶意软件检测概述</h4>
+          <p>恶意软件检测是网络安全防护的核心技术：</p>
+          <ul>
+            <li><strong>静态分析</strong>：通过文件特征识别恶意软件</li>
+            <li><strong>动态分析</strong>：监控程序运行时的异常行为</li>
+            <li><strong>行为分析</strong>：基于行为模式检测威胁</li>
+            <li><strong>威胁情报</strong>：利用已知威胁信息进行匹配</li>
+          </ul>
+        </div>
+      </div>
+    `
+  };
+  
+  return tutorials[section] || '<div class="tutorial-content"><p>该模块的教程正在完善中...</p></div>';
+}
+
 </script>
 </head>
 <body>
   <div class="header">
-    <h1>🛡️ Linux 应急响应报告查看器 (增强版)</h1>
-    <div class="subtitle">智能化安全威胁检测与分析系统 | 保留原有功能 + 增强统计分析</div>
+    <h1>🛡️ Linux 应急响应报告查看器 (详细版)</h1>
+    <div class="subtitle">专业化安全威胁检测与分析系统 | 详细日志分析 + 攻击溯源 + 技术教程</div>
   </div>
   
   <div class="main-container">

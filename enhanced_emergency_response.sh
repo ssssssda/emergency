@@ -197,11 +197,222 @@ log_check() {
   {
     write_section "${TAB_TITLES[log]}"
     
+    write_subsection "SSH攻击统计分析"
+    echo "=== 攻击IP统计与分析 ==="
+    
+    # 确定日志文件位置
+    if [ -f /var/log/secure ]; then
+        LOG_FILE="/var/log/secure"
+    elif [ -f /var/log/auth.log ]; then
+        LOG_FILE="/var/log/auth.log"
+    else
+        echo "未找到安全日志文件"
+        LOG_FILE=""
+    fi
+    
+    if [ -n "$LOG_FILE" ]; then
+        echo "【失败登录IP统计 - 前20名攻击者】"
+        grep "Failed password" $LOG_FILE 2>/dev/null | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr | head -20 | while read count ip; do
+            echo "攻击次数: $count | IP地址: $ip"
+        done
+        
+        echo ""
+        echo "【暴力破解时间分析 - 攻击高峰期】"
+        grep "Failed password" $LOG_FILE 2>/dev/null | awk '{print $1" "$2" "$3}' | cut -d: -f1 | sort | uniq -c | sort -nr | head -10 | while read count time; do
+            echo "攻击次数: $count | 时间段: $time"
+        done
+        
+        echo ""
+        echo "【成功登录IP统计 - 常用登录IP】"
+        grep -E "Accepted password|Accepted publickey" $LOG_FILE 2>/dev/null | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr | while read count ip; do
+            echo "登录次数: $count | IP地址: $ip"
+        done
+        
+        echo ""
+        echo "【异常时间登录检测 - 非工作时间(22:00-06:00)】"
+        grep -E "Accepted password|Accepted publickey" $LOG_FILE 2>/dev/null | awk '{
+            time = $3
+            split(time, t, ":")
+            hour = t[1]
+            if (hour >= 22 || hour <= 6) {
+                print "异常时间登录: "$1" "$2" "$3" | 用户: "$(NF-5)" | IP: "$(NF-3)
+            }
+        }' | head -10
+        
+        echo ""
+        echo "【用户登录行为统计】"
+        grep -E "Accepted password|Accepted publickey" $LOG_FILE 2>/dev/null | awk '{
+            for(i=1;i<=NF;i++) {
+                if($i=="for") {
+                    print $(i+1)
+                    break
+                }
+            }
+        }' | sort | uniq -c | sort -nr | while read count user; do
+            echo "登录次数: $count | 用户: $user"
+        done
+        
+        echo ""
+        echo "【攻击成功率分析】"
+        failed_count=$(grep "Failed password" $LOG_FILE 2>/dev/null | wc -l)
+        success_count=$(grep -E "Accepted password|Accepted publickey" $LOG_FILE 2>/dev/null | wc -l)
+        total_count=$((failed_count + success_count))
+        if [ $total_count -gt 0 ]; then
+            success_rate=$((success_count * 100 / total_count))
+            echo "总登录尝试: $total_count"
+            echo "失败次数: $failed_count"
+            echo "成功次数: $success_count"
+            echo "成功率: $success_rate%"
+        fi
+    fi
+    
+    write_subsection "登录会话分析"
+    echo "【当前活跃会话】"
+    who -u 2>/dev/null || who 2>/dev/null
+    
+    echo ""
+    echo "【最近登录记录】"
+    last -10 2>/dev/null
+    
+    echo ""
+    echo "【登录失败详细分析 - 最近20次】"
+    if [ -n "$LOG_FILE" ]; then
+        grep "Failed password" $LOG_FILE 2>/dev/null | tail -20 | while read line; do
+            echo "$line" | awk '{
+                print "时间: "$1" "$2" "$3" | 用户: "$(NF-5)" | 来源IP: "$(NF-3)
+            }'
+        done
+    fi
+    
     write_subsection "系统日志错误"
     grep -Ei 'error|fail|denied|refused|invalid|segfault|unauthorized|attack|panic' /var/log/syslog /var/log/messages 2>/dev/null | tail -n 50
     
-    write_subsection "安全日志错误"
-    grep -Ei 'fail|invalid|root|attack|sudo|su:|authentication failure' /var/log/auth.log /var/log/secure 2>/dev/null | tail -n 50
+    write_subsection "数据传输异常分析"
+    echo "【大量数据传输检测 - 可能的数据窃取】"
+    if [ -f /var/log/wtmp ]; then
+        last -f /var/log/wtmp | grep -v "reboot\|shutdown" | head -20 | while read line; do
+            if echo "$line" | grep -q "still logged in"; then
+                echo "⚠️ 长时间会话: $line"
+            fi
+        done
+    fi
+    
+    echo ""
+    echo "【文件传输活动检测】"
+    if [ -n "$LOG_FILE" ]; then
+        grep -E "sftp|scp|rsync|wget|curl" $LOG_FILE 2>/dev/null | tail -10 | while read line; do
+            echo "📁 文件传输: $line"
+        done
+    fi
+    
+    echo ""
+    echo "【频繁登录检测 - 可能的自动化攻击】"
+    if [ -n "$LOG_FILE" ]; then
+        echo "【5分钟内多次登录的IP】"
+        grep -E "Accepted password|Accepted publickey" $LOG_FILE 2>/dev/null | awk '{
+            time = $1" "$2" "$3
+            ip = $(NF-3)
+            print time"|"ip
+        }' | sort | uniq | awk -F'|' '{
+            ip = $2
+            count[ip]++
+            times[ip] = times[ip] $1 "\n"
+        } END {
+            for (ip in count) {
+                if (count[ip] > 5) {
+                    print "🚨 频繁登录IP: " ip " (次数: " count[ip] ")"
+                }
+            }
+        }'
+    fi
+    
+    write_subsection "攻击模式识别"
+    echo "【常见攻击模式检测】"
+    if [ -n "$LOG_FILE" ]; then
+        echo "🔍 字典攻击检测:"
+        grep "Failed password" $LOG_FILE 2>/dev/null | awk '{
+            for(i=1;i<=NF;i++) {
+                if($i=="for") {
+                    user = $(i+1)
+                    ip = $(NF-3)
+                    key = ip"|"user
+                    count[key]++
+                    users[ip][user]++
+                }
+            }
+        } END {
+            for (key in count) {
+                split(key, parts, "|")
+                ip = parts[1]
+                user = parts[2]
+                if (count[key] > 10) {
+                    print "  IP: " ip " 对用户 " user " 尝试 " count[key] " 次"
+                }
+            }
+            print ""
+            print "🔍 用户名枚举检测:"
+            for (ip in users) {
+                user_count = 0
+                for (user in users[ip]) user_count++
+                if (user_count > 5) {
+                    print "  IP: " ip " 尝试了 " user_count " 个不同用户名"
+                }
+            }
+        }'
+        
+        echo ""
+        echo "🔍 时间模式分析:"
+        grep "Failed password" $LOG_FILE 2>/dev/null | awk '{
+            time = $3
+            split(time, t, ":")
+            hour = t[1]
+            minute = t[2]
+            time_slot = hour":"int(minute/10)*10
+            count[time_slot]++
+        } END {
+            print "攻击时间分布 (10分钟间隔):"
+            for (slot in count) {
+                if (count[slot] > 20) {
+                    print "  " slot " - " count[slot] " 次攻击 (高频)"
+                }
+            }
+        }'
+    fi
+    
+    write_subsection "IP地理位置分析"
+    echo "【攻击来源地理分析】"
+    if [ -n "$LOG_FILE" ] && command -v whois >/dev/null 2>&1; then
+        echo "正在分析前5个攻击IP的地理位置..."
+        grep "Failed password" $LOG_FILE 2>/dev/null | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr | head -5 | while read count ip; do
+            echo "IP: $ip (攻击次数: $count)"
+            whois "$ip" 2>/dev/null | grep -E "country|Country|organization|Organization" | head -3
+            echo "---"
+        done
+    else
+        echo "whois工具未安装，无法进行地理位置分析"
+        echo "建议安装: apt-get install whois 或 yum install whois"
+    fi
+    
+    write_subsection "安全事件时间线"
+    echo "【最近50个安全事件时间线】"
+    if [ -n "$LOG_FILE" ]; then
+        grep -E "Failed password|Accepted|Invalid user|Connection closed|sudo:" $LOG_FILE 2>/dev/null | tail -50 | while read line; do
+            echo "$line" | awk '{
+                time = $1" "$2" "$3
+                if (match($0, /Failed password/)) {
+                    print time" [🚨ATTACK] 密码攻击"
+                } else if (match($0, /Accepted/)) {
+                    print time" [✅LOGIN] 成功登录"
+                } else if (match($0, /Invalid user/)) {
+                    print time" [🔍SCAN] 用户扫描"
+                } else if (match($0, /sudo:/)) {
+                    print time" [⚡PRIV] 权限提升"
+                } else {
+                    print time" [ℹ️OTHER] 其他事件"
+                }
+            }'
+        done
+    fi
   } >> "$REPORT"
 }
 
