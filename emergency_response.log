@@ -1,0 +1,52 @@
+2025-06-06 03:17:03,344 - ERROR - Error loading rule file /workspace/emergency_response/rules/network.yml: while scanning a double-quoted scalar
+  in "/workspace/emergency_response/rules/network.yml", line 12, column 62
+found unknown escape character '.'
+  in "/workspace/emergency_response/rules/network.yml", line 12, column 73
+2025-06-06 03:17:03,350 - ERROR - Error loading rule file /workspace/emergency_response/rules/backdoor.yml: while scanning a double-quoted scalar
+  in "/workspace/emergency_response/rules/backdoor.yml", line 12, column 75
+found unknown escape character '.'
+  in "/workspace/emergency_response/rules/backdoor.yml", line 12, column 88
+2025-06-06 03:17:03,352 - ERROR - Error loading rule file /workspace/emergency_response/rules/process.yml: while scanning a double-quoted scalar
+  in "/workspace/emergency_response/rules/process.yml", line 26, column 41
+found unknown escape character '.'
+  in "/workspace/emergency_response/rules/process.yml", line 26, column 52
+2025-06-06 03:17:03,356 - INFO - Loaded 40 rules from 7 files
+2025-06-06 03:17:03,358 - INFO - Starting Enhanced Emergency Response Engine on port 12000
+2025-06-06 03:17:03,368 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12000
+ * Running on http://10.2.38.23:12000
+2025-06-06 03:17:03,368 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-06 03:17:10,496 - INFO - 127.0.0.1 - - [06/Jun/2025 03:17:10] "GET /health HTTP/1.1" 200 -
+2025-06-06 03:17:54,411 - ERROR - Error loading rule file /workspace/emergency_response/rules/network.yml: while parsing a block mapping
+  in "/workspace/emergency_response/rules/network.yml", line 8, column 3
+expected <block end>, but found '<scalar>'
+  in "/workspace/emergency_response/rules/network.yml", line 12, column 62
+2025-06-06 03:17:54,416 - ERROR - Error loading rule file /workspace/emergency_response/rules/backdoor.yml: while parsing a block mapping
+  in "/workspace/emergency_response/rules/backdoor.yml", line 8, column 3
+expected <block end>, but found '<scalar>'
+  in "/workspace/emergency_response/rules/backdoor.yml", line 12, column 75
+2025-06-06 03:17:54,418 - ERROR - Error loading rule file /workspace/emergency_response/rules/process.yml: while parsing a block mapping
+  in "/workspace/emergency_response/rules/process.yml", line 22, column 3
+expected <block end>, but found '<scalar>'
+  in "/workspace/emergency_response/rules/process.yml", line 26, column 41
+2025-06-06 03:17:54,423 - INFO - Loaded 40 rules from 7 files
+2025-06-06 03:17:54,424 - INFO - Starting Enhanced Emergency Response Engine on port 12000
+2025-06-06 03:17:54,434 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:12000
+ * Running on http://10.2.38.23:12000
+2025-06-06 03:17:54,434 - INFO - [33mPress CTRL+C to quit[0m
+2025-06-06 03:18:01,066 - INFO - 127.0.0.1 - - [06/Jun/2025 03:18:01] "GET /health HTTP/1.1" 200 -
+2025-06-06 03:18:50,746 - INFO - 127.0.0.1 - - [06/Jun/2025 03:18:50] "GET / HTTP/1.1" 200 -
+2025-06-06 03:19:18,564 - INFO - 10.2.34.24 - - [06/Jun/2025 03:19:18] "GET / HTTP/1.1" 200 -
+2025-06-06 03:23:08,389 - INFO - 10.2.56.141 - - [06/Jun/2025 03:23:08] "GET / HTTP/1.1" 200 -
+2025-06-06 03:26:05,544 - INFO - 10.2.9.135 - - [06/Jun/2025 03:26:05] "GET / HTTP/1.1" 200 -
+2025-06-06 03:27:30,364 - INFO - 10.2.56.141 - - [06/Jun/2025 03:27:30] "GET / HTTP/1.1" 200 -
+2025-06-06 03:27:57,806 - INFO - 10.2.56.141 - - [06/Jun/2025 03:27:57] "GET / HTTP/1.1" 200 -
+2025-06-06 03:28:56,765 - INFO - 10.2.56.141 - - [06/Jun/2025 03:28:56] "GET / HTTP/1.1" 200 -
+2025-06-06 03:30:58,012 - INFO - 10.2.56.141 - - [06/Jun/2025 03:30:58] "GET / HTTP/1.1" 200 -
+2025-06-06 03:35:12,491 - INFO - 10.2.58.81 - - [06/Jun/2025 03:35:12] "GET / HTTP/1.1" 200 -
+2025-06-06 03:35:41,418 - INFO - 10.2.58.81 - - [06/Jun/2025 03:35:41] "GET / HTTP/1.1" 200 -
+2025-06-06 03:36:42,614 - INFO - 10.2.56.141 - - [06/Jun/2025 03:36:42] "GET / HTTP/1.1" 200 -
+2025-06-06 03:37:29,580 - INFO - 10.2.56.141 - - [06/Jun/2025 03:37:29] "GET / HTTP/1.1" 200 -

