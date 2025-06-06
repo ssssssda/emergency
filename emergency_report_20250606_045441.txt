@@ -1,0 +1,1131 @@
+Linux 应急响应报告 (增强版)
+生成时间: Fri Jun  6 04:54:41 UTC 2025
+主机名: runtime-lzvpynwhsagtniyb-5477cb6c47-kwmw8
+操作系统: debian
+##########################################
+
+##########################################
+模块: 系统后门排查
+==========================================
+------------------------------------------
+子项: UID为0的非root用户
+------------------------------------------
+
+------------------------------------------
+子项: 可疑系统配置
+------------------------------------------
+检查系统配置文件权限:
+-rw-r--r-- 1 root root    446 Jun  3 05:18 /etc/group
+-rw-r--r-- 1 root root    839 Jun  3 05:18 /etc/passwd
+-rw-r----- 1 root shadow  474 Jun  3 05:18 /etc/shadow
+-r--r----- 1 root root   1714 Jun 27  2023 /etc/sudoers
+检查异常的系统配置:
+    30901      4 -rw-r--r--   1 root     root          195 Jun  6 02:07 /etc/resolv.conf
+------------------------------------------
+子项: 异常系统文件
+------------------------------------------
+检查关键目录下的异常文件:
+检查异常的系统库文件:
+##########################################
+模块: 用户与登录检查
+==========================================
+------------------------------------------
+子项: 当前用户
+------------------------------------------
+root
+------------------------------------------
+子项: 所有用户
+------------------------------------------
+root
+daemon
+bin
+sys
+sync
+games
+man
+lp
+mail
+news
+uucp
+proxy
+www-data
+backup
+list
+irc
+_apt
+nobody
+------------------------------------------
+子项: 最近登录记录
+------------------------------------------
+
+wtmp begins Fri Jun  6 02:07:24 2025
+------------------------------------------
+子项: 登录失败记录
+------------------------------------------
+
+btmp begins Fri Jun  6 02:07:24 2025
+##########################################
+模块: 日志分析
+==========================================
+------------------------------------------
+子项: SSH攻击统计分析
+------------------------------------------
+=== 攻击IP统计与分析 ===
+未找到安全日志文件
+------------------------------------------
+子项: 登录会话分析
+------------------------------------------
+【当前活跃会话】
+
+【最近登录记录】
+
+wtmp begins Fri Jun  6 02:07:24 2025
+
+【登录失败详细分析 - 最近20次】
+------------------------------------------
+子项: 系统日志错误
+------------------------------------------
+------------------------------------------
+子项: 数据传输异常分析
+------------------------------------------
+【大量数据传输检测 - 可能的数据窃取】
+
+【文件传输活动检测】
+
+【频繁登录检测 - 可能的自动化攻击】
+------------------------------------------
+子项: 攻击模式识别
+------------------------------------------
+【常见攻击模式检测】
+------------------------------------------
+子项: IP地理位置分析
+------------------------------------------
+【攻击来源地理分析】
+未找到安全日志文件，无法进行IP分析
+------------------------------------------
+子项: 安全事件时间线
+------------------------------------------
+【最近50个安全事件时间线】
+##########################################
+模块: 网络检查
+==========================================
+------------------------------------------
+子项: 监听端口
+------------------------------------------
+
+------------------------------------------
+子项: 活动连接
+------------------------------------------
+------------------------------------------
+子项: 网络配置
+------------------------------------------
+------------------------------------------
+子项: 路由表
+------------------------------------------
+------------------------------------------
+子项: 可疑连接
+------------------------------------------
+##########################################
+模块: 进程检查
+==========================================
+------------------------------------------
+子项: 高CPU占用进程
+------------------------------------------
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          85  0.0  2.4 786472 408864 ?       Sl   02:07   1:03 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=14, pipe_handle=16) --multiprocessing-fork
+root          26  0.0  2.5 1155504 415212 ?      Sl   02:07   0:41 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python -u -m openhands.runtime.action_execution_server 60000 --working-dir /workspace --plugins agent_skills jupyter vscode --username root --user-id 0
+root         329  0.0  0.7 11829284 120352 ?     Sl   02:07   0:19 /openhands/.openvscode-server/node /openhands/.openvscode-server/out/server-main.js --host 0.0.0.0 --connection-token aadc636c-2dd6-44e3-a624-29a62d9f70a2 --port 60001 --disable-workspace-trust
+root          91  0.0  0.5 1061240 82288 ?       Sl   02:07   0:16 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/lib/python3.12/site-packages/playwright/driver/node /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/lib/python3.12/site-packages/playwright/driver/package/cli.js run-driver
+root         344  0.0  2.2 1294828 360684 ?      Ssl  02:07   0:06 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python -m ipykernel_launcher -f /root/.local/share/jupyter/runtime/kernel-cf5dd2bc-17cc-4906-97b8-1067ec16d6eb.json
+root        1835  0.0  0.3 11817920 64516 ?      Sl   03:26   0:05 /openhands/.openvscode-server/node /openhands/.openvscode-server/out/bootstrap-fork --type=ptyHost --logsPath /root/.openvscode-server/data/logs/20250606T020747
+root        4472  0.0  0.6 32794820 105164 ?     Sl   04:13   0:03 /openhands/.openvscode-server/node --dns-result-order=ipv4first /openhands/.openvscode-server/out/bootstrap-fork --type=extensionHost --transformURIs --useHostProxy=false
+root         304  0.0  0.4 234364 77460 ?        Sl   02:07   0:02 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/jupyter-kernelgateway --KernelGatewayApp.ip=0.0.0.0 --KernelGatewayApp.port=42768
+root        1832  0.0  0.0      0     0 ?        Z    03:26   0:02 [python] <defunct>
+root         103  0.0  0.5 33933552 92860 ?      Ssl  02:07   0:01 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AutoExpandDetailsElement,AvoidUnnecessaryBeforeUnloadCheckSync,CertificateTransparencyComponentUpdater,DeferRendererTasksAfterInput,DestroyProfileOnBrowserClose,DialMediaRouteProvider,ExtensionManifestV2Disabled,GlobalMediaControls,HttpsUpgrades,ImprovedCookieControls,LazyFrameLoading,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --enable-automation --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-75vMFW --remote-debugging-pipe --no-startup-window
+root         555  0.0  0.4 228320 69976 ?        Sl   03:11   0:01 /root/.cache/uv/archive-v0/wXy7UGI0AMw0vxHVXGPyw/bin/python /root/.cache/uv/archive-v0/wXy7UGI0AMw0vxHVXGPyw/bin/mcp-server-fetch
+root        1787  0.0  0.0      0     0 ?        Z    03:26   0:00 [node] <defunct>
+root         418  0.0  0.2 2291672 43424 ?       Sl   03:11   0:00 /openhands/bin/uv tool uvx mcp-server-fetch
+root        1327  0.0  0.2 116912 37272 pts/1    S    03:17   0:00 python3 enhanced_rules_engine.py
+------------------------------------------
+子项: 可疑脚本进程
+------------------------------------------
+1 /openhands/micromamba/bin/micromamba
+26 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+72 bash
+84 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+85 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+91 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/lib/python3.12/site-packages/playwright/driver/node
+103 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+105 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+106 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+163 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+175 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+193 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+195 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+196 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+224 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+229 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+262 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+277 /bin/sh
+279 su
+280 /bin/sh
+282 su
+283 -bash
+284 sh
+304 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+344 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+555 /root/.cache/uv/archive-v0/wXy7UGI0AMw0vxHVXGPyw/bin/python
+570 [sh]
+677 [sh]
+736 [sh]
+843 [sh]
+877 [sh]
+910 [sh]
+956 [sh]
+1008 [sh]
+1054 [sh]
+1106 [sh]
+1151 [sh]
+1185 [sh]
+1219 [sh]
+1253 [sh]
+1298 [sh]
+1325 bash
+1327 python3
+1344 [sh]
+1396 [sh]
+1430 [sh]
+1467 [sh]
+1501 [sh]
+1548 [git]
+1565 [git]
+1594 [sh]
+1625 [sh]
+1656 [sh]
+1718 [sh]
+1787 [node]
+1832 [python]
+1846 /bin/bash
+1883 [python]
+1902 /bin/bash
+1995 [sh]
+2052 [sh]
+2098 [sh]
+2230 [sh]
+2261 [sh]
+2305 [sh]
+2352 [sh]
+2383 [gzip]
+2400 [sh]
+2446 [sh]
+2474 bash
+2475 python3
+2493 [sh]
+2545 [sh]
+2608 [sh]
+2643 [sh]
+2756 [sh]
+2796 [git]
+2831 [sh]
+2914 [sh]
+2966 [sh]
+3014 [sh]
+3073 [sh]
+3104 [sh]
+3226 [sh]
+3316 [sh]
+3362 [sh]
+3409 [sh]
+3463 [sh]
+3502 [sh]
+3517 [sh]
+3584 [sh]
+3596 [sh]
+3648 [sh]
+3767 [sh]
+3792 /bin/bash
+3839 [sh]
+4041 /bin/bash
+4064 [sh]
+4154 [sh]
+4206 [sh]
+4241 [sh]
+4322 [sh]
+4357 [sh]
+4403 [sh]
+4579 [sh]
+4645 [sh]
+4692 [sh]
+4720 bash
+4723 python3
+4739 [sh]
+4764 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+4808 [sh]
+4849 [sh]
+4892 [sh]
+4931 [sh]
+4966 [sh]
+5001 [sh]
+5036 [sh]
+5082 [sh]
+5128 [sh]
+5185 [sh]
+5220 [sh]
+5255 [sh]
+5301 [sh]
+5338 [sh]
+5373 [sh]
+5419 [sh]
+5465 [sh]
+5500 [sh]
+5535 [sh]
+5570 [sh]
+5605 [sh]
+5651 [sh]
+5686 [sh]
+5721 [sh]
+5778 [sh]
+5824 [sh]
+5870 [sh]
+5927 [sh]
+5984 [sh]
+6030 [sh]
+6077 [sh]
+6123 [sh]
+6177 [sh]
+6212 [sh]
+10217 [sh]
+18698 [sh]
+21313 [sh]
+26776 [sh]
+35032 [sh]
+37386 [find]
+37404 [sh]
+37439 [sh]
+##########################################
+模块: 文件系统检查
+==========================================
+------------------------------------------
+子项: SUID文件
+------------------------------------------
+-rwsr-xr-x 1 root root 653888 Feb 14 13:06 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root root 52880 Mar 23  2023 /usr/bin/chsh
+-rwsr-xr-x 1 root root 59704 Nov 21  2024 /usr/bin/mount
+-rwsr-xr-x 1 root root 35128 Nov 21  2024 /usr/bin/umount
+-rwsr-xr-x 1 root root 48896 Mar 23  2023 /usr/bin/newgrp
+-rwsr-xr-x 1 root root 62672 Mar 23  2023 /usr/bin/chfn
+-rwsr-xr-x 1 root root 88496 Mar 23  2023 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root 72000 Nov 21  2024 /usr/bin/su
+-rwsr-xr-x 1 root root 68248 Mar 23  2023 /usr/bin/passwd
+-rwsr-xr-x 1 root root 281624 Jun 27  2023 /usr/bin/sudo
+------------------------------------------
+子项: 最近修改的文件
+------------------------------------------
+-rw-r--r-- 1 root root 21092 Jun  3 23:15 /var/log/apt/eipp.log.xz
+-rw-r----- 1 root adm 118950 Jun  3 23:15 /var/log/apt/term.log
+-rw-r--r-- 1 root root 22837 Jun  3 23:15 /var/log/apt/history.log
+-rw-r--r-- 1 root root 3214 Jun  3 23:15 /var/log/fontconfig.log
+-rw-r--r-- 1 root root 239250 Jun  3 23:15 /var/log/dpkg.log
+-rw-r--r-- 1 root root 11292 Jun  3 23:15 /var/log/alternatives.log
+-rw------- 1 root root 24110 Jun  3 23:15 /var/cache/ldconfig/aux-cache
+-rw-r--r-- 1 root root 16136 Jun  3 23:15 /var/cache/fontconfig/d589a48862398ed80a3d6066f4f56f4c-le64.cache-8
+-rw-r--r-- 1 root root 104 Jun  3 23:15 /var/cache/fontconfig/4c599c202bc5c08e2d34565a40eac3b2-le64.cache-8
+-rw-r--r-- 1 root root 12840 Jun  3 23:15 /var/cache/fontconfig/7ef2298fde41cc6eeb7af42e48b7d293-le64.cache-8
+-rw-r--r-- 1 root root 200 Jun  3 23:15 /var/cache/fontconfig/CACHEDIR.TAG
+-rw-r--r-- 1 root root 216 Jun  3 23:15 /var/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-8
+-rw-r--r-- 1 root root 22128 Jun  6 02:07 /var/cache/fontconfig/bb9ef35e7661cc55c3d6e0d2d8cc2051-le64.cache-9
+-rw-r--r-- 1 root root 2960 Jun  6 02:07 /var/cache/fontconfig/0bd3dc0958fa2205aaaa8ebb13e2872b-le64.cache-9
+-rw-r--r-- 1 root root 10848 Jun  6 02:07 /var/cache/fontconfig/99e8ed0e538f840c565b6ed5dad60d56-le64.cache-9
+-rw-r--r-- 1 root root 12680 Jun  6 02:07 /var/cache/fontconfig/e13b20fdb08344e0e664864cc2ede53d-le64.cache-9
+-rw-r--r-- 1 root root 160 Jun  6 02:07 /var/cache/fontconfig/707971e003b4ae6c8121c3a920e507f5-le64.cache-9
+-rw-r--r-- 1 root root 216 Jun  6 02:07 /var/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-9
+-rw-r--r-- 1 root root 4424 Jun  6 02:07 /var/cache/fontconfig/0fafd173547752dce4dee1a69e0b3c95-le64.cache-9
+-rw-r--r-- 1 root root 104 Jun  6 02:07 /var/cache/fontconfig/4c599c202bc5c08e2d34565a40eac3b2-le64.cache-9
+-rw-r--r-- 1 root root 79600 Jun  6 02:07 /var/cache/fontconfig/d52a8644073d54c13679302ca1180695-le64.cache-9
+-rw-r--r-- 1 root root 224 Jun  6 02:07 /var/cache/fontconfig/c855463f699352c367813e37f3f70ea7-le64.cache-9
+-rw-r--r-- 1 root root 7032 Jun  6 02:07 /var/cache/fontconfig/da82082e1ef13c4097208324d67c180c-le64.cache-9
+-rw-r--r-- 1 root root 28056 Jun  6 02:07 /var/cache/fontconfig/3047814df9a2f067bd2d96a2b9c36e5a-le64.cache-9
+-rw-r--r-- 1 root root 16760 Jun  6 02:07 /var/cache/fontconfig/d589a48862398ed80a3d6066f4f56f4c-le64.cache-9
+-rw-r--r-- 1 root root 256 Jun  6 02:07 /var/cache/fontconfig/573ec803664ed168555e0e8b6d0f0c7f-le64.cache-9
+-rw-r--r-- 1 root root 12944 Jun  6 02:07 /var/cache/fontconfig/7ef2298fde41cc6eeb7af42e48b7d293-le64.cache-9
+-rw-r--r-- 1 root root 120 Jun  6 02:07 /var/cache/fontconfig/6333f38776742d18e214673cd2c24e34-le64.cache-9
+-rw-r--r-- 1 root root 14696 Jun  6 02:07 /var/cache/fontconfig/4d6aee6d44eccb37054d3216e945f618-le64.cache-9
+-rw-r--r-- 1 root root 112 Jun  6 02:07 /var/cache/fontconfig/fe547fea3a41b43a38975d292a2b19c7-le64.cache-9
+-rw-r--r-- 1 root root 6616 Jun  3 23:15 /var/cache/fontconfig/da82082e1ef13c4097208324d67c180c-le64.cache-8
+-rw-r--r-- 1 root root 26392 Jun  3 23:15 /var/cache/fontconfig/3047814df9a2f067bd2d96a2b9c36e5a-le64.cache-8
+-rw-r--r-- 1 root root 14312 Jun  3 23:15 /var/cache/fontconfig/4d6aee6d44eccb37054d3216e945f618-le64.cache-8
+-rw-r--r-- 1 root root 21712 Jun  3 23:15 /var/cache/fontconfig/bb9ef35e7661cc55c3d6e0d2d8cc2051-le64.cache-8
+-rw-r--r-- 1 root root 10536 Jun  3 23:15 /var/cache/fontconfig/99e8ed0e538f840c565b6ed5dad60d56-le64.cache-8
+-rw-r--r-- 1 root root 4320 Jun  3 23:15 /var/cache/fontconfig/0fafd173547752dce4dee1a69e0b3c95-le64.cache-8
+-rw-r--r-- 1 root root 160 Jun  3 23:15 /var/cache/fontconfig/707971e003b4ae6c8121c3a920e507f5-le64.cache-8
+-rw-r--r-- 1 root root 2856 Jun  3 23:15 /var/cache/fontconfig/0bd3dc0958fa2205aaaa8ebb13e2872b-le64.cache-8
+-rw-r--r-- 1 root root 120 Jun  3 23:15 /var/cache/fontconfig/6333f38776742d18e214673cd2c24e34-le64.cache-8
+-rw-r--r-- 1 root root 78352 Jun  3 23:15 /var/cache/fontconfig/d52a8644073d54c13679302ca1180695-le64.cache-8
+-rw-r--r-- 1 root root 12296 Jun  3 23:15 /var/cache/fontconfig/e13b20fdb08344e0e664864cc2ede53d-le64.cache-8
+-rw-r--r-- 1 root root 112 Jun  3 23:15 /var/cache/fontconfig/fe547fea3a41b43a38975d292a2b19c7-le64.cache-8
+-rw-r--r-- 1 root root 224 Jun  3 23:15 /var/cache/fontconfig/c855463f699352c367813e37f3f70ea7-le64.cache-8
+-rw-r--r-- 1 root root 256 Jun  3 23:15 /var/cache/fontconfig/573ec803664ed168555e0e8b6d0f0c7f-le64.cache-8
+-rw-r--r-- 1 root root 503211 Jun  3 23:15 /var/lib/dpkg/status-old
+-rw-r--r-- 1 root root 113 Jun  3 23:15 /var/lib/dpkg/alternatives/fonts-japanese-gothic.ttf
+-rw-r----- 1 root root 0 Jun  3 23:15 /var/lib/dpkg/lock
+-rw-r--r-- 1 root root 503097 Jun  3 23:15 /var/lib/dpkg/status
+-rw-r--r-- 1 root root 209 Jun  3 05:18 /var/lib/dpkg/info/libgcc-s1:amd64.list
+-rw-r--r-- 1 root root 234 Jun  3 05:18 /var/lib/dpkg/info/gcc-12-base:amd64.list
+##########################################
+模块: 软件包检查
+==========================================
+------------------------------------------
+子项: 已安装的软件包
+------------------------------------------
+adduser 3.134
+apt 2.6.1
+apt-utils 2.6.1
+at-spi2-common 2.46.0-5
+autoconf 2.71-3
+automake 1:1.16.5-1.3
+autotools-dev 20220109.1
+base-files 12.4+deb12u10
+base-passwd 3.6.1
+bash 5.2.15-2+b7
+binutils 2.40-2
+binutils-common:amd64 2.40-2
+binutils-x86-64-linux-gnu 2.40-2
+bsdutils 1:2.38.1-5+deb12u3
+build-essential 12.9
+bzip2 1.0.8-5+b1
+ca-certificates 20230311
+comerr-dev:amd64 2.1-1.47.0-2
+coreutils 9.1-1
+cpp 4:12.2.0-3
+cpp-12 12.2.0-14+deb12u1
+curl 7.88.1-10+deb12u12
+dash 0.5.12-2
+debconf 1.5.82
+debian-archive-keyring 2023.3+deb12u1
+debianutils 5.7-0.5~deb12u1
+default-libmysqlclient-dev:amd64 1.1.0
+diffutils 1:3.8-4
+dirmngr 2.2.40-1.1
+dpkg 1.21.22
+dpkg-dev 1.21.22
+e2fsprogs 1.47.0-2
+file 1:5.44-3
+findutils 4.9.0-4
+fontconfig 2.14.1-4
+fontconfig-config 2.14.1-4
+fonts-dejavu-core 2.37-6
+fonts-freefont-ttf 20120503-10
+fonts-ipafont-gothic 00303-23
+fonts-liberation 1:1.07.4-11
+fonts-noto-color-emoji 2.042-0+deb12u1
+fonts-tlwg-loma-otf 1:0.7.3-1
+fonts-unifont 1:15.0.01-2
+fonts-wqy-zenhei 0.9.45-8
+g++ 4:12.2.0-3
+g++-12 12.2.0-14+deb12u1
+gcc 4:12.2.0-3
+gcc-12 12.2.0-14+deb12u1
+gcc-12-base:amd64 12.2.0-14+deb12u1
+gir1.2-freedesktop:amd64 1.74.0-3
+gir1.2-gdkpixbuf-2.0:amd64 2.42.10+dfsg-1+deb12u1
+gir1.2-glib-2.0:amd64 1.74.0-3
+gir1.2-rsvg-2.0:amd64 2.54.7+dfsg-1~deb12u1
+git 1:2.39.5-0+deb12u2
+git-man 1:2.39.5-0+deb12u2
+gnupg 2.2.40-1.1
+gnupg-l10n 2.2.40-1.1
+gnupg-utils 2.2.40-1.1
+gpg 2.2.40-1.1
+gpg-agent 2.2.40-1.1
+gpg-wks-client 2.2.40-1.1
+gpg-wks-server 2.2.40-1.1
+gpgconf 2.2.40-1.1
+gpgsm 2.2.40-1.1
+gpgv 2.2.40-1.1
+grep 3.8-5
+gzip 1.12-1
+hicolor-icon-theme 0.17-2
+hostname 3.23+nmu1
+icu-devtools 72.1-3
+imagemagick 8:6.9.11.60+dfsg-1.6+deb12u2
+imagemagick-6-common 8:6.9.11.60+dfsg-1.6+deb12u2
+imagemagick-6.q16 8:6.9.11.60+dfsg-1.6+deb12u2
+init-system-helpers 1.65.2
+jq 1.6-2.1
+krb5-multidev:amd64 1.20.1-2+deb12u2
+libacl1:amd64 2.3.1-3
+libaom3:amd64 3.6.0-1+deb12u1
+libapr1:amd64 1.7.2-3+deb12u1
+libaprutil1:amd64 1.6.3-1
+libapt-pkg6.0:amd64 2.6.1
+libasan8:amd64 12.2.0-14+deb12u1
+libasound2:amd64 1.2.8-1+b1
+libasound2-data 1.2.8-1
+libasound2-plugins:amd64 1.2.7.1-1
+libassuan0:amd64 2.5.5-5
+libasyncns0:amd64 0.8-6+b3
+libatk-bridge2.0-0:amd64 2.46.0-5
+libatk1.0-0:amd64 2.46.0-5
+libatomic1:amd64 12.2.0-14+deb12u1
+libatspi2.0-0:amd64 2.46.0-5
+libattr1:amd64 1:2.5.1-4
+libaudit-common 1:3.0.9-1
+libaudit1:amd64 1:3.0.9-1
+libavahi-client3:amd64 0.8-10+deb12u1
+libavahi-common-data:amd64 0.8-10+deb12u1
+libavahi-common3:amd64 0.8-10+deb12u1
+libavcodec59:amd64 7:5.1.6-0+deb12u1
+libavutil57:amd64 7:5.1.6-0+deb12u1
+libbinutils:amd64 2.40-2
+libblkid-dev:amd64 2.38.1-5+deb12u3
+libblkid1:amd64 2.38.1-5+deb12u3
+libbluetooth-dev:amd64 5.66-1+deb12u2
+libbluetooth3:amd64 5.66-1+deb12u2
+libbrotli-dev:amd64 1.0.9-2+b6
+libbrotli1:amd64 1.0.9-2+b6
+libbsd0:amd64 0.11.7-2
+libbz2-1.0:amd64 1.0.8-5+b1
+libbz2-dev:amd64 1.0.8-5+b1
+libc-bin 2.36-9+deb12u10
+libc-dev-bin 2.36-9+deb12u10
+libc6:amd64 2.36-9+deb12u10
+libc6-dev:amd64 2.36-9+deb12u10
+libcairo-gobject2:amd64 1.16.0-7
+libcairo-script-interpreter2:amd64 1.16.0-7
+libcairo2:amd64 1.16.0-7
+libcairo2-dev:amd64 1.16.0-7
+libcap-ng0:amd64 0.8.3-1+b3
+libcap2:amd64 1:2.66-4
+libcbor0.8:amd64 0.8.0-2+b1
+libcc1-0:amd64 12.2.0-14+deb12u1
+libcodec2-1.0:amd64 1.0.5-1
+libcom-err2:amd64 1.47.0-2
+libcrypt-dev:amd64 1:4.4.33-2
+libcrypt1:amd64 1:4.4.33-2
+libctf-nobfd0:amd64 2.40-2
+libctf0:amd64 2.40-2
+libcups2:amd64 2.4.2-3+deb12u8
+libcurl3-gnutls:amd64 7.88.1-10+deb12u12
+libcurl4:amd64 7.88.1-10+deb12u12
+libcurl4-openssl-dev:amd64 7.88.1-10+deb12u12
+libdatrie1:amd64 0.2.13-2+b1
+libdav1d6:amd64 1.0.0-2+deb12u1
+libdb-dev:amd64 5.3.2
+libdb5.3:amd64 5.3.28+dfsg2-1
+libdb5.3-dev 5.3.28+dfsg2-1
+libdbus-1-3:amd64 1.14.10-1~deb12u1
+libde265-0:amd64 1.0.11-1+deb12u2
+libdebconfclient0:amd64 0.270
+libdeflate-dev:amd64 1.14-1
+libdeflate0:amd64 1.14-1
+libdjvulibre-dev:amd64 3.5.28-2+b1
+libdjvulibre-text 3.5.28-2
+libdjvulibre21:amd64 3.5.28-2+b1
+libdpkg-perl 1.21.22
+libdrm-amdgpu1:amd64 2.4.114-1+b1
+libdrm-common 2.4.114-1
+libdrm-intel1:amd64 2.4.114-1+b1
+libdrm-nouveau2:amd64 2.4.114-1+b1
+libdrm-radeon1:amd64 2.4.114-1+b1
+libdrm2:amd64 2.4.114-1+b1
+libedit2:amd64 3.1-20221030-2
+libelf1:amd64 0.188-2.1
+liberror-perl 0.17029-2
+libevent-2.1-7:amd64 2.1.12-stable-8
+libevent-core-2.1-7:amd64 2.1.12-stable-8
+libevent-dev 2.1.12-stable-8
+libevent-extra-2.1-7:amd64 2.1.12-stable-8
+libevent-openssl-2.1-7:amd64 2.1.12-stable-8
+libevent-pthreads-2.1-7:amd64 2.1.12-stable-8
+libexif-dev:amd64 0.6.24-1+b1
+libexif12:amd64 0.6.24-1+b1
+libexpat1:amd64 2.5.0-1+deb12u1
+libexpat1-dev:amd64 2.5.0-1+deb12u1
+libext2fs2:amd64 1.47.0-2
+libffi-dev:amd64 3.4.4-1
+libffi8:amd64 3.4.4-1
+libfftw3-double3:amd64 3.3.10-1
+libfido2-1:amd64 1.12.0-2+b1
+libflac12:amd64 1.4.2+ds-2
+libfontconfig-dev:amd64 2.14.1-4
+libfontconfig1:amd64 2.14.1-4
+libfontenc1:amd64 1:1.1.4-1
+libfreetype-dev:amd64 2.12.1+dfsg-5+deb12u4
+libfreetype6:amd64 2.12.1+dfsg-5+deb12u4
+libfreetype6-dev:amd64 2.12.1+dfsg-5+deb12u4
+libfribidi0:amd64 1.0.8-2.1
+libgbm1:amd64 22.3.6-1+deb12u1
+libgcc-12-dev:amd64 12.2.0-14+deb12u1
+libgcc-s1:amd64 12.2.0-14+deb12u1
+libgcrypt20:amd64 1.10.1-3
+libgdbm-compat4:amd64 1.23-3
+libgdbm-dev:amd64 1.23-3
+libgdbm6:amd64 1.23-3
+libgdk-pixbuf-2.0-0:amd64 2.42.10+dfsg-1+deb12u1
+libgdk-pixbuf-2.0-dev:amd64 2.42.10+dfsg-1+deb12u1
+libgdk-pixbuf2.0-bin 2.42.10+dfsg-1+deb12u1
+libgdk-pixbuf2.0-common 2.42.10+dfsg-1+deb12u1
+libgirepository-1.0-1:amd64 1.74.0-3
+libgl1:amd64 1.6.0-1
+libgl1-mesa-dri:amd64 22.3.6-1+deb12u1
+libgl1-mesa-glx:amd64 22.3.6-1+deb12u1
+libglapi-mesa:amd64 22.3.6-1+deb12u1
+libglib2.0-0:amd64 2.74.6-2+deb12u6
+libglib2.0-bin 2.74.6-2+deb12u6
+libglib2.0-data 2.74.6-2+deb12u6
+libglib2.0-dev:amd64 2.74.6-2+deb12u6
+libglib2.0-dev-bin 2.74.6-2+deb12u6
+libglvnd0:amd64 1.6.0-1
+libglx-mesa0:amd64 22.3.6-1+deb12u1
+libglx0:amd64 1.6.0-1
+libgmp-dev:amd64 2:6.2.1+dfsg1-1.1
+libgmp10:amd64 2:6.2.1+dfsg1-1.1
+libgmpxx4ldbl:amd64 2:6.2.1+dfsg1-1.1
+libgnutls30:amd64 3.7.9-2+deb12u4
+libgomp1:amd64 12.2.0-14+deb12u1
+libgpg-error0:amd64 1.46-1
+libgprofng0:amd64 2.40-2
+libgraphite2-3:amd64 1.3.14-1
+libgsm1:amd64 1.0.22-1
+libgssapi-krb5-2:amd64 1.20.1-2+deb12u2
+libgssrpc4:amd64 1.20.1-2+deb12u2
+libharfbuzz0b:amd64 6.0.0+dfsg-3
+libheif1:amd64 1.15.1-1+deb12u1
+libhogweed6:amd64 3.8.1-2
+libhwy1:amd64 1.0.3-3+deb12u1
+libice-dev:amd64 2:1.0.10-1
+libice6:amd64 2:1.0.10-1
+libicu-dev:amd64 72.1-3
+libicu72:amd64 72.1-3
+libidn2-0:amd64 2.3.3-1+b1
+libimath-3-1-29:amd64 3.1.6-1
+libimath-dev:amd64 3.1.6-1
+libisl23:amd64 0.25-1.1
+libitm1:amd64 12.2.0-14+deb12u1
+libjack-jackd2-0:amd64 1.9.21~dfsg-3
+libjansson4:amd64 2.14-2
+libjbig-dev:amd64 2.1-6.1
+libjbig0:amd64 2.1-6.1
+libjpeg-dev:amd64 1:2.1.5-2
+libjpeg62-turbo:amd64 1:2.1.5-2
+libjpeg62-turbo-dev:amd64 1:2.1.5-2
+libjq1:amd64 1.6-2.1
+libjxl0.7:amd64 0.7.0-10
+libk5crypto3:amd64 1.20.1-2+deb12u2
+libkadm5clnt-mit12:amd64 1.20.1-2+deb12u2
+libkadm5srv-mit12:amd64 1.20.1-2+deb12u2
+libkdb5-10:amd64 1.20.1-2+deb12u2
+libkeyutils1:amd64 1.6.3-2
+libkrb5-3:amd64 1.20.1-2+deb12u2
+libkrb5-dev:amd64 1.20.1-2+deb12u2
+libkrb5support0:amd64 1.20.1-2+deb12u2
+libksba8:amd64 1.6.3-2
+liblcms2-2:amd64 2.14-2
+liblcms2-dev:amd64 2.14-2
+libldap-2.5-0:amd64 2.5.13+dfsg-5
+liblerc-dev:amd64 4.0.0+ds-2
+liblerc4:amd64 4.0.0+ds-2
+libllvm15:amd64 1:15.0.6-4+b1
+liblqr-1-0:amd64 0.4.2-2.1
+liblqr-1-0-dev:amd64 0.4.2-2.1
+liblsan0:amd64 12.2.0-14+deb12u1
+libltdl-dev:amd64 2.4.7-7~deb12u1
+libltdl7:amd64 2.4.7-7~deb12u1
+liblz4-1:amd64 1.9.4-1
+liblzma-dev:amd64 5.4.1-1
+liblzma5:amd64 5.4.1-1
+liblzo2-2:amd64 2.10-2
+libmagic-mgc 1:5.44-3
+libmagic1:amd64 1:5.44-3
+libmagickcore-6-arch-config:amd64 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickcore-6-headers 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickcore-6.q16-6:amd64 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickcore-6.q16-6-extra:amd64 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickcore-6.q16-dev:amd64 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickcore-dev 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickwand-6-headers 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickwand-6.q16-6:amd64 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickwand-6.q16-dev:amd64 8:6.9.11.60+dfsg-1.6+deb12u2
+libmagickwand-dev 8:6.9.11.60+dfsg-1.6+deb12u2
+libmariadb-dev 1:10.11.11-0+deb12u1
+libmariadb-dev-compat 1:10.11.11-0+deb12u1
+libmariadb3:amd64 1:10.11.11-0+deb12u1
+libmaxminddb-dev:amd64 1.7.1-1
+libmaxminddb0:amd64 1.7.1-1
+libmd0:amd64 1.0.4-2
+libmfx1:amd64 22.5.4-1
+libmount-dev:amd64 2.38.1-5+deb12u3
+libmount1:amd64 2.38.1-5+deb12u3
+libmp3lame0:amd64 3.100-6
+libmpc3:amd64 1.3.1-1
+libmpfr6:amd64 4.2.0-1
+libmpg123-0:amd64 1.31.2-1+deb12u1
+libncurses-dev:amd64 6.4-4
+libncurses5-dev:amd64 6.4-4
+libncurses6:amd64 6.4-4
+libncursesw5-dev:amd64 6.4-4
+libncursesw6:amd64 6.4-4
+libnettle8:amd64 3.8.1-2
+libnghttp2-14:amd64 1.52.0-1+deb12u2
+libnpth0:amd64 1.6-3
+libnsl-dev:amd64 1.3.0-2
+libnsl2:amd64 1.3.0-2
+libnspr4:amd64 2:4.35-1
+libnss3:amd64 2:3.87.1-1+deb12u1
+libnuma1:amd64 2.0.16-1
+libogg0:amd64 1.3.5-3
+libonig5:amd64 6.9.8-1
+libopenexr-3-1-30:amd64 3.1.5-5
+libopenexr-dev 3.1.5-5
+libopenjp2-7:amd64 2.5.0-2+deb12u1
+libopenjp2-7-dev:amd64 2.5.0-2+deb12u1
+libopus0:amd64 1.3.1-3
+libp11-kit0:amd64 0.24.1-2
+libpam-modules:amd64 1.5.2-6+deb12u1
+libpam-modules-bin 1.5.2-6+deb12u1
+libpam-runtime 1.5.2-6+deb12u1
+libpam0g:amd64 1.5.2-6+deb12u1
+libpango-1.0-0:amd64 1.50.12+ds-1
+libpangocairo-1.0-0:amd64 1.50.12+ds-1
+libpangoft2-1.0-0:amd64 1.50.12+ds-1
+libpciaccess0:amd64 0.17-2
+libpcre2-16-0:amd64 10.42-1
+libpcre2-32-0:amd64 10.42-1
+libpcre2-8-0:amd64 10.42-1
+libpcre2-dev:amd64 10.42-1
+libpcre2-posix3:amd64 10.42-1
+libperl5.36:amd64 5.36.0-7+deb12u2
+libpixman-1-0:amd64 0.42.2-1
+libpixman-1-dev:amd64 0.42.2-1
+libpkgconf3:amd64 1.8.1-1
+libpng-dev:amd64 1.6.39-2
+libpng16-16:amd64 1.6.39-2
+libpq-dev 15.12-0+deb12u2
+libpq5:amd64 15.12-0+deb12u2
+libproc2-0:amd64 2:4.0.2-3
+libpsl5:amd64 0.21.2-1
+libpthread-stubs0-dev:amd64 0.4-1
+libpulse0:amd64 16.1+dfsg1-2+b1
+libpython3-stdlib:amd64 3.11.2-1+b1
+libpython3.11-minimal:amd64 3.11.2-6+deb12u5
+libpython3.11-stdlib:amd64 3.11.2-6+deb12u5
+libquadmath0:amd64 12.2.0-14+deb12u1
+librav1e0:amd64 0.5.1-6
+libreadline-dev:amd64 8.2-1.3
+libreadline8:amd64 8.2-1.3
+librsvg2-2:amd64 2.54.7+dfsg-1~deb12u1
+librsvg2-common:amd64 2.54.7+dfsg-1~deb12u1
+librsvg2-dev:amd64 2.54.7+dfsg-1~deb12u1
+librtmp1:amd64 2.4+20151223.gitfa8646d.1-2+b2
+libsamplerate0:amd64 0.2.2-3
+libsasl2-2:amd64 2.1.28+dfsg-10
+libsasl2-modules-db:amd64 2.1.28+dfsg-10
+libseccomp2:amd64 2.5.4-1+deb12u1
+libselinux1:amd64 3.4-1+b6
+libselinux1-dev:amd64 3.4-1+b6
+libsemanage-common 3.4-1
+libsemanage2:amd64 3.4-1+b5
+libsensors-config 1:3.6.0-7.1
+libsensors5:amd64 1:3.6.0-7.1
+libsepol-dev:amd64 3.4-2.1
+libsepol2:amd64 3.4-2.1
+libserf-1-1:amd64 1.3.9-11
+libshine3:amd64 3.1.1-2
+libsm-dev:amd64 2:1.2.3-1
+libsm6:amd64 2:1.2.3-1
+libsmartcols1:amd64 2.38.1-5+deb12u3
+libsnappy1v5:amd64 1.1.9-3
+libsndfile1:amd64 1.2.0-1
+libsoxr0:amd64 0.1.3-4
+libspeex1:amd64 1.2.1-2
+libspeexdsp1:amd64 1.2.1-1
+libsqlite3-0:amd64 3.40.1-2+deb12u1
+libsqlite3-dev:amd64 3.40.1-2+deb12u1
+libss2:amd64 1.47.0-2
+libssh2-1:amd64 1.10.0-3+b1
+libssl-dev:amd64 3.0.15-1~deb12u1
+libssl3:amd64 3.0.15-1~deb12u1
+libstdc++-12-dev:amd64 12.2.0-14+deb12u1
+libstdc++6:amd64 12.2.0-14+deb12u1
+libsvn1:amd64 1.14.2-4+deb12u1
+libsvtav1enc1:amd64 1.4.1+dfsg-1
+libswresample4:amd64 7:5.1.6-0+deb12u1
+libsystemd0:amd64 252.36-1~deb12u1
+libtasn1-6:amd64 4.19.0-2+deb12u1
+libtcl8.6:amd64 8.6.13+dfsg-2
+libthai-data 0.1.29-1
+libthai0:amd64 0.1.29-1
+libtheora0:amd64 1.1.1+dfsg.1-16.1+b1
+libtiff-dev:amd64 4.5.0-6+deb12u2
+libtiff6:amd64 4.5.0-6+deb12u2
+libtiffxx6:amd64 4.5.0-6+deb12u2
+libtinfo6:amd64 6.4-4
+libtirpc-common 1.3.3+ds-1
+libtirpc-dev:amd64 1.3.3+ds-1
+libtirpc3:amd64 1.3.3+ds-1
+libtk8.6:amd64 8.6.13-2
+libtool 2.4.7-7~deb12u1
+libtsan2:amd64 12.2.0-14+deb12u1
+libtwolame0:amd64 0.4.0-2
+libubsan1:amd64 12.2.0-14+deb12u1
+libudev1:amd64 252.36-1~deb12u1
+libunistring2:amd64 1.0-2
+libunwind8:amd64 1.6.2-3
+libutempter0:amd64 1.2.1-3
+libutf8proc2:amd64 2.8.0-1
+libuuid1:amd64 2.38.1-5+deb12u3
+libva-drm2:amd64 2.17.0-1
+libva-x11-2:amd64 2.17.0-1
+libva2:amd64 2.17.0-1
+libvdpau1:amd64 1.5-2
+libvorbis0a:amd64 1.3.7-1
+libvorbisenc2:amd64 1.3.7-1
+libvpx7:amd64 1.12.0-1+deb12u4
+libwayland-server0:amd64 1.21.0-1
+libwebp-dev:amd64 1.2.4-0.2+deb12u1
+libwebp7:amd64 1.2.4-0.2+deb12u1
+libwebpdemux2:amd64 1.2.4-0.2+deb12u1
+libwebpmux3:amd64 1.2.4-0.2+deb12u1
+libwmf-0.2-7:amd64 0.2.12-5.1
+libwmf-dev 0.2.12-5.1
+libwmflite-0.2-7:amd64 0.2.12-5.1
+libx11-6:amd64 2:1.8.4-2+deb12u2
+libx11-data 2:1.8.4-2+deb12u2
+libx11-dev:amd64 2:1.8.4-2+deb12u2
+libx11-xcb1:amd64 2:1.8.4-2+deb12u2
+libx264-164:amd64 2:0.164.3095+gitbaee400-3
+libx265-199:amd64 3.5-2+b1
+libxau-dev:amd64 1:1.0.9-1
+libxau6:amd64 1:1.0.9-1
+libxaw7:amd64 2:1.0.14-1
+libxcb-dri2-0:amd64 1.15-1
+libxcb-dri3-0:amd64 1.15-1
+libxcb-glx0:amd64 1.15-1
+libxcb-present0:amd64 1.15-1
+libxcb-randr0:amd64 1.15-1
+libxcb-render0:amd64 1.15-1
+libxcb-render0-dev:amd64 1.15-1
+libxcb-shm0:amd64 1.15-1
+libxcb-shm0-dev:amd64 1.15-1
+libxcb-sync1:amd64 1.15-1
+libxcb-xfixes0:amd64 1.15-1
+libxcb1:amd64 1.15-1
+libxcb1-dev:amd64 1.15-1
+libxcomposite1:amd64 1:0.4.5-1
+libxdamage1:amd64 1:1.1.6-1
+libxdmcp-dev:amd64 1:1.1.2-3
+libxdmcp6:amd64 1:1.1.2-3
+libxext-dev:amd64 2:1.3.4-1+b1
+libxext6:amd64 2:1.3.4-1+b1
+libxfixes3:amd64 1:6.0.0-2
+libxfont2:amd64 1:2.0.6-1
+libxft-dev:amd64 2.3.6-1
+libxft2:amd64 2.3.6-1
+libxi6:amd64 2:1.8-1+b1
+libxkbcommon0:amd64 1.5.0-1
+libxkbfile1:amd64 1:1.1.0-1
+libxml2:amd64 2.9.14+dfsg-1.3~deb12u1
+libxml2-dev:amd64 2.9.14+dfsg-1.3~deb12u1
+libxmu6:amd64 2:1.1.3-3
+libxpm4:amd64 1:3.5.12-1.1+deb12u1
+libxrandr2:amd64 2:1.5.2-2+b1
+libxrender-dev:amd64 1:0.9.10-1.1
+libxrender1:amd64 1:0.9.10-1.1
+libxshmfence1:amd64 1.3-1
+libxslt1-dev:amd64 1.1.35-1+deb12u1
+libxslt1.1:amd64 1.1.35-1+deb12u1
+libxss-dev:amd64 1:1.2.3-1
+libxss1:amd64 1:1.2.3-1
+libxt-dev:amd64 1:1.2.1-1.1
+libxt6:amd64 1:1.2.1-1.1
+libxvidcore4:amd64 2:1.3.7-1
+libxxf86vm1:amd64 1:1.1.4-1+b2
+libxxhash0:amd64 0.8.1-1
+libyaml-0-2:amd64 0.2.5-1
+libyaml-dev:amd64 0.2.5-1
+libz3-4:amd64 4.8.12-3.1
+libzstd-dev:amd64 1.5.4+dfsg2-5
+libzstd1:amd64 1.5.4+dfsg2-5
+libzvbi-common 0.2.41-1
+libzvbi0:amd64 0.2.41-1
+linux-libc-dev:amd64 6.1.135-1
+login 1:4.13+dfsg1-1+b1
+logsave 1.47.0-2
+m4 1.4.19-3
+make 4.3-4.1
+mariadb-common 1:10.11.11-0+deb12u1
+mawk 1.3.4.20200120-3.1
+media-types 10.0.0
+mercurial 6.3.2-1+deb12u1
+mercurial-common 6.3.2-1+deb12u1
+mount 2.38.1-5+deb12u3
+mysql-common 5.8+1.1.0
+ncurses-base 6.4-4
+ncurses-bin 6.4-4
+netbase 6.4
+ocl-icd-libopencl1:amd64 2.3.1-1
+openssh-client 1:9.2p1-2+deb12u5
+openssl 3.0.15-1~deb12u1
+passwd 1:4.13+dfsg1-1+b1
+patch 2.7.6-7
+perl 5.36.0-7+deb12u2
+perl-base 5.36.0-7+deb12u2
+perl-modules-5.36 5.36.0-7+deb12u2
+pinentry-curses 1.2.1-1
+pkg-config:amd64 1.8.1-1
+pkgconf:amd64 1.8.1-1
+pkgconf-bin 1.8.1-1
+procps 2:4.0.2-3
+python3 3.11.2-1+b1
+python3-distutils 3.11.2-3
+python3-lib2to3 3.11.2-3
+python3-minimal 3.11.2-1+b1
+python3.11 3.11.2-6+deb12u5
+python3.11-minimal 3.11.2-6+deb12u5
+readline-common 8.2-1.3
+ripgrep 13.0.0-4+b2
+rpcsvc-proto 1.4.3-1
+sed 4.9-1
+sensible-utils 0.0.17+nmu1
+shared-mime-info 2.2-1
+sq 0.27.0-2+b1
+subversion 1.14.2-4+deb12u1
+sudo 1.9.13p3-1+deb12u1
+sysvinit-utils 3.06-4
+tar 1.34+dfsg-1.2+deb12u1
+tcl 8.6.13
+tcl-dev:amd64 8.6.13
+tcl8.6 8.6.13+dfsg-2
+tcl8.6-dev:amd64 8.6.13+dfsg-2
+tk 8.6.13
+tk-dev:amd64 8.6.13
+tk8.6 8.6.13-2
+tk8.6-dev:amd64 8.6.13-2
+tmux 3.3a-3
+tzdata 2025b-0+deb12u1
+ucf 3.0043+nmu1+deb12u1
+unzip 6.0-28
+usr-is-merged 37~deb12u1
+util-linux 2.38.1-5+deb12u3
+util-linux-extra 2.38.1-5+deb12u3
+uuid-dev:amd64 2.38.1-5+deb12u3
+wget 1.21.3-1+deb12u1
+x11-common 1:7.7+23
+x11-xkb-utils 7.7+7
+x11proto-core-dev 2022.1-1
+x11proto-dev 2022.1-1
+xfonts-encodings 1:1.0.4-2.2
+xfonts-scalable 1:1.0.3-1.3
+xfonts-utils 1:7.7+6
+xkb-data 2.35.1-1
+xorg-sgml-doctools 1:1.11-1.1
+xserver-common 2:21.1.7-3+deb12u9
+xtrans-dev 1.4.0-1
+xvfb 2:21.1.7-3+deb12u9
+xz-utils 5.4.1-1
+zlib1g:amd64 1:1.2.13.dfsg-1
+zlib1g-dev:amd64 1:1.2.13.dfsg-1
+##########################################
+模块: 持久化检查
+==========================================
+------------------------------------------
+子项: 自启动服务
+------------------------------------------
+------------------------------------------
+子项: 计划任务
+------------------------------------------
+系统计划任务:
+Cron目录内容:
+/etc/cron.d:
+total 4
+-rw-r--r-- 1 root root 201 Mar  5  2023 e2scrub_all
+
+/etc/cron.daily:
+total 8
+-rwxr-xr-x 1 root root 1478 May 25  2023 apt-compat
+-rwxr-xr-x 1 root root  123 Mar 27  2023 dpkg
+用户计划任务:
+------------------------------------------
+子项: SSH公钥
+------------------------------------------
+------------------------------------------
+子项: 启动项配置
+------------------------------------------
+RC启动脚本:
+/etc/rc0.d/:
+total 0
+lrwxrwxrwx 1 root root 20 Apr 28 00:00 K01hwclock.sh -> ../init.d/hwclock.sh
+
+/etc/rc1.d/:
+total 0
+
+/etc/rc2.d/:
+total 0
+lrwxrwxrwx 1 root root 14 Jun  3 05:18 S01sudo -> ../init.d/sudo
+
+/etc/rc3.d/:
+total 0
+lrwxrwxrwx 1 root root 14 Jun  3 05:18 S01sudo -> ../init.d/sudo
+
+/etc/rc4.d/:
+total 0
+lrwxrwxrwx 1 root root 14 Jun  3 05:18 S01sudo -> ../init.d/sudo
+
+/etc/rc5.d/:
+total 0
+lrwxrwxrwx 1 root root 14 Jun  3 05:18 S01sudo -> ../init.d/sudo
+
+/etc/rc6.d/:
+total 0
+lrwxrwxrwx 1 root root 20 Apr 28 00:00 K01hwclock.sh -> ../init.d/hwclock.sh
+
+/etc/rcS.d/:
+total 0
+lrwxrwxrwx 1 root root 20 Apr 28 00:00 S01hwclock.sh -> ../init.d/hwclock.sh
+lrwxrwxrwx 1 root root 16 Apr 28 22:14 S01procps -> ../init.d/procps
+lrwxrwxrwx 1 root root 20 Apr 28 23:11 S01x11-common -> ../init.d/x11-common
+RC Local内容:
+Systemd用户服务:
+-rw-r--r-- 1 root root 389 May 25  2023 /usr/lib/systemd/system/apt-daily-upgrade.service
+-rw-r--r-- 1 root root 326 May 25  2023 /usr/lib/systemd/system/apt-daily.service
+-rw-r--r-- 1 root root 147 Mar 27  2023 /usr/lib/systemd/system/dpkg-db-backup.service
+-rw-r--r-- 1 root root 438 Mar  5  2023 /usr/lib/systemd/system/e2scrub@.service
+-rw-r--r-- 1 root root 297 Mar  5  2023 /usr/lib/systemd/system/e2scrub_all.service
+-rw-r--r-- 1 root root 245 Mar  5  2023 /usr/lib/systemd/system/e2scrub_fail@.service
+-rw-r--r-- 1 root root 553 Mar  5  2023 /usr/lib/systemd/system/e2scrub_reap.service
+-rw-r--r-- 1 root root 477 Nov 21  2024 /usr/lib/systemd/system/fstrim.service
+-rw-r--r-- 1 root root 327 Sep 21  2023 /usr/lib/systemd/system/pam_namespace.service
+lrwxrwxrwx 1 root root   9 Jun 27  2023 /usr/lib/systemd/system/sudo.service -> /dev/null
+Init.d脚本:
+total 16
+-rwxr-xr-x 1 root root 1748 Nov 21  2024 hwclock.sh
+-rwxr-xr-x 1 root root  959 Dec 19  2022 procps
+-rwxr-xr-x 1 root root 1161 Jun 27  2023 sudo
+-rwxr-xr-x 1 root root 2762 Aug 18  2021 x11-common
+##########################################
+模块: 系统完整性
+==========================================
+------------------------------------------
+子项: 关键二进制文件校验
+------------------------------------------
+cb30d69b24245bf2ecdc9e7f53bbad19159999970b6d82c0c00c7d32d9e37aa4  /bin/ls
+b2a1f7b6ae39ca71cf915d9553877df8f65e1b5ee39c4c269ee3c0d0bb282546  /bin/ps
+a4b895f98db75079f2af6e510c95db0d5c5d596e448bf3fe689d0bfdd182e28e  /bin/bash
+cafbdbfd938d25c09da67bcde78e4c4f25817e3018863f9f5ee4b3807f1bbffa  /usr/bin/sudo
+------------------------------------------
+子项: 系统文件完整性
+------------------------------------------
+未安装 debsums
+##########################################
+模块: 恶意进程与提权点
+==========================================
+------------------------------------------
+子项: 可疑进程
+------------------------------------------
+103 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+193 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+1327 python3
+1846 /bin/bash
+1902 /bin/bash
+3792 /bin/bash
+4041 /bin/bash
+4723 python3
+------------------------------------------
+子项: 可疑提权点
+------------------------------------------
+-rwsr-xr-x 1 root root 653888 Feb 14 13:06 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root root 52880 Mar 23  2023 /usr/bin/chsh
+------------------------------------------
+子项: 隐藏文件
+------------------------------------------
+-rw-r--r-- 1 1000 1000 3526 Mar 29  2024 /home/pn/.bashrc
+-rw-r--r-- 1 1000 1000 220 Mar 29  2024 /home/pn/.bash_logout
+-rw-r--r-- 1 1000 1000 807 Mar 29  2024 /home/pn/.profile
+-rw-r--r-- 1 root root 656 Jun  6 03:11 /root/.bashrc
+-rw-r--r-- 1 root root 185 Jun  3 05:18 /root/.profile
+total 4
+drwxr-xr-x 1 root root 4096 Jun  6 03:11 share
+-rwxrwxrwx 1 root root 0 Jun  6 03:11 /root/.local/share/uv/tools/.lock
+-rw-r--r-- 1 root root 1 Jun  6 03:11 /root/.local/share/uv/tools/.gitignore
+total 4
+drwx------ 2 root root 4096 Jun  6 04:13 nssdb
+total 8
+drwx------ 7 root root 4096 Jun  6 03:26 data
+drwx------ 4 root root 4096 Jun  6 03:26 extensions
+total 15576
+-rw-r--r-- 1 root root 9015683 Jun  6 03:26 ms-python.debugpy-2025.6.0-linux-x64
+-rw-r--r-- 1 root root   18048 Jun  6 03:26 ms-python.debugpy-2025.6.0-linux-x64.sigzip
+-rw-r--r-- 1 root root 6802494 Jun  6 03:26 ms-python.python-2025.4.0-universal
+-rw-r--r-- 1 root root  106433 Jun  6 03:26 ms-python.python-2025.4.0-universal.sigzip
+-rw-r--r-- 1 root root 87 Jun  6 03:26 /root/.openvscode-server/extensions/ms-python.debugpy-2025.6.0-linux-x64/bundled/libs/debugpy/_vendored/pydevd/_pydevd_frame_eval/.gitignore
+-rw-r--r-- 1 root root 82 Jun  6 03:26 /root/.openvscode-server/extensions/ms-python.debugpy-2025.6.0-linux-x64/bundled/libs/debugpy/_vendored/pydevd/pydevd_attach_to_process/linux_and_mac/.gitignore
+total 8
+drwxr-xr-x 2 root root 4096 Jun  6 03:26 1espt
+drwxr-xr-x 2 root root 4096 Jun  6 03:26 guardian
+-rw-r--r-- 1 root root 6794 Jun  6 03:26 /root/.openvscode-server/extensions/ms-python.debugpy-2025.6.0-linux-x64/.config/guardian/.gdnbaselines
+-rw-r--r-- 1 root root 278 Jun  6 03:26 /root/.openvscode-server/extensions/ms-python.debugpy-2025.6.0-linux-x64/.flake8
+-rw-r--r-- 1 root root 2797 Jun  6 03:26 /root/.openvscode-server/extensions/ms-python.debugpy-2025.6.0-linux-x64/.vsixmanifest
+total 0
+total 8
+-rw-r--r-- 1 root root 2222 Jun  6 03:26 no-bad-gdpr-comment.js
+-rw-r--r-- 1 root root 2242 Jun  6 03:26 no-bad-gdpr-comment.ts
+-rw-r--r-- 1 root root 3301 Jun  6 03:26 /root/.openvscode-server/extensions/ms-python.python-2025.4.0-universal/.vsixmanifest
+-rw-r--r-- 1 root root 24 Jun  6 03:26 /root/.openvscode-server/extensions/ms-python.python-2025.4.0-universal/python_files/.env
+total 4
+-rw-r--r-- 1 root root 139 Jun  6 03:26 settings.json
+-rw-r--r-- 1 root root 58 Jun  6 02:07 /root/.gitconfig
+total 44
+drwxr-xr-x 3 root root 4096 Jun  6 02:07 Microsoft
+drwxr-xr-x 3 root root 4096 Jun  6 03:27 jedi
+drwxr-xr-x 1 root root 4096 Jun  3 23:14 mamba
+drwxr-xr-x 1 root root 4096 Jun  3 23:15 ms-playwright
+drwxr-xr-x 1 root root 4096 May 22 00:05 pip
+drwxr-xr-x 1 root root 4096 Jun  3 23:14 pypoetry
+drwxr-xr-x 9 root root 4096 Jun  6 03:11 uv
+total 4
+-rw-r--r-- 1 root root 101 Jun  3 23:15 761f6f7fa7924ce74bce7005c96e8496506fa358
+-rw-r--r-- 1 root root 1 Jun  6 03:11 /root/.cache/uv/archive-v0/wXy7UGI0AMw0vxHVXGPyw/.gitignore
+-rw-r--r-- 1 root root 1 Jun  6 03:11 /root/.cache/uv/.gitignore
+-rw-r--r-- 1 root root 0 Jun  6 03:11 /root/.cache/uv/sdists-v9/.git
+-rw-r--r-- 1 root root 0 Jun  6 03:11 /root/.cache/uv/sdists-v9/.gitignore
+##########################################
+模块: 统计分析与建议
+==========================================
+------------------------------------------
+子项: 系统统计概览
+------------------------------------------
+=== 系统基本信息 ===
+操作系统: debian
+检查时间: Fri Jun  6 04:55:59 UTC 2025
+总用户数: 17
+UID为0的非root用户: 0
+0
+监听端口数: 0
+可疑进程数: 21
+SUID文件数: 10
+最近修改文件数: 59
+登录失败次数: 0
+计划任务数: 0
+------------------------------------------
+子项: 安全风险评估
+------------------------------------------
+整体风险等级: 低危 (评分: 30)
+------------------------------------------
+子项: 处置建议
+------------------------------------------
+[正常] 除root外未发现其他UID为0的高权限用户，权限配置良好。
+[中危] 发现21个可疑脚本进程，数量较多，建议检查进程合法性。
+
+------------------------------------------
+子项: 应急响应检查清单
+------------------------------------------
+□ 1. 确认所有UID为0的用户合法性
+□ 2. 检查可疑进程的业务必要性
+□ 3. 审查SUID文件是否存在异常
+□ 4. 分析登录失败日志，确认是否存在攻击
+□ 5. 检查网络服务配置，关闭不必要端口
+□ 6. 审查计划任务和启动项配置
+□ 7. 检查最近修改的系统文件
+□ 8. 确认SSH密钥配置的合法性
+□ 9. 进行完整的恶意软件扫描
+□ 10. 更新系统和安全补丁

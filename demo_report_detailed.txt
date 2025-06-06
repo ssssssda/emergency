@@ -1,0 +1,35 @@
+[0;34m[INFO][0m 开始Linux应急响应检查...
+[0;32m正在执行模块：系统后门排查[0m
+[0;32m正在执行模块：用户与登录检查[0m
+[0;32m正在执行模块：日志分析[0m
+[0;32m正在执行模块：网络检查[0m
+[0;32m正在执行模块：进程检查[0m
+[0;32m正在执行模块：文件系统检查[0m
+[0;32m正在执行模块：软件包检查[0m
+[0;32m正在执行模块：持久化检查[0m
+[0;32m正在执行模块：系统完整性[0m
+[0;32m正在执行模块：恶意进程与提权点[0m
+[0;32m正在执行模块：统计分析与建议[0m
+./enhanced_emergency_response.sh: line 617: [: 0
+0: integer expression expected
+[0;34m[INFO][0m 生成JSON格式报告...
+Python3未安装，跳过JSON报告生成
+[0;32m[SUCCESS][0m 应急响应检查完成！
+
+[0;34m[INFO][0m 报告文件：
+  文本格式: emergency_report_20250606_045441.txt
+  JSON格式: emergency_report_20250606_045441.json
+
+[0;34m[INFO][0m 统计摘要：
+  总用户数: 17
+  UID为0的非root用户: 0
+0
+  监听端口数: 0
+  可疑进程数: 21
+  SUID文件数: 10
+./enhanced_emergency_response.sh: line 803: [: 0
+0: integer expression expected
+[0;32m[SUCCESS][0m 用户权限配置正常
+
+[0;34m[INFO][0m 建议使用增强版Web界面查看详细分析结果：
+  python3 enhanced_rules_engine.py

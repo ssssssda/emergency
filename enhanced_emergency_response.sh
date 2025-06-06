@@ -381,16 +381,18 @@ log_check() {
     
     write_subsection "IP地理位置分析"
     echo "【攻击来源地理分析】"
-    if [ -n "$LOG_FILE" ] && command -v whois >/dev/null 2>&1; then
-        echo "正在分析前5个攻击IP的地理位置..."
+    if [ -n "$LOG_FILE" ]; then
+        echo "前5个攻击IP统计："
         grep "Failed password" $LOG_FILE 2>/dev/null | awk '{print $(NF-3)}' | sort | uniq -c | sort -nr | head -5 | while read count ip; do
             echo "IP: $ip (攻击次数: $count)"
-            whois "$ip" 2>/dev/null | grep -E "country|Country|organization|Organization" | head -3
-            echo "---"
         done
+        echo ""
+        echo "建议使用以下方式进行地理位置分析："
+        echo "1. whois命令: whois [IP地址]"
+        echo "2. 在线查询: https://www.abuseipdb.com/"
+        echo "3. 威胁情报: https://www.virustotal.com/"
     else
-        echo "whois工具未安装，无法进行地理位置分析"
-        echo "建议安装: apt-get install whois 或 yum install whois"
+        echo "未找到安全日志文件，无法进行IP分析"
     fi
     
     write_subsection "安全事件时间线"
@@ -612,7 +614,8 @@ generate_summary() {
     local recommendations=""
     
     # 风险评分逻辑
-    if [ "${STATS[uid0_users]}" -gt 0 ]; then
+    uid0_count=$(echo "${STATS[uid0_users]}" | tr -d '\n' | tr -d ' ')
+    if [ "$uid0_count" -gt 0 ] 2>/dev/null; then
       risk_score=$((risk_score + 50))
       recommendations+="[高危] 发现${STATS[uid0_users]}个非root的UID为0用户，建议立即与运维开发人员确认这些用户的合法性。\n"
     else

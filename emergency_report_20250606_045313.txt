@@ -1,0 +1,316 @@
+Linux 应急响应报告 (增强版)
+生成时间: Fri Jun  6 04:53:13 UTC 2025
+主机名: runtime-lzvpynwhsagtniyb-5477cb6c47-kwmw8
+操作系统: debian
+##########################################
+
+##########################################
+模块: 系统后门排查
+==========================================
+------------------------------------------
+子项: UID为0的非root用户
+------------------------------------------
+
+------------------------------------------
+子项: 可疑系统配置
+------------------------------------------
+检查系统配置文件权限:
+-rw-r--r-- 1 root root    446 Jun  3 05:18 /etc/group
+-rw-r--r-- 1 root root    839 Jun  3 05:18 /etc/passwd
+-rw-r----- 1 root shadow  474 Jun  3 05:18 /etc/shadow
+-r--r----- 1 root root   1714 Jun 27  2023 /etc/sudoers
+检查异常的系统配置:
+    30901      4 -rw-r--r--   1 root     root          195 Jun  6 02:07 /etc/resolv.conf
+------------------------------------------
+子项: 异常系统文件
+------------------------------------------
+检查关键目录下的异常文件:
+检查异常的系统库文件:
+##########################################
+模块: 用户与登录检查
+==========================================
+------------------------------------------
+子项: 当前用户
+------------------------------------------
+root
+------------------------------------------
+子项: 所有用户
+------------------------------------------
+root
+daemon
+bin
+sys
+sync
+games
+man
+lp
+mail
+news
+uucp
+proxy
+www-data
+backup
+list
+irc
+_apt
+nobody
+------------------------------------------
+子项: 最近登录记录
+------------------------------------------
+
+wtmp begins Fri Jun  6 02:07:24 2025
+------------------------------------------
+子项: 登录失败记录
+------------------------------------------
+
+btmp begins Fri Jun  6 02:07:24 2025
+##########################################
+模块: 日志分析
+==========================================
+------------------------------------------
+子项: SSH攻击统计分析
+------------------------------------------
+=== 攻击IP统计与分析 ===
+未找到安全日志文件
+------------------------------------------
+子项: 登录会话分析
+------------------------------------------
+【当前活跃会话】
+
+【最近登录记录】
+
+wtmp begins Fri Jun  6 02:07:24 2025
+
+【登录失败详细分析 - 最近20次】
+------------------------------------------
+子项: 系统日志错误
+------------------------------------------
+------------------------------------------
+子项: 数据传输异常分析
+------------------------------------------
+【大量数据传输检测 - 可能的数据窃取】
+
+【文件传输活动检测】
+
+【频繁登录检测 - 可能的自动化攻击】
+------------------------------------------
+子项: 攻击模式识别
+------------------------------------------
+【常见攻击模式检测】
+------------------------------------------
+子项: IP地理位置分析
+------------------------------------------
+【攻击来源地理分析】
+whois工具未安装，无法进行地理位置分析
+建议安装: apt-get install whois 或 yum install whois
+------------------------------------------
+子项: 安全事件时间线
+------------------------------------------
+【最近50个安全事件时间线】
+##########################################
+模块: 网络检查
+==========================================
+------------------------------------------
+子项: 监听端口
+------------------------------------------
+
+------------------------------------------
+子项: 活动连接
+------------------------------------------
+------------------------------------------
+子项: 网络配置
+------------------------------------------
+------------------------------------------
+子项: 路由表
+------------------------------------------
+------------------------------------------
+子项: 可疑连接
+------------------------------------------
+##########################################
+模块: 进程检查
+==========================================
+------------------------------------------
+子项: 高CPU占用进程
+------------------------------------------
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          85  0.0  2.4 786472 408864 ?       Sl   02:07   1:03 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=14, pipe_handle=16) --multiprocessing-fork
+root          26  0.0  2.5 1155504 415212 ?      Sl   02:07   0:41 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python -u -m openhands.runtime.action_execution_server 60000 --working-dir /workspace --plugins agent_skills jupyter vscode --username root --user-id 0
+root         329  0.0  0.7 11829284 120136 ?     Sl   02:07   0:19 /openhands/.openvscode-server/node /openhands/.openvscode-server/out/server-main.js --host 0.0.0.0 --connection-token aadc636c-2dd6-44e3-a624-29a62d9f70a2 --port 60001 --disable-workspace-trust
+root          91  0.0  0.5 1061240 82288 ?       Sl   02:07   0:16 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/lib/python3.12/site-packages/playwright/driver/node /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/lib/python3.12/site-packages/playwright/driver/package/cli.js run-driver
+root         344  0.0  2.2 1294828 360684 ?      Ssl  02:07   0:06 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python -m ipykernel_launcher -f /root/.local/share/jupyter/runtime/kernel-cf5dd2bc-17cc-4906-97b8-1067ec16d6eb.json
+root        1835  0.0  0.3 11817920 64252 ?      Sl   03:26   0:05 /openhands/.openvscode-server/node /openhands/.openvscode-server/out/bootstrap-fork --type=ptyHost --logsPath /root/.openvscode-server/data/logs/20250606T020747
+root        4472  0.0  0.6 32794820 104780 ?     Sl   04:13   0:02 /openhands/.openvscode-server/node --dns-result-order=ipv4first /openhands/.openvscode-server/out/bootstrap-fork --type=extensionHost --transformURIs --useHostProxy=false
+root         304  0.0  0.4 234364 77460 ?        Sl   02:07   0:02 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/jupyter-kernelgateway --KernelGatewayApp.ip=0.0.0.0 --KernelGatewayApp.port=42768
+root        1832  0.0  0.0      0     0 ?        Z    03:26   0:02 [python] <defunct>
+root         103  0.0  0.5 33933552 92860 ?      Ssl  02:07   0:01 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AcceptCHFrame,AutoExpandDetailsElement,AvoidUnnecessaryBeforeUnloadCheckSync,CertificateTransparencyComponentUpdater,DeferRendererTasksAfterInput,DestroyProfileOnBrowserClose,DialMediaRouteProvider,ExtensionManifestV2Disabled,GlobalMediaControls,HttpsUpgrades,ImprovedCookieControls,LazyFrameLoading,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --enable-automation --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-75vMFW --remote-debugging-pipe --no-startup-window
+root         555  0.0  0.4 228320 69976 ?        Sl   03:11   0:01 /root/.cache/uv/archive-v0/wXy7UGI0AMw0vxHVXGPyw/bin/python /root/.cache/uv/archive-v0/wXy7UGI0AMw0vxHVXGPyw/bin/mcp-server-fetch
+root        1787  0.0  0.0      0     0 ?        Z    03:26   0:00 [node] <defunct>
+root         418  0.0  0.2 2291672 43424 ?       Sl   03:11   0:00 /openhands/bin/uv tool uvx mcp-server-fetch
+root        1327  0.0  0.2 116912 37268 pts/1    S    03:17   0:00 python3 enhanced_rules_engine.py
+------------------------------------------
+子项: 可疑脚本进程
+------------------------------------------
+1 /openhands/micromamba/bin/micromamba
+26 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+72 bash
+84 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+85 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+91 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/lib/python3.12/site-packages/playwright/driver/node
+103 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+105 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+106 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+163 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+175 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+193 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+195 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+196 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+224 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+229 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+262 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+277 /bin/sh
+279 su
+280 /bin/sh
+282 su
+283 -bash
+284 sh
+304 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+344 /openhands/poetry/openhands-ai-5O4_aCHf-py3.12/bin/python
+555 /root/.cache/uv/archive-v0/wXy7UGI0AMw0vxHVXGPyw/bin/python
+570 [sh]
+677 [sh]
+736 [sh]
+843 [sh]
+877 [sh]
+910 [sh]
+956 [sh]
+1008 [sh]
+1054 [sh]
+1106 [sh]
+1151 [sh]
+1185 [sh]
+1219 [sh]
+1253 [sh]
+1298 [sh]
+1325 bash
+1327 python3
+1344 [sh]
+1396 [sh]
+1430 [sh]
+1467 [sh]
+1501 [sh]
+1548 [git]
+1565 [git]
+1594 [sh]
+1625 [sh]
+1656 [sh]
+1718 [sh]
+1787 [node]
+1832 [python]
+1846 /bin/bash
+1883 [python]
+1902 /bin/bash
+1995 [sh]
+2052 [sh]
+2098 [sh]
+2230 [sh]
+2261 [sh]
+2305 [sh]
+2352 [sh]
+2383 [gzip]
+2400 [sh]
+2446 [sh]
+2474 bash
+2475 python3
+2493 [sh]
+2545 [sh]
+2608 [sh]
+2643 [sh]
+2756 [sh]
+2796 [git]
+2831 [sh]
+2914 [sh]
+2966 [sh]
+3014 [sh]
+3073 [sh]
+3104 [sh]
+3226 [sh]
+3316 [sh]
+3362 [sh]
+3409 [sh]
+3463 [sh]
+3502 [sh]
+3517 [sh]
+3584 [sh]
+3596 [sh]
+3648 [sh]
+3767 [sh]
+3792 /bin/bash
+3839 [sh]
+4041 /bin/bash
+4064 [sh]
+4154 [sh]
+4206 [sh]
+4241 [sh]
+4322 [sh]
+4357 [sh]
+4403 [sh]
+4579 [sh]
+4645 [sh]
+4692 [sh]
+4720 bash
+4723 python3
+4739 [sh]
+4764 /root/.cache/ms-playwright/chromium_headless_shell-1169/chrome-linux/headless_shell
+4808 [sh]
+4849 [sh]
+4892 [sh]
+4931 [sh]
+4966 [sh]
+5001 [sh]
+5036 [sh]
+5082 [sh]
+5128 [sh]
+5185 [sh]
+5220 [sh]
+5255 [sh]
+5301 [sh]
+5338 [sh]
+5373 [sh]
+5419 [sh]
+5465 [sh]
+5500 [sh]
+5535 [sh]
+5570 [sh]
+5605 [sh]
+5651 [sh]
+5686 [sh]
+5721 [sh]
+5778 [sh]
+5824 [sh]
+5870 [sh]
+5927 [sh]
+5984 [sh]
+6030 [sh]
+6077 [sh]
+6123 [sh]
+6177 [sh]
+6212 [sh]
+##########################################
+模块: 文件系统检查
+==========================================
+------------------------------------------
+子项: SUID文件
+------------------------------------------
+-rwsr-xr-x 1 root root 653888 Feb 14 13:06 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root root 52880 Mar 23  2023 /usr/bin/chsh
+-rwsr-xr-x 1 root root 59704 Nov 21  2024 /usr/bin/mount
+-rwsr-xr-x 1 root root 35128 Nov 21  2024 /usr/bin/umount
+-rwsr-xr-x 1 root root 48896 Mar 23  2023 /usr/bin/newgrp
+-rwsr-xr-x 1 root root 62672 Mar 23  2023 /usr/bin/chfn
+-rwsr-xr-x 1 root root 88496 Mar 23  2023 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root 72000 Nov 21  2024 /usr/bin/su
+-rwsr-xr-x 1 root root 68248 Mar 23  2023 /usr/bin/passwd
+-rwsr-xr-x 1 root root 281624 Jun 27  2023 /usr/bin/sudo
+------------------------------------------
+子项: 最近修改的文件
+------------------------------------------
