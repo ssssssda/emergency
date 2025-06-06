@@ -313,7 +313,7 @@ log_check() {
             time = $1" "$2" "$3
             ip = $(NF-3)
             print time"|"ip
-        }' | sort | uniq | awk -F'|' '{
+        }' | sort | uniq | awk -F"|" '{
             ip = $2
             count[ip]++
             times[ip] = times[ip] $1 "\n"
@@ -622,24 +622,28 @@ generate_summary() {
       recommendations+="[正常] 除root外未发现其他UID为0的高权限用户，权限配置良好。\n"
     fi
     
-    if [ "${STATS[suspicious_processes]}" -gt 10 ]; then
+    suspicious_count=$(echo "${STATS[suspicious_processes]}" | tr -d '\n' | tr -d ' ')
+    if [ "$suspicious_count" -gt 10 ] 2>/dev/null; then
       risk_score=$((risk_score + 30))
       recommendations+="[中危] 发现${STATS[suspicious_processes]}个可疑脚本进程，数量较多，建议检查进程合法性。\n"
-    elif [ "${STATS[suspicious_processes]}" -gt 0 ]; then
+    elif [ "$suspicious_count" -gt 0 ] 2>/dev/null; then
       recommendations+="[低危] 发现${STATS[suspicious_processes]}个可疑脚本进程，建议确认业务必要性。\n"
     fi
     
-    if [ "${STATS[suid_files]}" -gt 100 ]; then
+    suid_count=$(echo "${STATS[suid_files]}" | tr -d '\n' | tr -d ' ')
+    if [ "$suid_count" -gt 100 ] 2>/dev/null; then
       risk_score=$((risk_score + 20))
       recommendations+="[中危] SUID文件数量(${STATS[suid_files]})较多，建议审查是否存在异常提权文件。\n"
     fi
     
-    if [ "${STATS[failed_logins]}" -gt 50 ]; then
+    failed_count=$(echo "${STATS[failed_logins]}" | tr -d '\n' | tr -d ' ')
+    if [ "$failed_count" -gt 50 ] 2>/dev/null; then
       risk_score=$((risk_score + 25))
       recommendations+="[中危] 登录失败次数(${STATS[failed_logins]})较多，可能存在暴力破解攻击。\n"
     fi
     
-    if [ "${STATS[listening_ports]}" -gt 20 ]; then
+    ports_count=$(echo "${STATS[listening_ports]}" | tr -d '\n' | tr -d ' ')
+    if [ "$ports_count" -gt 20 ] 2>/dev/null; then
       risk_score=$((risk_score + 15))
       recommendations+="[低危] 监听端口数量(${STATS[listening_ports]})较多，建议关闭不必要的服务。\n"
     fi
@@ -801,7 +805,8 @@ main() {
   echo "  可疑进程数: ${STATS[suspicious_processes]}"
   echo "  SUID文件数: ${STATS[suid_files]}"
   
-  if [ "${STATS[uid0_users]}" -gt 0 ]; then
+  uid0_check=$(echo "${STATS[uid0_users]}" | tr -d '\n' | tr -d ' ')
+  if [ "$uid0_check" -gt 0 ] 2>/dev/null; then
     print_error "发现${STATS[uid0_users]}个异常UID为0用户，建议立即检查！"
   else
     print_success "用户权限配置正常"

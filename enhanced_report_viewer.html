@@ -708,7 +708,108 @@ function generateStatistics(data) {
       action: '建议定期审查用户账户，确保权限分配合理。'
     });
   }
+
+  // 增强的用户分析
+  if (systemStats.total_users === 0) {
+    recommendations.push({
+      level: 'warning',
+      title: '用户信息获取异常',
+      description: '未能获取到系统用户信息，可能是权限不足或系统异常。',
+      action: '建议检查脚本执行权限，确保以root权限运行，或检查/etc/passwd文件是否可读。'
+    });
+  } else if (systemStats.total_users < 5) {
+    recommendations.push({
+      level: 'info',
+      title: '系统用户数量较少',
+      description: `系统仅有 ${systemStats.total_users} 个用户账户，这通常表明是一个精简的生产系统。`,
+      action: '建议确认所有用户账户都是必需的，定期清理不活跃的账户。'
+    });
+  } else if (systemStats.total_users > 20) {
+    recommendations.push({
+      level: 'medium',
+      title: '系统用户数量较多',
+      description: `系统有 ${systemStats.total_users} 个用户账户，用户数量较多可能增加安全风险。`,
+      action: '建议与运维团队确认所有用户的必要性，禁用或删除不活跃的账户，实施最小权限原则。'
+    });
+  }
   
+  // 网络端口分析
+  if (systemStats.listening_ports === 0) {
+    recommendations.push({
+      level: 'warning',
+      title: '未检测到监听端口',
+      description: '系统未检测到任何监听端口，这可能表明网络服务未启动或检测异常。',
+      action: '建议检查网络服务状态，确认是否为预期配置。如果是服务器，通常应该有一些必要的服务端口。'
+    });
+  } else if (systemStats.listening_ports > 20) {
+    riskScore += 20;
+    recommendations.push({
+      level: 'medium',
+      title: '监听端口数量较多',
+      description: `系统监听了 ${systemStats.listening_ports} 个端口，端口数量较多可能增加攻击面。`,
+      action: '建议与运维团队逐一确认每个监听端口的必要性，关闭不必要的服务，减少潜在的攻击入口。'
+    });
+  } else if (systemStats.listening_ports > 0 && systemStats.listening_ports <= 5) {
+    recommendations.push({
+      level: 'info',
+      title: '网络服务配置合理',
+      description: `系统监听 ${systemStats.listening_ports} 个端口，数量适中，符合安全最佳实践。`,
+      action: '建议定期审查监听服务，确保所有服务都是业务必需的。'
+    });
+  }
+
+  // SUID文件分析
+  if (systemStats.suid_files === 0) {
+    recommendations.push({
+      level: 'warning',
+      title: 'SUID文件检测异常',
+      description: '未检测到任何SUID文件，这可能表明检测异常，正常系统应该有一些系统SUID文件。',
+      action: '建议检查find命令是否正常执行，或者系统是否为容器环境。'
+    });
+  } else if (systemStats.suid_files > 100) {
+    riskScore += 25;
+    recommendations.push({
+      level: 'high',
+      title: 'SUID文件数量异常',
+      description: `发现 ${systemStats.suid_files} 个SUID文件，数量异常偏多，可能存在提权风险。`,
+      action: '建议立即检查SUID文件列表，特别关注/tmp、/var/tmp等临时目录中的SUID文件，与运维团队确认异常文件的来源。'
+    });
+  } else if (systemStats.suid_files > 50) {
+    riskScore += 10;
+    recommendations.push({
+      level: 'medium',
+      title: 'SUID文件需要关注',
+      description: `发现 ${systemStats.suid_files} 个SUID文件，数量偏多，建议审查。`,
+      action: '建议检查SUID文件列表，确认所有文件都是系统必需的，移除不必要的SUID权限。'
+    });
+  }
+
+  // 登录失败分析
+  if (systemStats.failed_logins > 100) {
+    riskScore += 40;
+    recommendations.push({
+      level: 'high',
+      title: '检测到大量登录失败',
+      description: `发现 ${systemStats.failed_logins} 次登录失败，可能正在遭受暴力破解攻击。`,
+      action: '建议立即检查登录日志，识别攻击源IP，考虑实施IP封禁、修改SSH端口、启用fail2ban等防护措施。'
+    });
+  } else if (systemStats.failed_logins > 20) {
+    riskScore += 15;
+    recommendations.push({
+      level: 'medium',
+      title: '登录失败次数较多',
+      description: `发现 ${systemStats.failed_logins} 次登录失败，需要关注潜在的安全威胁。`,
+      action: '建议检查登录日志，分析失败原因，如果是外部攻击应加强访问控制。'
+    });
+  } else if (systemStats.failed_logins === 0) {
+    recommendations.push({
+      level: 'info',
+      title: '登录安全状况良好',
+      description: '未发现登录失败记录，系统登录安全状况良好。',
+      action: '建议保持当前的安全配置，定期监控登录日志。'
+    });
+  }
+
   if (systemStats.suspicious_processes > 10) {
     riskScore += 30;
     recommendations.push({
@@ -2064,7 +2165,7 @@ function renderTabs(data) {
       let content = "";
       if (title === '📚 排查教程') {
         // 显示教程内容
-        content = generateTutorialContent(k);
+        content = generateTutorial(k);
         return `<details open><summary>${title}</summary><div style="padding: 10px;">${content}</div></details>`;
       } else {
         // 显示实际数据
