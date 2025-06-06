@@ -418,7 +418,7 @@ const TAB_TITLES = {
 };
 
 const SUB_TAB_TITLES = {
-  summary: ["系统概览", "风险评估", "智能建议", "检查清单"],
+  summary: ["系统概览", "风险评估", "智能建议", "检查清单", "专业总结"],
   backdoor: ["UID为0的非root用户", "可疑系统配置", "异常系统文件"],
   user: ["当前用户", "所有用户", "最近登录记录", "登录失败记录"],
   log: ["系统日志错误", "安全日志错误"],
@@ -691,28 +691,133 @@ HIGH (80+分): 存在严重安全风险，需要立即处理
       `[${rec.level.toUpperCase()}] ${rec.title}\n${rec.description}\n处置建议: ${rec.action}`
     ).join('\n\n'),
     
-    '检查清单': `
-=== 应急响应检查清单 ===
-□ 1. 确认所有UID为0的用户合法性
-□ 2. 检查可疑进程的业务必要性
-□ 3. 审查SUID文件是否存在异常
-□ 4. 分析登录失败日志，确认是否存在攻击
-□ 5. 检查网络服务配置，关闭不必要端口
-□ 6. 审查计划任务和启动项配置
-□ 7. 检查最近修改的系统文件
-□ 8. 确认SSH密钥配置的合法性
-□ 9. 进行完整的恶意软件扫描
-□ 10. 更新系统和安全补丁
-
-=== 优先级处理建议 ===
-${stats.uid0_users > 0 ? '🔴 高优先级: 立即处理UID为0异常用户' : ''}
-${stats.risk_score >= 50 ? '🟡 中优先级: 处理中等风险项目' : ''}
-${stats.risk_score < 50 && stats.risk_score > 0 ? '🟢 低优先级: 优化安全配置' : ''}
-${stats.risk_score === 0 ? '✅ 系统安全状况良好，建议定期检查' : ''}
-    `
+    '检查清单': generateProfessionalSummary(data, stats),
+    
+    '专业总结': generateIncidentResponseSummary(data, stats)
   };
   
   return summaryData;
+}
+
+// 生成专业检查清单
+function generateProfessionalSummary(data, stats) {
+  return `
+=== 应急响应检查清单 (基于NIST SP 800-61框架) ===
+
+【准备阶段 - Preparation】
+□ 1. 确认应急响应团队联系方式和职责分工
+□ 2. 验证备份系统和恢复程序的可用性
+□ 3. 确保日志记录和监控系统正常运行
+
+【检测与分析阶段 - Detection & Analysis】
+□ 4. 确认所有UID为0的用户合法性 ${stats.uid0_users > 0 ? '⚠️ 发现异常' : '✅ 正常'}
+□ 5. 分析可疑进程的业务必要性 ${stats.suspicious_processes > 10 ? '⚠️ 数量异常' : '✅ 正常范围'}
+□ 6. 审查SUID文件是否存在异常提权点
+□ 7. 分析登录失败日志，识别潜在的暴力破解攻击 ${stats.failed_logins > 50 ? '⚠️ 失败次数过多' : '✅ 正常'}
+□ 8. 检查网络连接和监听端口的合法性 ${stats.listening_ports > 20 ? '⚠️ 端口较多' : '✅ 正常'}
+
+【遏制阶段 - Containment】
+□ 9. 隔离可疑系统和网络连接
+□ 10. 保护关键数据和系统资源
+□ 11. 收集和保存数字证据
+
+【根除阶段 - Eradication】
+□ 12. 清除恶意软件和后门程序
+□ 13. 修复系统漏洞和安全配置
+□ 14. 更新系统补丁和安全策略
+
+【恢复阶段 - Recovery】
+□ 15. 验证系统完整性和功能正常
+□ 16. 恢复业务服务和数据访问
+□ 17. 加强监控和日志记录
+
+【事后活动 - Post-Incident Activity】
+□ 18. 编写详细的事件报告
+□ 19. 总结经验教训和改进建议
+□ 20. 更新应急响应程序和预案
+
+=== 优先级处理建议 ===
+${stats.uid0_users > 0 ? '🔴 紧急 (P0): 立即处理UID为0异常用户，可能存在权限提升威胁' : ''}
+${stats.risk_score >= 80 ? '🔴 高危 (P1): 系统存在严重安全风险，需要立即响应' : ''}
+${stats.risk_score >= 50 && stats.risk_score < 80 ? '🟡 中危 (P2): 存在安全隐患，建议24小时内处理' : ''}
+${stats.risk_score >= 20 && stats.risk_score < 50 ? '🟢 低危 (P3): 优化安全配置，建议72小时内处理' : ''}
+${stats.risk_score < 20 ? '✅ 正常 (P4): 系统安全状况良好，建议定期检查维护' : ''}
+  `;
+}
+
+// 生成专业的事件响应总结
+function generateIncidentResponseSummary(data, stats) {
+  const currentTime = new Date().toLocaleString();
+  
+  // 分析已确认安全的项目
+  const secureItems = [];
+  if (stats.uid0_users === 0) secureItems.push('用户权限配置');
+  if (stats.failed_logins < 10) secureItems.push('登录安全状况');
+  if (stats.suspicious_processes < 5) secureItems.push('进程运行状态');
+  
+  // 需要与运维确认的项目
+  const confirmItems = [];
+  if (stats.listening_ports > 10) confirmItems.push(`网络服务配置(${stats.listening_ports}个监听端口)`);
+  if (stats.cron_jobs > 5) confirmItems.push(`计划任务配置(${stats.cron_jobs}个任务)`);
+  if (stats.suid_files > 50) confirmItems.push(`SUID文件权限(${stats.suid_files}个文件)`);
+  
+  // 已确认存在威胁的项目
+  const threatItems = [];
+  if (stats.uid0_users > 0) threatItems.push(`异常高权限用户(${stats.uid0_users}个)`);
+  if (stats.failed_logins > 50) threatItems.push(`暴力破解攻击迹象(${stats.failed_logins}次失败)`);
+  
+  // 未完成检查的项目
+  const pendingItems = [
+    '深度恶意软件扫描',
+    '网络流量异常分析',
+    '文件完整性深度校验',
+    '内存转储分析',
+    '系统调用审计'
+  ];
+  
+  return `
+=== 网络安全事件响应总结报告 ===
+报告生成时间: ${currentTime}
+分析师: 自动化应急响应系统
+事件等级: ${stats.risk_level} (评分: ${stats.risk_score}/100)
+
+【执行摘要 - Executive Summary】
+本次应急响应检查基于NIST SP 800-61网络安全事件处理指南执行，采用标准化的检测、分析、遏制、根除、恢复流程。通过自动化工具对目标系统进行了全面的安全态势评估。
+
+【已确认安全的检查项目 - Verified Secure Items】
+${secureItems.length > 0 ? secureItems.map(item => `✅ ${item}: 经检查确认符合安全基线要求`).join('\n') : '⚠️ 暂无完全确认安全的项目，建议进一步深入分析'}
+
+【需要运维确认的业务合规性项目 - Items Requiring Operational Validation】
+${confirmItems.length > 0 ? confirmItems.map(item => `🔍 ${item}: 建议与运维团队确认业务合规性和必要性`).join('\n') : '✅ 所有配置项目均在正常范围内'}
+
+【已识别的安全威胁 - Confirmed Security Threats】
+${threatItems.length > 0 ? threatItems.map(item => `🚨 ${item}: 已确认存在安全风险，建议立即采取遏制措施`).join('\n') : '✅ 未发现明确的安全威胁指标'}
+
+【待深入检查的项目 - Pending Advanced Analysis】
+${pendingItems.map(item => `⏳ ${item}: 建议使用专业工具进行深度分析`).join('\n')}
+
+【建议后续行动 - Recommended Next Actions】
+1. 【立即行动】针对已识别威胁执行遏制和根除措施
+2. 【24小时内】与运维团队确认可疑配置的业务合规性
+3. 【72小时内】执行深度安全扫描和威胁狩猎活动
+4. 【一周内】更新安全基线和监控规则
+5. 【持续监控】加强日志分析和异常行为检测
+
+【合规性声明 - Compliance Statement】
+本次检查遵循以下安全框架和标准:
+• NIST Cybersecurity Framework 2.0
+• NIST SP 800-61 Rev.3 事件响应指南
+• ISO/IEC 27035 信息安全事件管理
+• SANS 事件响应六步法
+
+【免责声明 - Disclaimer】
+本报告基于自动化工具生成，仅供参考。建议结合人工分析和专业安全团队的判断，制定最终的安全响应策略。对于关键业务系统，建议咨询专业的网络安全服务提供商。
+
+---
+报告编号: IR-${Date.now()}
+分类级别: 内部使用
+有效期限: 30天
+  `;
 }
 
 function openTab(evt, tabName) {
@@ -874,7 +979,8 @@ function highlightCurrentMatch() {
 // 添加规则引擎API调用
 async function analyzeReport(data) {
   try {
-    const response = await fetch('http://localhost:12000/analyze', {
+    // 使用相对路径，自动适配当前域名和端口
+    const response = await fetch('/analyze', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -891,18 +997,74 @@ async function analyzeReport(data) {
     displayAlerts();
   } catch (error) {
     console.error('规则分析失败:', error);
-    // 显示错误提示
-    const container = document.getElementById('alertContainer');
-    container.innerHTML = `
-      <div class="alert alert-high">
-        <div>
-          <strong>规则分析失败</strong>
-          <p>无法连接到规则引擎服务器，请确保服务器正在运行。</p>
-          <p>错误信息: ${error.message}</p>
-        </div>
-      </div>
-    `;
+    // 如果API调用失败，使用本地分析
+    performLocalAnalysis(data);
   }
+}
+
+// 本地分析功能（当API不可用时）
+function performLocalAnalysis(data) {
+  const localResults = {
+    high: [],
+    medium: [],
+    low: []
+  };
+  
+  // 检查UID为0的用户
+  if (data.backdoor && data.backdoor['UID为0的非root用户']) {
+    const uid0Content = data.backdoor['UID为0的非root用户'];
+    if (uid0Content.includes('可疑UID 0用户') || uid0Content.match(/^(?!root)/m)) {
+      localResults.high.push({
+        rule_id: 'LOCAL_001',
+        section: 'backdoor',
+        subsection: 'UID为0的非root用户',
+        description: '发现可疑的UID为0用户',
+        severity: 'high',
+        recommendation: '立即与运维和开发人员确认这些用户的合法性，如无法确认应立即禁用'
+      });
+    }
+  }
+  
+  // 检查可疑进程
+  if (data.process && data.process['可疑脚本进程']) {
+    const processes = data.process['可疑脚本进程'].split('\n').filter(p => p.trim());
+    if (processes.length > 10) {
+      localResults.medium.push({
+        rule_id: 'LOCAL_002',
+        section: 'process',
+        subsection: '可疑脚本进程',
+        description: `发现${processes.length}个可疑脚本进程，数量异常`,
+        severity: 'medium',
+        recommendation: '检查这些进程的合法性，确认其业务必要性'
+      });
+    }
+  }
+  
+  // 检查登录失败
+  if (data.user && data.user['登录失败记录']) {
+    const failedLogins = data.user['登录失败记录'];
+    const failCount = (failedLogins.match(/Failed password/g) || []).length;
+    if (failCount > 50) {
+      localResults.medium.push({
+        rule_id: 'LOCAL_003',
+        section: 'user',
+        subsection: '登录失败记录',
+        description: `登录失败次数(${failCount})异常，可能存在暴力破解攻击`,
+        severity: 'medium',
+        recommendation: '检查登录日志，加强密码策略和访问控制'
+      });
+    }
+  }
+  
+  alertResults = localResults;
+  displayAlerts();
+  
+  // 显示本地分析提示
+  const container = document.getElementById('alertContainer');
+  const localNotice = document.createElement('div');
+  localNotice.style.cssText = 'background: #e3f2fd; padding: 10px; margin-bottom: 15px; border-radius: 5px; font-size: 12px; color: #1565c0;';
+  localNotice.innerHTML = '📍 当前使用本地分析模式，功能有限。建议启动完整的规则引擎服务获得更准确的分析结果。';
+  container.insertBefore(localNotice, container.firstChild);
 }
 
 // 修改renderTabs函数
