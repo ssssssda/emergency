@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>Linux 应急响应报告查看器 (增强版)</title>
+<style>
+body { 
+  font-family: "Microsoft YaHei", Arial, sans-serif; 
+  background: #f5f5f5; 
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: white;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header h1 {
+  margin: 0 0 15px 0;
+  font-size: 2.2em;
+}
+
+.header .subtitle {
+  font-size: 1.1em;
+  opacity: 0.9;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.content-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.sidebar {
+  width: 350px;
+  background: #fff;
+  border-left: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 15px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.alert-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+}
+
+.alert { 
+  padding: 15px; 
+  margin-bottom: 10px; 
+  border-radius: 5px;
+}
+
+.alert-high { 
+  background: #ffebee; 
+  color: #c62828; 
+  border-left: 5px solid #c62828; 
+}
+
+.alert-medium { 
+  background: #fff3e0; 
+  color: #ef6c00; 
+  border-left: 5px solid #ef6c00; 
+}
+
+.alert-low { 
+  background: #e3f2fd; 
+  color: #1565c0; 
+  border-left: 5px solid #1565c0; 
+}
+
+.alert-link { 
+  cursor: pointer; 
+  color: inherit; 
+  text-decoration: underline; 
+}
+
+.alert-count { 
+  background: #fff; 
+  padding: 2px 8px; 
+  border-radius: 10px; 
+  margin-left: 10px; 
+  font-size: 12px; 
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+#searchInput {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  min-width: 200px;
+}
+
+.search-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.search-nav button {
+  padding: 8px 15px;
+  background: #2196F3;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.search-nav button:hover {
+  background: #1976D2;
+}
+
+.search-nav button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.tabs {
+  overflow: hidden;
+  background: #333;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tabs button {
+  background: #333;
+  color: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 14px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.tabs button:hover {
+  background: #ddd;
+  color: black;
+}
+
+.tabs button.active {
+  background: #2196F3;
+  color: white;
+}
+
+.tabcontent {
+  display: none;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  margin-top: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.tabcontent pre {
+  background: #222;
+  color: #eee;
+  padding: 15px;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin: 0;
+  font-size: 14px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.tabcontent details {
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+}
+
+.tabcontent summary {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 5px 5px 0 0;
+  border-bottom: 1px solid #e0e0e0;
+  transition: background 0.3s;
+}
+
+.tabcontent summary:hover {
+  background: #e9ecef;
+}
+
+.tabcontent details[open] summary {
+  background: #007bff;
+  color: white;
+}
+
+.mark {
+  background: yellow;
+  color: red;
+  font-weight: bold;
+}
+
+.mark.current {
+  background: #ff4444;
+  color: white;
+}
+
+#fileInput {
+  margin: 10px 0;
+}
+
+.alert-summary {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.alert-badge {
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+}
+
+.alert-badge.high {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.alert-badge.medium {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.alert-badge.low {
+  background: #e3f2fd;
+  color: #1565c0;
+}
+
+.alert-badge .count {
+  background: rgba(255,255,255,0.8);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.collapse-button {
+  padding: 5px 10px;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.collapse-button:hover {
+  background: #f0f0f0;
+}
+
+/* 统计面板样式 */
+.stats-panel {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.stat-item {
+  background: rgba(255,255,255,0.1);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.stat-number {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.9em;
+  opacity: 0.9;
+}
+
+.risk-level {
+  display: inline-block;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.risk-high { background: #ff4757; color: white; }
+.risk-medium { background: #ffa502; color: white; }
+.risk-low { background: #3742fa; color: white; }
+.risk-normal { background: #2ed573; color: white; }
+
+/* 建议面板样式 */
+.recommendations-panel {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-left: 5px solid #28a745;
+}
+
+.recommendation-item {
+  background: white;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border-left: 4px solid #007bff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.recommendation-level {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.level-high { background: #ff4757; color: white; }
+.level-medium { background: #ffa502; color: white; }
+.level-low { background: #3742fa; color: white; }
+.level-info { background: #2ed573; color: white; }
+
+@keyframes highlight-pulse {
+  0% { background: #ff4444; }
+  50% { background: #ff8888; }
+  100% { background: #ff4444; }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    max-height: 300px;
+  }
+  
+  .tabs {
+    flex-direction: column;
+  }
+  
+  .tabs button {
+    flex: none;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+}
+
+</style>
+<script>
+const TAB_TITLES = {
+  summary: "📊 统计分析总览",
+  backdoor: "🔍 系统后门排查",
+  user: "👥 用户与登录检查",
+  log: "📋 日志分析",
+  network: "🌐 网络检查",
+  process: "⚙️ 进程检查",
+  filesystem: "📁 文件系统检查",
+  package: "📦 软件包检查",
+  persistence: "🔄 持久化检查",
+  integrity: "🛡️ 系统完整性",
+  malware: "🦠 恶意进程与提权点"
+};
+
+const SUB_TAB_TITLES = {
+  summary: ["系统概览", "风险评估", "智能建议", "检查清单"],
+  backdoor: ["UID为0的非root用户", "可疑系统配置", "异常系统文件"],
+  user: ["当前用户", "所有用户", "最近登录记录", "登录失败记录"],
+  log: ["系统日志错误", "安全日志错误"],
+  network: ["监听端口", "活动连接", "网络配置", "路由表", "可疑连接"],
+  process: ["高CPU占用进程", "可疑脚本进程"],
+  filesystem: ["SUID文件", "最近修改的文件"],
+  package: ["已安装的软件包"],
+  persistence: ["自启动服务", "计划任务", "SSH公钥", "启动项配置"],
+  integrity: ["关键二进制文件校验", "系统文件完整性"],
+  malware: ["可疑进程", "可疑提权点", "隐藏文件"]
+};
+
+let gTabs = Object.keys(TAB_TITLES);
+let gContent = "";
+let currentSearchIndex = -1;
+let searchResults = [];
+let analysisData = null;
+
+// 告警结果存储
+let alertResults = {
+  high: [],
+  medium: [],
+  low: []
+};
+
+// 统计数据存储
+let systemStats = {
+  total_users: 0,
+  uid0_users: 0,
+  listening_ports: 0,
+  suspicious_processes: 0,
+  suid_files: 0,
+  recent_files: 0,
+  failed_logins: 0,
+  cron_jobs: 0,
+  risk_score: 0,
+  risk_level: 'NORMAL'
+};
+
+function parseTextReport(text) {
+  const sections = text.split("##########################################");
+  const data = {};
+  let currentSection = null;
+  
+  for (const section of sections) {
+    if (!section.trim()) continue;
+    
+    const moduleMatch = section.match(/模块: (.*?)\n/);
+    if (!moduleMatch) continue;
+    
+    const moduleTitle = moduleMatch[1];
+    const moduleKey = Object.keys(TAB_TITLES).find(key => TAB_TITLES[key].includes(moduleTitle) || TAB_TITLES[key] === moduleTitle);
+    if (!moduleKey) continue;
+    
+    const subSections = section.split("------------------------------------------");
+    data[moduleKey] = {};
+    
+    for (let i = 1; i < subSections.length; i += 2) {
+      const titleMatch = subSections[i].match(/子项: (.*?)\n/);
+      if (!titleMatch) continue;
+      const title = titleMatch[1];
+      const content = subSections[i + 1] ? subSections[i + 1].trim() : "";
+      data[moduleKey][title] = content;
+    }
+  }
+  
+  return data;
+}
+
+// 生成统计分析
+function generateStatistics(data) {
+  const stats = {
+    system_overview: {},
+    security_summary: {},
+    risk_assessment: {},
+    recommendations: []
+  };
+  
+  // 重置统计数据
+  systemStats = {
+    total_users: 0,
+    uid0_users: 0,
+    listening_ports: 0,
+    suspicious_processes: 0,
+    suid_files: 0,
+    recent_files: 0,
+    failed_logins: 0,
+    cron_jobs: 0,
+    risk_score: 0,
+    risk_level: 'NORMAL'
+  };
+  
+  // 用户统计
+  if (data.user && data.user['所有用户']) {
+    const users = data.user['所有用户'].split('\n').filter(u => u.trim());
+    systemStats.total_users = users.length;
+  }
+  
+  if (data.backdoor && data.backdoor['UID为0的非root用户']) {
+    const uid0Content = data.backdoor['UID为0的非root用户'];
+    systemStats.uid0_users = (uid0Content.match(/可疑UID 0用户/g) || []).length;
+  }
+  
+  // 网络统计
+  if (data.network && data.network['监听端口']) {
+    const ports = data.network['监听端口'];
+    systemStats.listening_ports = (ports.match(/LISTEN|:/g) || []).length;
+  }
+  
+  // 进程统计
+  if (data.process && data.process['可疑脚本进程']) {
+    const processes = data.process['可疑脚本进程'].split('\n').filter(p => p.trim());
+    systemStats.suspicious_processes = processes.length;
+  }
+  
+  // 文件系统统计
+  if (data.filesystem && data.filesystem['SUID文件']) {
+    const suidFiles = data.filesystem['SUID文件'];
+    systemStats.suid_files = (suidFiles.match(/-rws/g) || []).length;
+  }
+  
+  if (data.filesystem && data.filesystem['最近修改的文件']) {
+    const recentFiles = data.filesystem['最近修改的文件'].split('\n').filter(f => f.trim());
+    systemStats.recent_files = recentFiles.length;
+  }
+  
+  // 登录失败统计
+  if (data.user && data.user['登录失败记录']) {
+    const failedLogins = data.user['登录失败记录'];
+    systemStats.failed_logins = (failedLogins.match(/Failed password/g) || []).length;
+  }
+  
+  // 计划任务统计
+  if (data.persistence && data.persistence['计划任务']) {
+    const cronJobs = data.persistence['计划任务'];
+    systemStats.cron_jobs = (cronJobs.match(/crontab|cron|\*/g) || []).length;
+  }
+  
+  // 风险评分计算
+  let riskScore = 0;
+  const recommendations = [];
+  
+  if (systemStats.uid0_users > 0) {
+    riskScore += 50;
+    recommendations.push({
+      level: 'high',
+      title: '发现异常高权限用户',
+      description: `发现 ${systemStats.uid0_users} 个非root的UID为0用户，这可能是安全威胁。`,
+      action: '建议立即与运维和开发人员确认这些用户的合法性，如无法确认应立即禁用。'
+    });
+  } else {
+    recommendations.push({
+      level: 'info',
+      title: '用户权限检查正常',
+      description: `系统共有 ${systemStats.total_users} 个用户账户，除root外未发现其他UID为0的高权限用户，这是良好的安全实践。`,
+      action: '建议定期审查用户账户，确保权限分配合理。'
+    });
+  }
+  
+  if (systemStats.suspicious_processes > 10) {
+    riskScore += 30;
+    recommendations.push({
+      level: 'medium',
+      title: '可疑进程数量异常',
+      description: `发现 ${systemStats.suspicious_processes} 个可疑脚本进程，数量较多。`,
+      action: '建议检查这些进程的合法性，确认其业务必要性。'
+    });
+  } else if (systemStats.suspicious_processes > 0) {
+    recommendations.push({
+      level: 'low',
+      title: '发现少量可疑进程',
+      description: `发现 ${systemStats.suspicious_processes} 个可疑脚本进程。`,
+      action: '建议确认这些进程的业务必要性。'
+    });
+  }
+  
+  if (systemStats.suid_files > 100) {
+    riskScore += 20;
+    recommendations.push({
+      level: 'medium',
+      title: 'SUID文件数量异常',
+      description: `发现 ${systemStats.suid_files} 个SUID文件，数量较多。`,
+      action: '建议审查SUID文件列表，确认是否存在异常的提权文件。'
+    });
+  }
+  
+  if (systemStats.failed_logins > 50) {
+    riskScore += 25;
+    recommendations.push({
+      level: 'medium',
+      title: '登录失败次数异常',
+      description: `登录失败次数(${systemStats.failed_logins})较多，可能存在暴力破解攻击。`,
+      action: '建议检查登录日志，加强密码策略和访问控制。'
+    });
+  }
+  
+  if (systemStats.listening_ports > 20) {
+    riskScore += 15;
+    recommendations.push({
+      level: 'low',
+      title: '监听端口数量较多',
+      description: `监听端口数量(${systemStats.listening_ports})较多。`,
+      action: '建议关闭不必要的服务以减少攻击面。'
+    });
+  }
+  
+  // 确定风险等级
+  if (riskScore >= 80) {
+    systemStats.risk_level = 'HIGH';
+  } else if (riskScore >= 50) {
+    systemStats.risk_level = 'MEDIUM';
+  } else if (riskScore >= 20) {
+    systemStats.risk_level = 'LOW';
+  } else {
+    systemStats.risk_level = 'NORMAL';
+  }
+  
+  systemStats.risk_score = riskScore;
+  
+  return {
+    statistics: systemStats,
+    recommendations: recommendations
+  };
+}
+
+// 生成统计总览内容
+function generateSummaryContent(data) {
+  const analysis = generateStatistics(data);
+  const stats = analysis.statistics;
+  const recommendations = analysis.recommendations;
+  
+  const summaryData = {
+    '系统概览': `
+=== 系统基本信息 ===
+检查时间: ${new Date().toLocaleString()}
+总用户数: ${stats.total_users}
+UID为0的非root用户: ${stats.uid0_users}
+监听端口数: ${stats.listening_ports}
+可疑进程数: ${stats.suspicious_processes}
+SUID文件数: ${stats.suid_files}
+最近修改文件数: ${stats.recent_files}
+登录失败次数: ${stats.failed_logins}
+计划任务数: ${stats.cron_jobs}
+
+=== 风险评估 ===
+风险评分: ${stats.risk_score}
+风险等级: ${stats.risk_level}
+    `,
+    
+    '风险评估': `
+=== 风险等级说明 ===
+NORMAL (0-19分): 系统安全状况良好
+LOW (20-49分): 存在轻微安全风险
+MEDIUM (50-79分): 存在中等安全风险，需要关注
+HIGH (80+分): 存在严重安全风险，需要立即处理
+
+=== 当前风险分析 ===
+总评分: ${stats.risk_score} 分
+风险等级: ${stats.risk_level}
+
+评分构成:
+- UID为0异常用户: ${stats.uid0_users > 0 ? '+50分 (高危)' : '0分 (正常)'}
+- 可疑进程过多: ${stats.suspicious_processes > 10 ? '+30分 (中危)' : stats.suspicious_processes > 0 ? '+10分 (低危)' : '0分 (正常)'}
+- SUID文件异常: ${stats.suid_files > 100 ? '+20分 (中危)' : '0分 (正常)'}
+- 登录失败过多: ${stats.failed_logins > 50 ? '+25分 (中危)' : '0分 (正常)'}
+- 监听端口过多: ${stats.listening_ports > 20 ? '+15分 (低危)' : '0分 (正常)'}
+    `,
+    
+    '智能建议': recommendations.map(rec => 
+      `[${rec.level.toUpperCase()}] ${rec.title}\n${rec.description}\n处置建议: ${rec.action}`
+    ).join('\n\n'),
+    
+    '检查清单': `
+=== 应急响应检查清单 ===
+□ 1. 确认所有UID为0的用户合法性
+□ 2. 检查可疑进程的业务必要性
+□ 3. 审查SUID文件是否存在异常
+□ 4. 分析登录失败日志，确认是否存在攻击
+□ 5. 检查网络服务配置，关闭不必要端口
+□ 6. 审查计划任务和启动项配置
+□ 7. 检查最近修改的系统文件
+□ 8. 确认SSH密钥配置的合法性
+□ 9. 进行完整的恶意软件扫描
+□ 10. 更新系统和安全补丁
+
+=== 优先级处理建议 ===
+${stats.uid0_users > 0 ? '🔴 高优先级: 立即处理UID为0异常用户' : ''}
+${stats.risk_score >= 50 ? '🟡 中优先级: 处理中等风险项目' : ''}
+${stats.risk_score < 50 && stats.risk_score > 0 ? '🟢 低优先级: 优化安全配置' : ''}
+${stats.risk_score === 0 ? '✅ 系统安全状况良好，建议定期检查' : ''}
+    `
+  };
+  
+  return summaryData;
+}
+
+function openTab(evt, tabName) {
+  const tabcontent = document.getElementsByClassName("tabcontent");
+  for (let i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  const tablinks = document.getElementsByClassName("tablinks");
+  for (let i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+function findAllMatches(text, searchTerm) {
+  if (!searchTerm) return [];
+  const regex = new RegExp(searchTerm, 'gi');
+  const matches = [];
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    matches.push({
+      index: match.index,
+      text: match[0],
+      position: matches.length,
+      end: match.index + match[0].length
+    });
+  }
+  return matches;
+}
+
+function searchTabs() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  if (!input) {
+    updateSearchCount(0, -1);
+    return;
+  }
+
+  searchResults = [];
+  currentSearchIndex = -1;
+  
+  const tabs = document.getElementsByClassName("tabcontent");
+  for (let i = 0; i < tabs.length; i++) {
+    const tabId = tabs[i].id;
+    const pres = tabs[i].getElementsByTagName("pre");
+    for (let j = 0; j < pres.length; j++) {
+      const preText = pres[j].textContent;
+      const matches = findAllMatches(preText, input);
+      matches.forEach(match => {
+        searchResults.push({
+          tabId,
+          preIndex: j,
+          ...match
+        });
+      });
+    }
+  }
+  
+  highlightCurrentMatch();
+  updateSearchCount(searchResults.length, currentSearchIndex);
+}
+
+function updateSearchCount(total, current) {
+  const countElement = document.getElementById("searchCount");
+  if (total === 0) {
+    countElement.textContent = "未找到匹配项";
+    document.getElementById("prevMatch").disabled = true;
+    document.getElementById("nextMatch").disabled = true;
+  } else {
+    countElement.textContent = `${current + 1}/${total}`;
+    document.getElementById("prevMatch").disabled = current <= 0;
+    document.getElementById("nextMatch").disabled = current >= total - 1;
+  }
+}
+
+function navigateSearch(direction) {
+  if (searchResults.length === 0) return;
+  
+  currentSearchIndex += direction;
+  if (currentSearchIndex < 0) currentSearchIndex = searchResults.length - 1;
+  if (currentSearchIndex >= searchResults.length) currentSearchIndex = 0;
+  
+  highlightCurrentMatch();
+  updateSearchCount(searchResults.length, currentSearchIndex);
+}
+
+function highlightCurrentMatch() {
+  // 清除所有高亮
+  const tabs = document.getElementsByClassName("tabcontent");
+  for (let i = 0; i < tabs.length; i++) {
+    const pres = tabs[i].getElementsByTagName("pre");
+    for (let j = 0; j < pres.length; j++) {
+      let html = pres[j].innerHTML.replace(/<span class="mark.*?">(.*?)<\/span>/g, "$1");
+      pres[j].innerHTML = html;
+    }
+  }
+  
+  if (searchResults.length === 0 || currentSearchIndex === -1) return;
+  
+  const currentMatch = searchResults[currentSearchIndex];
+  
+  // 切换到对应的标签页
+  const tabButton = document.querySelector(`button[onclick="openTab(event, '${currentMatch.tabId}')"]`);
+  if (tabButton) {
+    tabButton.click();
+  }
+  
+  // 高亮所有匹配项，当前匹配项特殊高亮
+  const searchTerm = document.getElementById("searchInput").value;
+  const regex = new RegExp(`(${searchTerm})`, 'gi');
+  const targetPre = document.getElementById(currentMatch.tabId)
+    .getElementsByTagName("pre")[currentMatch.preIndex];
+  
+  targetPre.innerHTML = targetPre.textContent.replace(regex, (match, p1, offset) => {
+    const isCurrentMatch = offset === currentMatch.index;
+    return `<span class="mark${isCurrentMatch ? ' current' : ''}">${match}</span>`;
+  });
+  
+  // 找到当前匹配项的元素
+  const currentElement = targetPre.querySelector('.mark.current');
+  if (currentElement) {
+    // 获取父级details元素
+    const detailsElement = targetPre.closest('details');
+    if (detailsElement && !detailsElement.open) {
+      detailsElement.open = true;
+    }
+    
+    // 计算滚动位置
+    const contentContainer = document.querySelector('.content-container');
+    const elementRect = currentElement.getBoundingClientRect();
+    const containerRect = contentContainer.getBoundingClientRect();
+    
+    // 检查元素是否在视图中
+    const isInView = (
+      elementRect.top >= containerRect.top &&
+      elementRect.bottom <= containerRect.bottom
+    );
+    
+    if (!isInView) {
+      // 计算理想的滚动位置（将匹配项放在容器中间）
+      const elementTop = elementRect.top + contentContainer.scrollTop - containerRect.top;
+      const containerMiddle = containerRect.height / 2;
+      const scrollTo = elementTop - containerMiddle + elementRect.height / 2;
+      
+      // 平滑滚动到目标位置
+      contentContainer.scrollTo({
+        top: scrollTo,
+        behavior: 'smooth'
+      });
+    }
+    
+    // 添加闪烁动画以突出显示当前匹配项
+    currentElement.style.animation = 'none';
+    currentElement.offsetHeight; // 触发重绘
+    currentElement.style.animation = 'highlight-pulse 1s';
+  }
+}
+
+// 添加规则引擎API调用
+async function analyzeReport(data) {
+  try {
+    const response = await fetch('http://localhost:12000/analyze', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const results = await response.json();
+    alertResults = results;
+    displayAlerts();
+  } catch (error) {
+    console.error('规则分析失败:', error);
+    // 显示错误提示
+    const container = document.getElementById('alertContainer');
+    container.innerHTML = `
+      <div class="alert alert-high">
+        <div>
+          <strong>规则分析失败</strong>
+          <p>无法连接到规则引擎服务器，请确保服务器正在运行。</p>
+          <p>错误信息: ${error.message}</p>
+        </div>
+      </div>
+    `;
+  }
+}
+
+// 修改renderTabs函数
+function renderTabs(data) {
+  analysisData = data;
+  
+  // 生成统计总览数据
+  const summaryData = generateSummaryContent(data);
+  data.summary = summaryData;
+  
+  const tabBtnHtml = gTabs.map((k, i) => 
+    `<button class="tablinks" onclick="openTab(event, '${k}')">${TAB_TITLES[k]}</button>`
+  ).join("");
+  document.getElementById("tabBtns").innerHTML = tabBtnHtml;
+
+  const tabContentHtml = gTabs.map(k => {
+    const subTitles = SUB_TAB_TITLES[k];
+    const subContent = subTitles.map(title => {
+      const content = data[k] && data[k][title] ? data[k][title] : "";
+      return `<details open><summary>${title}</summary><pre>${escapeHtml(content)}</pre></details>`;
+    }).join("");
+    return `<div id="${k}" class="tabcontent">${subContent}</div>`;
+  }).join("");
+  document.getElementById("tabContents").innerHTML = tabContentHtml;
+
+  // 显示统计面板
+  displayStatsPanel();
+  
+  if (gTabs.length) {
+    setTimeout(() => document.getElementsByClassName("tablinks")[0].click(), 100);
+  }
+  
+  // 调用规则引擎API进行分析
+  analyzeReport(data);
+}
+
+// 显示统计面板
+function displayStatsPanel() {
+  const stats = systemStats;
+  const statsHtml = `
+    <div class="stats-panel">
+      <h3>📊 系统安全状况总览</h3>
+      <div class="risk-level risk-${stats.risk_level.toLowerCase()}">
+        风险等级: ${stats.risk_level} (评分: ${stats.risk_score})
+      </div>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">${stats.total_users}</div>
+          <div class="stat-label">总用户数</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number ${stats.uid0_users > 0 ? 'risk-high' : ''}">${stats.uid0_users}</div>
+          <div class="stat-label">异常高权限用户</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">${stats.listening_ports}</div>
+          <div class="stat-label">监听端口</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">${stats.suspicious_processes}</div>
+          <div class="stat-label">可疑进程</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">${stats.suid_files}</div>
+          <div class="stat-label">SUID文件</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">${stats.failed_logins}</div>
+          <div class="stat-label">登录失败</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  // 在内容区域顶部插入统计面板
+  const contentContainer = document.querySelector('.content-container');
+  const existingStats = contentContainer.querySelector('.stats-panel');
+  if (existingStats) {
+    existingStats.remove();
+  }
+  contentContainer.insertAdjacentHTML('afterbegin', statsHtml);
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return str.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("fileInput").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      try {
+        const text = e.target.result;
+        try {
+          const data = JSON.parse(text);
+          renderTabs(data);
+        } catch (jsonError) {
+          const data = parseTextReport(text);
+          renderTabs(data);
+        }
+      } catch (err) {
+        alert("解析失败：" + err.message);
+      }
+    };
+    reader.readAsText(file);
+  });
+  
+  // 添加搜索导航事件监听
+  document.getElementById("prevMatch").addEventListener("click", () => navigateSearch(-1));
+  document.getElementById("nextMatch").addEventListener("click", () => navigateSearch(1));
+});
+
+// 添加侧边栏折叠功能
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const button = document.querySelector('.collapse-button');
+  if (sidebar.style.width === '0px') {
+    sidebar.style.width = '350px';
+    button.textContent = '收起告警面板 >';
+  } else {
+    sidebar.style.width = '0px';
+    button.textContent = '< 展开告警面板';
+  }
+}
+
+// 添加显示告警的函数
+function displayAlerts() {
+  const container = document.getElementById('alertContainer');
+  const summary = document.getElementById('alertSummary');
+  
+  // 清空现有内容
+  container.innerHTML = '';
+  summary.innerHTML = '';
+  
+  // 显示告警统计
+  const summaryHtml = `
+    <div class="alert-badge high">
+      <span>高危告警</span>
+      <span class="count">${alertResults.high.length}</span>
+    </div>
+    <div class="alert-badge medium">
+      <span>中危告警</span>
+      <span class="count">${alertResults.medium.length}</span>
+    </div>
+    <div class="alert-badge low">
+      <span>低危告警</span>
+      <span class="count">${alertResults.low.length}</span>
+    </div>
+  `;
+  summary.innerHTML = summaryHtml;
+  
+  // 显示告警详情
+  const alertsHtml = [
+    ...alertResults.high.map(alert => `
+      <div class="alert alert-high">
+        <div>
+          <strong>${alert.description}</strong>
+          <div style="margin-top: 5px; font-size: 12px; color: #666;">
+            规则ID: ${alert.rule_id} | 模块: ${alert.section} | 子项: ${alert.subsection}
+          </div>
+          ${alert.findings ? `
+            <div style="margin-top: 10px;">
+              <strong>发现:</strong>
+              <ul style="margin: 5px 0; padding-left: 20px;">
+                ${alert.findings.map(finding => `
+                  <li style="cursor: pointer;" onclick="scrollToPosition('${alert.section}', '${alert.subsection}', ${finding.start}, ${finding.end})">
+                    位置: ${finding.start}-${finding.end}, 匹配文本: "${finding.matched_text}"
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          ` : ''}
+          ${alert.recommendation ? `
+            <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+              <strong>处置建议:</strong> ${alert.recommendation}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `),
+    ...alertResults.medium.map(alert => `
+      <div class="alert alert-medium">
+        <div>
+          <strong>${alert.description}</strong>
+          <div style="margin-top: 5px; font-size: 12px; color: #666;">
+            规则ID: ${alert.rule_id} | 模块: ${alert.section} | 子项: ${alert.subsection}
+          </div>
+          ${alert.findings ? `
+            <div style="margin-top: 10px;">
+              <strong>发现:</strong>
+              <ul style="margin: 5px 0; padding-left: 20px;">
+                ${alert.findings.map(finding => `
+                  <li style="cursor: pointer;" onclick="scrollToPosition('${alert.section}', '${alert.subsection}', ${finding.start}, ${finding.end})">
+                    位置: ${finding.start}-${finding.end}, 匹配文本: "${finding.matched_text}"
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          ` : ''}
+          ${alert.recommendation ? `
+            <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+              <strong>处置建议:</strong> ${alert.recommendation}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `),
+    ...alertResults.low.map(alert => `
+      <div class="alert alert-low">
+        <div>
+          <strong>${alert.description}</strong>
+          <div style="margin-top: 5px; font-size: 12px; color: #666;">
+            规则ID: ${alert.rule_id} | 模块: ${alert.section} | 子项: ${alert.subsection}
+          </div>
+          ${alert.findings ? `
+            <div style="margin-top: 10px;">
+              <strong>发现:</strong>
+              <ul style="margin: 5px 0; padding-left: 20px;">
+                ${alert.findings.map(finding => `
+                  <li style="cursor: pointer;" onclick="scrollToPosition('${alert.section}', '${alert.subsection}', ${finding.start}, ${finding.end})">
+                    位置: ${finding.start}-${finding.end}, 匹配文本: "${finding.matched_text}"
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          ` : ''}
+          ${alert.recommendation ? `
+            <div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+              <strong>处置建议:</strong> ${alert.recommendation}
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    `)
+  ].join('');
+  
+  container.innerHTML = alertsHtml;
+}
+
+function scrollToPosition(section, subsection, start, end) {
+  // 切换到对应的标签页
+  const tabButton = document.querySelector(`button[onclick="openTab(event, '${section}')"]`);
+  if (tabButton) {
+    tabButton.click();
+  }
+  
+  // 找到对应的详情元素并展开
+  setTimeout(() => {
+    const tabContent = document.getElementById(section);
+    if (tabContent) {
+      const details = Array.from(tabContent.querySelectorAll('details')).find(d => 
+        d.querySelector('summary').textContent.includes(subsection)
+      );
+      if (details) {
+        details.open = true;
+        details.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, 100);
+}
+
+</script>
+</head>
+<body>
+  <div class="header">
+    <h1>🛡️ Linux 应急响应报告查看器 (增强版)</h1>
+    <div class="subtitle">智能化安全威胁检测与分析系统 | 保留原有功能 + 增强统计分析</div>
+  </div>
+  
+  <div class="main-container">
+    <div class="content-container">
+      <div class="search-container">
+        <input type="file" id="fileInput" accept=".txt,.json">
+        <input type="text" id="searchInput" placeholder="搜索报告内容..." onkeyup="searchTabs()">
+        <div class="search-nav">
+          <button id="prevMatch" onclick="navigateSearch(-1)" disabled>上一个</button>
+          <button id="nextMatch" onclick="navigateSearch(1)" disabled>下一个</button>
+          <span id="searchCount">输入关键词搜索</span>
+        </div>
+      </div>
+      
+      <div class="tabs" id="tabBtns">
+        <!-- 标签按钮将在这里动态生成 -->
+      </div>
+      
+      <div id="tabContents">
+        <!-- 标签内容将在这里动态生成 -->
+      </div>
+    </div>
+    
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h3>🚨 安全告警面板</h3>
+        <button class="collapse-button" onclick="toggleSidebar()">收起告警面板 ></button>
+        <div id="alertSummary" class="alert-summary">
+          <!-- 告警统计将在这里显示 -->
+        </div>
+      </div>
+      <div id="alertContainer" class="alert-container">
+        <div style="text-align: center; padding: 40px; color: #666;">
+          <p>📁 请选择报告文件开始分析</p>
+          <p style="font-size: 0.9em; margin-top: 10px;">支持 .txt 和 .json 格式</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

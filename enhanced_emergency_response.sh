@@ -44,6 +44,7 @@ else
 fi
 
 declare -A TAB_TITLES=(
+  [summary]="统计分析与建议"
   [backdoor]="系统后门排查"
   [user]="用户与登录检查"
   [log]="日志分析"
@@ -54,7 +55,6 @@ declare -A TAB_TITLES=(
   [persistence]="持久化检查"
   [integrity]="系统完整性"
   [malware]="恶意进程与提权点"
-  [summary]="统计分析与建议"
 )
 
 # 函数：打印彩色输出
